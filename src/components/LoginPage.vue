@@ -59,7 +59,8 @@ export default {
       }
     },
     async logout() {
-      this.$emit('logout')
+      const confirmation = confirm("Are you sure you want to logout?")
+      if(confirmation) this.$emit('logout')
     }
   },
   data() {

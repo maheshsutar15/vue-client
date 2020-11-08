@@ -1,6 +1,14 @@
 <template>
   <div class="container" v-if="sensors">
-    <b-card 
+    <br>
+    <b-button
+       variant="outline-primary"
+       v-on:click="addNode()"
+       >
+       Add Node
+    </b-button>
+      <br>
+  <b-card 
       v-for="sensor in sensors"
       v-bind:key="sensor._id"
       v-bind:title="sensor.uid"
@@ -85,7 +93,52 @@ export default {
       msg: 'Hello'
     }
   },
+
   methods: {
+    async addNode () {
+      const uid = prompt('Enter UID')
+      if(!uid) {
+        alert("could not add")
+        return;
+      }
+      const location = prompt('Enter Location')
+      if(!location) {
+        alert("could not add")
+        return
+      }
+      var node = {
+        "uid": uid,
+        "location": location,
+        "name": location,
+        "supply": {
+          "mains": {
+            "r": "0",
+            "y": "0",
+            "b": "0"
+          },
+          "amf": {
+            "r": "0",
+            "y": "0",
+            "b": "0"
+          },
+          "stabilizer": {
+            "r": "0",
+            "y": "0",
+            "b": "0"
+          }
+        }
+      }
+      const res = await fetch(process.env.VUE_APP_HOST + '/node/add', {
+        method: 'POST',
+        headers: {"Content-Type": "application/json"},
+        mode: 'cors',
+        cache: 'default',
+        body: JSON.stringify(node)
+      })
+      const newNode = await res.json()
+      console.log(newNode)
+      this.$emit('refresh')
+    },
     async deleteNode(uid) {
       const sure = confirm("Are you sure you want to delete the node "+ uid)
       if(sure) {

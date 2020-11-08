@@ -2,12 +2,6 @@
   <div id="app">
     <LoginPage @setAccessToken="setAccessToken" @logout="logout" :token="accessToken"/>
     <Cards v-bind:sensors="sensors" @refresh="fetchData" v-if="accessToken != ''"/>
-    <b-button
-       variant="outline-primary"
-       v-on:click="addNode()"
-       >
-       Add Node
-    </b-button>
   </div>
 </template>
 
@@ -67,50 +61,6 @@ export default {
         this.fetchData()
         console.log("Updating...")
       }, 30000)
-    },
-    async addNode() {
-      const uid = prompt('Enter UID')
-      if(!uid) {
-        alert("could not add")
-        return;
-      }
-      const location = prompt('Enter Location')
-      if(!location) {
-        alert("could not add")
-        return
-      }
-      var node = {
-        "uid": uid,
-        "location": location,
-        "name": location,
-        "supply": {
-          "mains": {
-            "r": "0",
-            "y": "0",
-            "b": "0"
-          },
-          "amf": {
-            "r": "0",
-            "y": "0",
-            "b": "0"
-          },
-          "stabilizer": {
-            "r": "0",
-            "y": "0",
-            "b": "0"
-          }
-        }
-      }
-      const res = await fetch(process.env.VUE_APP_HOST + '/node/add', {
-        method: 'POST',
-        headers: {"Content-Type": "application/json"},
-        mode: 'cors',
-        cache: 'default',
-        body: JSON.stringify(node)
-      })
-      const newNode = await res.json()
-      console.log(newNode)
-      this.fetchData()
     },
     async logout() {
       this.accessToken = null
