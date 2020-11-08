@@ -1,6 +1,7 @@
 <template>
-  <div class="container">
+  <div class="container" v-if="!token">
     <h1> Login </h1>
+    <p>{{ token }}</p>
     <b-form v-if="show">
       <b-form-group label="Email:" label-for="email">
         <b-form-input 
@@ -21,6 +22,11 @@
       </b-form-group>
       <b-button v-on:click="login()" variant="primary">Submit </b-button>
     </b-form>
+  </div>
+  <div v-else>
+    <b-button v-on:click="logout()" variant="primary">
+    Logout
+    </b-button>
   </div>
 </template>
 
@@ -51,6 +57,9 @@ export default {
       } else {
         alert("Invalid Username or password.")
       }
+    },
+    async logout() {
+      this.$emit('logout')
     }
   },
   data() {

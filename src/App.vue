@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <LoginPage @setAccessToken="setAccessToken" v-if="!accessToken"/>
+    <LoginPage @setAccessToken="setAccessToken" @logout="logout" :token="accessToken"/>
     <Cards v-bind:sensors="sensors" @refresh="fetchData" v-if="accessToken != ''"/>
     <b-button
        variant="outline-primary"
@@ -100,6 +100,11 @@ export default {
       const newNode = await res.json()
       console.log(newNode)
       this.fetchData()
+    },
+    async logout() {
+      this.accessToken = null;
+      localStorage.removeItem('accessToken')
+      window.location.reload()
     }
   }
 }
