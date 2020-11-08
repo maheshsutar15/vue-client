@@ -24,17 +24,20 @@ export default {
   data () {
     return {
       sensors: null,
-      accessToken: null
+      accessToken: null,
+      loggedIn: false
     }
   },
   created () {
-    this.fetchData()
     this.getAccessToken()
     // const updateLoop = 
-    setInterval(() => {
+    if(this.loggedIn) {
       this.fetchData()
-      console.log("Updating...")
-    }, 30000)
+      setInterval(() => {
+        this.fetchData()
+        console.log("Updating...")
+      }, 30000)
+    }
   },
   watch: {
     '$route': 'fetchData'
@@ -52,10 +55,18 @@ export default {
     },
     async getAccessToken() {
       this.accessToken  = localStorage.getItem('accessToken')
+      if(this.accessToken) {
+        this.loggedIn = true;
+      }
     },
     async setAccessToken(tok) {
       localStorage.setItem('accessToken', tok)
       this.accessToken  = localStorage.getItem('accessToken')
+      this.fetchData()
+      setInterval(() => {
+        this.fetchData()
+        console.log("Updating...")
+      }, 30000)
     },
     async addNode() {
       const uid = prompt('Enter UID')
@@ -102,8 +113,9 @@ export default {
       this.fetchData()
     },
     async logout() {
-      this.accessToken = null;
+      this.accessToken = null
       localStorage.removeItem('accessToken')
+      this.loggedIn = false
       window.location.reload()
     }
   }
