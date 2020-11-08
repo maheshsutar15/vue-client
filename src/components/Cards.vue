@@ -87,14 +87,17 @@ export default {
   },
   methods: {
     async deleteNode(uid) {
-      let resp = await fetch(process.env.VUE_APP_HOST + '/node/' + uid, {
-        method: "DELETE"
-      });
-      let msg = await resp.json();
-      if(msg.message == "Deleted Successfully") {
-        this.$emit('refresh');
-      } else {
-        alert("Could not delete");
+      const sure = confirm("Are you sure you want to delete the node "+ uid)
+      if(sure) {
+        let resp = await fetch(process.env.VUE_APP_HOST + '/node/' + uid, {
+          method: "DELETE"
+        });
+        let msg = await resp.json();
+        if(msg.message == "Deleted Successfully") {
+          this.$emit('refresh');
+        } else {
+          alert("Could not delete");
+        }
       }
     }
   }
