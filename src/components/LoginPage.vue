@@ -3,11 +3,11 @@
     <h1> Login </h1>
     <p>{{ token }}</p>
     <b-form v-if="show">
-      <b-form-group label="Email:" label-for="email">
+      <b-form-group label="Username:" label-for="uname">
         <b-form-input 
-                                   id="email"
-                                   v-model="form.email"
-                                   placeholder="Enter Email"
+                                   id="uname"
+                                   v-model="form.uname"
+                                   placeholder="Enter username"
                                    required>
 
         </b-form-input>
@@ -17,6 +17,7 @@
                                      id="pwd"
                                      v-model="form.pwd"
                                      placeholder="Enter Password"
+                                     type="password"
                                      required>
         </b-form-input>
       </b-form-group>
@@ -40,7 +41,7 @@ export default {
   methods: {
     async login() {
       const cred = {
-        username: this.form.email,
+        username: this.form.uname,
         password: this.form.pwd
       }
       console.log(JSON.stringify(cred))
@@ -67,7 +68,7 @@ export default {
     return {
       show: true,
       form: {
-        email: '',
+        uname: '',
         pwd: ''
       }
     }
