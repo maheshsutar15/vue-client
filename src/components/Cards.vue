@@ -7,7 +7,7 @@
       v-bind:sub-title="sensor.name"
       class="card"
     >
-    <DeleteIcon v-on:click="deleteNode(sensor.uid)"/>
+    <DeleteIcon class="action-btn" v-on:click="deleteNode(sensor.uid)"/>
       <b-card-text >
         <table class="table">
           <tr>
@@ -75,7 +75,7 @@ import DeleteIcon from 'vue-material-design-icons/Delete.vue'
 export default {
   name: 'Cards',
   components: {
-    DeleteIcon
+    DeleteIcon,
   },
   props: {
     sensors: Array
@@ -113,5 +113,8 @@ export default {
 }
 table {
   text-align: left;
+}
+.action-btn {
+  color: darkred;
 }
 </style>

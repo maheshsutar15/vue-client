@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <LoginPage @setAccessToken="setAccessToken" v-if="!accessToken"/>
-    <Cards v-bind:sensors="sensors" @refresh="fetchData"/>
+    <Cards v-bind:sensors="sensors" @refresh="fetchData" v-if="accessToken != ''"/>
     <b-button
        variant="outline-primary"
        v-on:click="addNode()"
@@ -30,6 +30,11 @@ export default {
   created () {
     this.fetchData()
     this.getAccessToken()
+    // const updateLoop = 
+    setInterval(() => {
+      this.fetchData()
+      console.log("Updating...")
+    }, 30000)
   },
   watch: {
     '$route': 'fetchData'
@@ -85,7 +90,6 @@ export default {
           }
         }
       }
-      console.log(JSON.stringify(node))
       const res = await fetch(process.env.VUE_APP_HOST + '/node/add', {
         method: 'POST',
         headers: {"Content-Type": "application/json"},

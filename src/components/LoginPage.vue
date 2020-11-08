@@ -28,6 +28,9 @@
 
 export default {
   name: 'LoginPage',
+  props: {
+    token: String
+  },
   methods: {
     async login() {
       const cred = {
@@ -42,8 +45,12 @@ export default {
         method: 'POST',
         body: "" + JSON.stringify(cred) + ""
       })
-      const token = await resp.json();
-      this.$emit('setAccessToken', token.accessToken)
+      if(resp.status == 200) {
+        const token = await resp.json();
+        this.$emit('setAccessToken', token.accessToken)
+      } else {
+        alert("Invalid Username or password.")
+      }
     }
   },
   data() {
