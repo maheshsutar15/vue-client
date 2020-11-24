@@ -25,16 +25,27 @@
     </b-form>
   </div>
   <div v-else>
-    <b-button v-on:click="logout()" variant="primary">
-    Logout
-    </b-button>
+    <b-navbar type="dark" variant="info">
+      <b-navbar-brand href="#">Frontend</b-navbar-brand>
+      <b-navbar-nav class="ml-auto operations">
+        <HumanIcon title="Add User" href="/k"/> 
+        <LogoutIcon title="Logout" v-on:click="logout()"/>
+      </b-navbar-nav>
+    </b-navbar>
   </div>
 </template>
 
 <script>
 
+import LogoutIcon from 'vue-material-design-icons/Logout.vue';
+import HumanIcon from 'vue-material-design-icons/HumanMale.vue'; 
+
 export default {
   name: 'LoginPage',
+  components: {
+    LogoutIcon,
+    HumanIcon
+  },
   props: {
     token: String
   },
@@ -53,8 +64,8 @@ export default {
         body: "" + JSON.stringify(cred) + ""
       })
       if(resp.status == 200) {
-        const token = await resp.json();
-        this.$emit('setAccessToken', token.accessToken)
+        const cred = await resp.json();
+        this.$emit('loginUser', cred);
       } else {
         alert("Invalid Username or password.")
       }
@@ -86,5 +97,8 @@ h1 {
   margin: 10px auto;
   padding: 10px;
   text-align: left;
+}
+.operations {
+  margin: 0 5px;
 }
 </style>

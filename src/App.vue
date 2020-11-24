@@ -1,7 +1,8 @@
 <template>
   <div id="app">
-    <LoginPage @setAccessToken="setAccessToken" @logout="logout" :token="accessToken"/>
-    <Cards v-bind:sensors="sensors" @refresh="fetchData" v-if="accessToken != ''"/>
+    
+    <LoginPage @loginUser="loginUser" @logout="logout" :token="accessToken" :designation="designation"/>
+    <Cards v-bind:sensors="sensors" @refresh="fetchData" v-if="accessToken != ''" :token="accessToken"/>
   </div>
 </template>
 
@@ -13,13 +14,14 @@ export default {
   name: 'App',
   components: {
     LoginPage,
-    Cards
+    Cards,
   },
   data () {
     return {
       sensors: null,
       accessToken: null,
-      loggedIn: false
+      loggedIn: false,
+      designation: null
     }
   },
   created () {
@@ -38,10 +40,18 @@ export default {
   },
   methods: {
     async fetchData () {
-      const res = await fetch(process.env.VUE_APP_HOST + '/node');
+      const res = await fetch(process.env.VUE_APP_HOST + '/node', {
+        headers: new Headers({
+          'Authorization': 'Bearer '+this.accessToken
+        })
+      });
       let sensorsList = await res.json();
       for(let i = 0; i < sensorsList.length; i++) {
-        let readResp = await fetch(process.env.VUE_APP_HOST + '/node/readings/' + sensorsList[i].uid)
+        let readResp = await fetch(process.env.VUE_APP_HOST + '/node/readings/' + sensorsList[i].uid, {
+          headers: new Headers({
+            'Authorization': 'Bearer '+this.accessToken
+          })
+        })
         let readings = await readResp.json()
         sensorsList[i] = Object.assign({}, sensorsList[i], readings)
       }
@@ -49,13 +59,16 @@ export default {
     },
     async getAccessToken() {
       this.accessToken  = localStorage.getItem('accessToken')
+      this.designation = localStorage.getItem('designation')
       if(this.accessToken) {
         this.loggedIn = true;
       }
     },
-    async setAccessToken(tok) {
-      localStorage.setItem('accessToken', tok)
+    async loginUser(cred) {
+      localStorage.setItem('accessToken', cred.accessToken)
       this.accessToken  = localStorage.getItem('accessToken')
+      localStorage.setItem('designation', cred.designation)
+      this.designation = localStorage.getItem('designation')
       this.fetchData()
       setInterval(() => {
         this.fetchData()
@@ -65,6 +78,8 @@ export default {
     async logout() {
       this.accessToken = null
       localStorage.removeItem('accessToken')
+      this.designation = null
+      localStorage.removeItem('designation')
       this.loggedIn = false
       window.location.reload()
     }
@@ -77,6 +92,6 @@ export default {
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     text-align: center;
-    margin-top: 60px;
+    margin-top: 0px;
   }
   </style>

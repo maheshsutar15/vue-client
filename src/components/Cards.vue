@@ -86,7 +86,8 @@ export default {
     DeleteIcon,
   },
   props: {
-    sensors: Array
+    sensors: Array,
+    token: String
   },
   data() {
     return {
@@ -130,7 +131,11 @@ export default {
       }
       const res = await fetch(process.env.VUE_APP_HOST + '/node/add', {
         method: 'POST',
-        headers: {"Content-Type": "application/json"},
+        headers: new Headers({
+          "Content-Type": "application/json",
+          "Authorization": "Bearer " + this.token
+
+        }),
         mode: 'cors',
         cache: 'default',
         body: JSON.stringify(node)
@@ -143,7 +148,10 @@ export default {
       const sure = confirm("Are you sure you want to delete the node "+ uid)
       if(sure) {
         let resp = await fetch(process.env.VUE_APP_HOST + '/node/' + uid, {
-          method: "DELETE"
+          method: "DELETE",
+          headers: new Headers({
+            "Authorization": "Bearer " + this.token
+          })
         });
         let msg = await resp.json();
         if(msg.message == "Deleted Successfully") {
