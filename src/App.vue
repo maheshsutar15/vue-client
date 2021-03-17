@@ -1,6 +1,5 @@
 <template>
   <div id="app">
-    
     <LoginPage @loginUser="loginUser" @logout="logout" :token="accessToken" :designation="designation"/>
     <Cards v-bind:sensors="sensors" @refresh="fetchData" v-if="accessToken != ''" :token="accessToken"/>
   </div>
@@ -46,16 +45,23 @@ export default {
         })
       });
       let sensorsList = await res.json();
+      // sensorsList.sort();
       for(let i = 0; i < sensorsList.length; i++) {
-        let readResp = await fetch(process.env.VUE_APP_HOST + '/node/readings/' + sensorsList[i].uid, {
+        const res = await fetch(process.env.VUE_APP_HOST + `/node/readings/${sensorsList[i].uid}`, {
           headers: new Headers({
             'Authorization': 'Bearer '+this.accessToken
           })
         })
-        let readings = await readResp.json()
-        sensorsList[i] = Object.assign({}, sensorsList[i], readings)
+        const readings = await res.json()
+        sensorsList[i].readings = {
+          co2: readings.co2,
+          pressure: readings.pressure,
+          humidity: readings.humidity,
+          temperature: readings.temperature
+        }
       }
       this.sensors = sensorsList;
+      console.log(this.sensors);
     },
     async getAccessToken() {
       this.accessToken  = localStorage.getItem('accessToken')
