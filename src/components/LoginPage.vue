@@ -24,11 +24,11 @@
     </b-form>
   </div>
   <div v-else>
-    <b-navbar type="dark" variant="warning">
+    <b-navbar type="dark" class="titlebar">
       <b-navbar-brand href="#">Atechno Embedded Solutions Pvt Ltd</b-navbar-brand>
       <b-navbar-nav class="ml-auto operations">
-        <HumanIcon title="Add User" @click="$bvModal.show('regForm')"/> 
-        <LogoutIcon title="Logout" v-on:click="logout()"/>
+        <HumanIcon class="ico" title="Add User" @click="$bvModal.show('regForm')"/> 
+        <LogoutIcon class="ico" title="Logout" v-on:click="logout()"/>
       </b-navbar-nav>
     </b-navbar>
     <div>
@@ -208,5 +208,13 @@ export default {
   }
   .operations {
     margin: 0 5px;
+  }
+
+  .titlebar {
+    background-color: #539;
+  }
+
+  .ico {
+    color: white;
   }
   </style>

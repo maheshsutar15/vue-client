@@ -6,7 +6,7 @@
 </template>
 
 <script>
-import LoginPage from './components/LoginPage.vue'
+  import LoginPage from './components/LoginPage.vue'
 import Cards from './components/Cards.vue'
 
 export default {
@@ -45,7 +45,6 @@ export default {
         })
       });
       let sensorsList = await res.json();
-      // sensorsList.sort();
       for(let i = 0; i < sensorsList.length; i++) {
         const res = await fetch(process.env.VUE_APP_HOST + `/node/readings/${sensorsList[i].uid}`, {
           headers: new Headers({
@@ -53,6 +52,7 @@ export default {
           })
         })
         const readings = await res.json()
+
         sensorsList[i].readings = {
           co2: readings.co2,
           pressure: readings.pressure,
@@ -61,7 +61,6 @@ export default {
         }
       }
       this.sensors = sensorsList;
-      console.log(this.sensors);
     },
     async getAccessToken() {
       this.accessToken  = localStorage.getItem('accessToken')

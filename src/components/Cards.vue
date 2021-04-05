@@ -18,9 +18,12 @@
       v-bind:sub-title="sensor.name"
       class="card"
       >
-      <DeleteIcon class="action-btn" v-on:click="deleteNode(sensor.uid)"/>
       <h5>{{ sensor.location }}</h5>
       <h5>{{ sensor.machineName }}</h5>
+      <b-modal class='long' :id="'trend' + sensor.uid" title='Trend' hide-footer>
+        <h3>{{ sensor.uid }}</h3>
+        <Trend :uid="sensor.uid" :token="token"> </Trend>
+      </b-modal>
       <b-card-text >
         <table>
           <tr>
@@ -61,19 +64,25 @@
         </tr>
         </table>
       </b-card-text>
+      <DeleteIcon class="action-btn delete" v-on:click="deleteNode(sensor.uid)"/>
+      <ChartLine class="action-btn chart" @click="$bvModal.show('trend' + sensor.uid)"/>
       </b-card>
   </div>
 </template>
 
 <script>
 import DeleteIcon from 'vue-material-design-icons/Delete.vue'
+import ChartLine from 'vue-material-design-icons/ChartLine.vue'
 import Form from './Form.vue'
+import Trend from './Trend.js'
 
 export default {
   name: 'Cards',
   components: {
+    ChartLine,
     DeleteIcon,
-    Form
+    Form,
+    Trend
   },
   props: {
     sensors: Array,
@@ -123,8 +132,13 @@ export default {
     width: 100%;
     text-align: left;
   }
-  .action-btn {
+
+  .delete {
     color: darkred;
+  }
+
+  .chart {
+    color: blue;
   }
 
   .ok {
