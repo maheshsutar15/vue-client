@@ -51,6 +51,7 @@ export default {
             'Authorization': 'Bearer '+this.accessToken
           })
         })
+
         const readings = await res.json()
 
         sensorsList[i].readings = {

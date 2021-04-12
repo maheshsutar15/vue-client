@@ -139,6 +139,7 @@ export default {
       })
       if(resp.status == 200) {
         const cred = await resp.json();
+        console.log(cred)
         this.$emit('loginUser', cred);
       } else {
         alert("Invalid Username or password.")
@@ -188,7 +189,8 @@ export default {
         { text: 'Please select an Option', value: null, disabled: true },
         { value: 'admin', text: 'Administrative User' },
         { value: 'user', text: 'Normal User' },
-        { value: 'maintenance', text: 'Maintenance Staff' }
+        { value: 'maintenance', text: 'Maintenance Staff' },
+        { value: 'maintenance', text: 'Observer' }
       ]
     }
   }
