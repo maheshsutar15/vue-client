@@ -66,7 +66,7 @@ export default {
       }
 
       console.log(JSON.stringify(node))
-      alert(JSON.stringify(node))
+      // alert(JSON.stringify(node))
       let resp = await fetch(process.env.VUE_APP_HOST + '/node/add', {
         headers: new Headers({
           'Authorization': 'Bearer ' + this.token,
