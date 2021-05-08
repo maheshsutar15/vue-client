@@ -17,7 +17,7 @@
     </b-navbar>
     <div>
       <b-modal  id='regForm' title="Add new user" hide-footer>
-        <RegisterForm v-if="this.designation == 'admin'"></RegisterForm>
+        <RegisterForm class="full_height" v-if="this.designation == 'admin'"></RegisterForm>
         <div v-else>
           <b-alert show variant="warning">Only admins can add new users.</b-alert>
         </div>
@@ -115,5 +115,8 @@ export default {
 
   .ico {
     color: white;
+  }
+  .full_height {
+    height: 100%;
   }
   </style>
