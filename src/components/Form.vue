@@ -1,5 +1,5 @@
 <template>
-  <b-form @submit="addNode()">
+  <b-form >
     <b-form-group label="UID: " label-for="node_uid" description="Please enter uid" >
       <b-form-input id="node_uid" v-model="addNodeForm.uid" placeholder="Enter UID"></b-form-input>
     </b-form-group>
@@ -29,7 +29,7 @@
       <b-form-input class="range" type="number" id="node_temperaturen" v-model="addNodeForm.temperaturen" placeholder="Enter Temperature Min"></b-form-input>
       <b-form-input class="range" type="number" id="node_temperaturex" v-model="addNodeForm.temperaturex" placeholder="Enter Temperature Max"></b-form-input>
     </b-form-group>
-    <b-button type="submit" variant="primary">Add Node</b-button>
+    <b-button @click="addNode()" variant="primary">Add Node</b-button>
 
   </b-form>
 </template>
@@ -67,24 +67,30 @@ export default {
 
       console.log(JSON.stringify(node))
       // alert(JSON.stringify(node))
-      let resp = await fetch(process.env.VUE_APP_HOST + '/node/add', {
-        headers: new Headers({
-          'Authorization': 'Bearer ' + this.token,
-          'Content-Type': 'application/json'
-        }),
-        mode: 'cors',
-        cache: 'default',
-        method: 'POST',
-        body: "" + JSON.stringify(node) + ""
-      })
-      let data = await resp.json()
-      if(resp.status == 200) {
-        alert("Node Added")
-      } else {
-        alert(`There was an error.\n ${resp.error}`)
-        console.log(data.message)
+      try {
+
+        let resp = await fetch(process.env.VUE_APP_HOST + '/node/add', {
+          headers: new Headers({
+            'Authorization': 'Bearer ' + this.token,
+            'Content-Type': 'application/json'
+          }),
+          mode: 'cors',
+          cache: 'default',
+          method: 'POST',
+          body: "" + JSON.stringify(node) + ""
+        })
+        let data = await resp.json()
+        if(resp.status == 200) {
+          alert("Node Added")
+        } else {
+          console.log(data.message)
+        }
+        alert(resp.status)
+      } catch (e) {
+        alert(e)
+        console.log(e)
       }
-      alert(resp.status)
+      window.location.reload()
     }
   },
   data() {
@@ -119,36 +125,3 @@ export default {
   margin-left: 2px;
 }
 </style>
-<!--
-    // async addNode () {
-    //   const uid = prompt('Enter UID')
-    //   if(!uid) {
-    //     alert("could not add")
-    //     return;
-    //   }
-    //   const location = prompt('Enter Location')
-    //   if(!location) {
-    //     alert("could not add")
-    //     return
-    //   }
-    //   var node = {
-    //     "uid": uid,
-    //     "location": location,
-    //     "name": location,
-    //   }
-    //   const res = await fetch(process.env.VUE_APP_HOST + '/node/add', {
-    //     method: 'POST',
-    //     headers: new Headers({
-    //       "Content-Type": "application/json",
-    //       "Authorization": "Bearer " + this.token
-
-    //     }),
-    //     mode: 'cors',
-    //     cache: 'default',
-    //     body: JSON.stringify(node)
-    //   })
-    //   const newNode = await res.json()
-    //   console.log(newNode)
-    //   this.$emit('refresh')
-    // },
--->

@@ -20,10 +20,11 @@ export default {
       sensors: null,
       accessToken: null,
       loggedIn: false,
-      designation: null
+      designation: null,
+      msg: ""
     }
   },
-  created () {
+  async created () {
     this.getAccessToken()
     // const updateLoop = 
     if(this.loggedIn) {
@@ -33,6 +34,9 @@ export default {
         console.log("Updating...")
       }, 30000)
     }
+    // let dat = await fetch(process.env.VUE_APP_HOST)
+    // let json = await dat.json()
+    this.msg = process.env.VUE_APP_HOST
   },
   watch: {
     '$route': 'fetchData'
@@ -88,7 +92,7 @@ export default {
       localStorage.removeItem('designation')
       this.loggedIn = false
       window.location.reload()
-    }
+    },
   }
 }
   </script>

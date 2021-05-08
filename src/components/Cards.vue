@@ -108,7 +108,7 @@ export default {
         });
         let msg = await resp.json();
         if(msg.message == "Deleted Successfully") {
-          this.$emit('refresh');
+          this.$emit('refresh')
         } else {
           alert("Could not delete");
         }
