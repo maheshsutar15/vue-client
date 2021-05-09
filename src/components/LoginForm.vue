@@ -34,7 +34,6 @@ export default {
         username: this.form.uname,
         password: this.form.pwd
       }
-      console.log(JSON.stringify(cred))
       let resp = await fetch(process.env.VUE_APP_HOST + '/user/login', {
         headers: {"Content-Type": "application/json"},
         mode: 'cors',
@@ -44,7 +43,6 @@ export default {
       })
       if(resp.status == 200) {
         const cred = await resp.json();
-        console.log(cred)
         this.$emit('login', cred);
       } else {
         alert("Invalid Username or password.")

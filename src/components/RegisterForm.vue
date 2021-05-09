@@ -1,7 +1,7 @@
 <template>
   <div class="container">
     <h1> Register New User </h1>
-    <b-form> <!-- @submit="registerUser()"-->
+    <b-form>
       <b-form-group label="Username: " label-for="reg_username" description="Please enter unique username." >
         <b-form-input v-model="regUserForm.username" id="reg_username" placeholder="Enter username" >
         </b-form-input>
@@ -42,31 +42,6 @@ export default {
         institute: this.regUserForm.institute,
         designation: this.regUserForm.designation
       }
-      // axios.post(process.env.VUE_APP_HOST + '/user/register', usr, {
-      //     headers: {
-      //       'Content-Type': 'text/plain',
-      //       'Accept': '*/*'
-      //     }
-      // }).then(r => {
-      //   console.log(r.data)
-      //   alert(r)
-      // }).catch(e => {
-      //   alert(e)
-      // })
-
-//       let resp = await fetch(process.env.VUE_APP_HOST + '/user/register', {
-//         headers: {"Content-Type": "application/json"},
-//         mode: 'cors',
-//         cache: 'default',
-//         method: 'POST',
-//         body: "" + JSON.stringify(usr) + ""
-//       })
-//       if(resp.status == 200) {
-//         const cred = await resp.json();
-//         console.log(cred)
-//       } else {
-//         alert("Invalid Username or password.")
-//       }
 
       fetch(process.env.VUE_APP_HOST + '/user/register', {
         method: "post",
@@ -79,7 +54,6 @@ export default {
         alert(r.status)
         r.json()
       }).then(d => {
-        console.log(d)
         alert(d)
       }).catch(e => {
         alert(e)

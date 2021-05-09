@@ -26,16 +26,12 @@ export default {
   },
   async created () {
     this.getAccessToken()
-    // const updateLoop = 
     if(this.loggedIn) {
       this.fetchData()
       setInterval(() => {
         this.fetchData()
-        console.log("Updating...")
       }, 30000)
     }
-    // let dat = await fetch(process.env.VUE_APP_HOST)
-    // let json = await dat.json()
     this.msg = process.env.VUE_APP_HOST
   },
   watch: {
@@ -82,7 +78,6 @@ export default {
       this.fetchData()
       setInterval(() => {
         this.fetchData()
-        console.log("Updating...")
       }, 30000)
     },
     async logout() {

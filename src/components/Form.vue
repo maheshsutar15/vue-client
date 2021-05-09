@@ -65,10 +65,7 @@ export default {
         }
       }
 
-      console.log(JSON.stringify(node))
-      // alert(JSON.stringify(node))
       try {
-
         let resp = await fetch(process.env.VUE_APP_HOST + '/node/add', {
           headers: new Headers({
             'Authorization': 'Bearer ' + this.token,
@@ -83,12 +80,11 @@ export default {
         if(resp.status == 200) {
           alert("Node Added")
         } else {
-          console.log(data.message)
+          alert(`Could Not Add Node ${data.msg}`)
         }
         alert(resp.status)
       } catch (e) {
         alert(e)
-        console.log(e)
       }
       window.location.reload()
     }
