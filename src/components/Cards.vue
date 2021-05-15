@@ -124,9 +124,9 @@ export default {
     height: 200px;
   }
   .card {
-    width: 20rem;
+    width: 17rem;
     float: left;
-    margin: 5px 5px;
+    margin: 6px 6px;
   }
   table {
     width: 100%;
