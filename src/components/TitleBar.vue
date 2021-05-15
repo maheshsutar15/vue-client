@@ -1,4 +1,13 @@
 <template>
+  <div>
+    <b-navbar type="dark" class="titlebar">
+      <b-navbar-brand href="#">Atechno Embedded Solutions Pvt Ltd</b-navbar-brand>
+      <b-navbar-nav class="ml-auto operations" v-if="!!token">
+        <HumanIcon class="ico" title="Add User" @click="$bvModal.show('regForm')"/> 
+        <LogoutIcon class="ico" title="Logout" v-on:click="logout()"/>
+      </b-navbar-nav>
+    </b-navbar>
+    <div class="container" v-if="!token">
   <b-tabs content-class="mt-3" v-if="!token">
     <b-tab title="Login" active>
       <LoginForm @login="login"> </LoginForm>
@@ -7,14 +16,8 @@
       <RegisterForm> </RegisterForm>
    </b-tab>
   </b-tabs>
+    </div>
   <div v-else>
-    <b-navbar type="dark" class="titlebar">
-      <b-navbar-brand href="#">Atechno Embedded Solutions Pvt Ltd</b-navbar-brand>
-      <b-navbar-nav class="ml-auto operations">
-        <HumanIcon class="ico" title="Add User" @click="$bvModal.show('regForm')"/> 
-        <LogoutIcon class="ico" title="Logout" v-on:click="logout()"/>
-      </b-navbar-nav>
-    </b-navbar>
     <div>
       <b-modal  id='regForm' title="Add new user" hide-footer>
         <RegisterForm class="full_height" v-if="this.designation == 'admin'"></RegisterForm>
@@ -23,6 +26,7 @@
         </div>
       </b-modal>
     </div>
+  </div>
   </div>
 </template>
 
@@ -35,7 +39,7 @@ import LogoutIcon from 'vue-material-design-icons/Logout.vue';
 import HumanIcon from 'vue-material-design-icons/HumanMale.vue'; 
 
 export default {
-  name: 'LoginPage',
+  name: 'TitleBar',
   components: {
     LoginForm,
     RegisterForm,

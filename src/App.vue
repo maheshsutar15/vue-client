@@ -1,18 +1,18 @@
 <template>
   <div id="app">
-    <LoginPage @loginUser="loginUser" @logout="logout" :token="accessToken" :designation="designation"/>
+    <TitleBar @loginUser="loginUser" @logout="logout" :token="accessToken" :designation="designation"/>
     <Cards v-bind:sensors="sensors" @refresh="fetchData" v-if="accessToken != ''" :token="accessToken"/>
   </div>
 </template>
 
 <script>
-  import LoginPage from './components/LoginPage.vue'
+import TitleBar from './components/TitleBar.vue'
 import Cards from './components/Cards.vue'
 
 export default {
   name: 'App',
   components: {
-    LoginPage,
+    TitleBar,
     Cards,
   },
   data () {
@@ -90,13 +90,13 @@ export default {
     },
   }
 }
-  </script>
+</script>
 
-  <style>
-  #app {
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-    text-align: center;
-    margin-top: 0px;
-  }
-  </style>
+<style>
+#app {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-align: center;
+  margin-top: 0px;
+}
+</style>
