@@ -1,16 +1,18 @@
 <template>
   <div class="container" v-if="sensors">
-    <br>
-    <b-button
-      variant="outline-primary"
-      @click="$bvModal.show('nodeForm')"
-      >
-      Add Node
-    </b-button>
+    <div class="row">
+          <b-button
+            variant="outline-primary"
+            @click="$bvModal.show('nodeForm')"
+            >
+            <PlusIcon class="addnode"/>
+            Add New Node
+          </b-button>
+    </div>
       <b-modal class='long' id="nodeForm" title="Add new Node" hide-footer>
-        <Form :token="this.token"> </Form>
+        <AddNodeForm :token="this.token"> </AddNodeForm>
       </b-modal>
-      <br>
+      <hr>
       <b-card 
       v-for="sensor in sensors"
       v-bind:key="sensor._id"
@@ -18,8 +20,7 @@
       v-bind:sub-title="sensor.name"
       class="card"
       >
-      <h5>{{ sensor.location }}</h5>
-      <h5>{{ sensor.machineName }}</h5>
+      <hr>
       <b-modal class='long' :id="'trend' + sensor.uid" title='Trend' hide-footer>
         <h3>{{ sensor.uid }}</h3>
         <Trend :uid="sensor.uid" :token="token"> </Trend>
@@ -27,12 +28,20 @@
       <b-card-text >
         <table>
           <tr>
+            <td>
+              <strong class="info">{{ sensor.machineName }}</strong>
+            </td>
+            <td>
+              <strong class="info">{{ sensor.location }}</strong>
+            </td>
+          </tr>
+          <tr>
             <td>Temperature</td>
             <td
               class="value"
               :class="{ok : checkOK(sensor.temperatureRange, sensor.readings.temperature) }"
               >
-              {{ sensor.readings.temperature }}
+              {{ sensor.readings.temperature || 0 }}
             </td>
           </tr>
         <tr>
@@ -62,26 +71,36 @@
             {{ sensor.readings.pressure }}
           </td>
         </tr>
+        <tr>
+          <td @click="deleteNode(sensor.uid)">
+            <DeleteIcon title="Delete Node" class="action-btn delete" />
+          </td>
+          <td>
+            <ChartLine title="See Node Trend" class="action-btn chart" @click="$bvModal.show('trend' + sensor.uid)"/>
+          </td>
+        </tr>
         </table>
       </b-card-text>
-      <DeleteIcon class="action-btn delete" v-on:click="deleteNode(sensor.uid)"/>
-      <ChartLine class="action-btn chart" @click="$bvModal.show('trend' + sensor.uid)"/>
       </b-card>
   </div>
 </template>
 
 <script>
+
+import AddNodeForm from './AddNode.vue'
+import Trend from './Trend.js'
+
+import PlusIcon from 'vue-material-design-icons/PlusCircle.vue'
 import DeleteIcon from 'vue-material-design-icons/Delete.vue'
 import ChartLine from 'vue-material-design-icons/ChartLine.vue'
-import Form from './Form.vue'
-import Trend from './Trend.js'
 
 export default {
   name: 'Cards',
   components: {
     ChartLine,
     DeleteIcon,
-    Form,
+    PlusIcon,
+    AddNodeForm,
     Trend
   },
   props: {
@@ -124,9 +143,9 @@ export default {
     height: 200px;
   }
   .card {
-    width: 17rem;
+    width: 13rem;
     float: left;
-    margin: 6px 6px;
+    margin: 8px 8px;
   }
   table {
     width: 100%;
@@ -134,7 +153,7 @@ export default {
   }
 
   .delete {
-    color: darkred;
+    color: #fd4433;
   }
 
   .chart {
@@ -142,6 +161,11 @@ export default {
   }
 
   .ok {
+    color: green
+  }
+  
+  .info {
+    text-transform: capitalize;
   }
 
   .notok {
@@ -154,5 +178,9 @@ export default {
 
   .value {
     font-weight: bold;
+  }
+
+  .addnode {
+
   }
   </style>

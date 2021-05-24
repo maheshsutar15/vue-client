@@ -29,8 +29,6 @@
 
 <script>
 
-// import axios from 'axios'
-
 export default {
   name: 'RegisterForm',
   methods: {
@@ -51,10 +49,10 @@ export default {
         },
         body: JSON.stringify(usr)
       }).then(r => {
-        alert(r.status)
-        r.json()
-      }).then(d => {
-        alert(d)
+        if(r.status === 201) {
+                alert("User Registered")
+                window.location.reload()
+        }
       }).catch(e => {
         alert(e)
       })
@@ -80,6 +78,6 @@ export default {
     }
   }
 }
-  </script>
+</script>
 
-  <style></style>
+<style></style>

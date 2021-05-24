@@ -1,11 +1,14 @@
 <template>
   <div id="app">
-    <TitleBar @loginUser="loginUser" @logout="logout" :token="accessToken" :designation="designation"/>
-    <Cards v-bind:sensors="sensors" @refresh="fetchData" v-if="accessToken != ''" :token="accessToken"/>
+    <TitleBar  @logout="logout" :token="accessToken" :designation="designation"/>
+    <Welcome v-if="!loggedIn" @loginUser="loginUser"/>
+    <Cards v-bind:sensors="sensors" @refresh="fetchData" v-else :token="accessToken"/>
   </div>
 </template>
 
 <script>
+
+import Welcome from './components/Welcome.vue'
 import TitleBar from './components/TitleBar.vue'
 import Cards from './components/Cards.vue'
 
@@ -14,6 +17,7 @@ export default {
   components: {
     TitleBar,
     Cards,
+    Welcome
   },
   data () {
     return {
@@ -79,6 +83,7 @@ export default {
       setInterval(() => {
         this.fetchData()
       }, 30000)
+      this.loggedIn = true
     },
     async logout() {
       this.accessToken = null

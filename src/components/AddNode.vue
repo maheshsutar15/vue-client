@@ -77,12 +77,11 @@ export default {
           body: "" + JSON.stringify(node) + ""
         })
         let data = await resp.json()
-        if(resp.status == 200) {
+        if(resp.status == 201) {
           alert("Node Added")
         } else {
           alert(`Could Not Add Node ${data.msg}`)
         }
-        alert(resp.status)
       } catch (e) {
         alert(e)
       }

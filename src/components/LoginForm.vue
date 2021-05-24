@@ -1,7 +1,7 @@
 <template>
   <div class="container">
     <h1> Login </h1>
-    <bForm> <!-- v-if="show"> -->
+    <bForm>
       <b-form-group label="Username:" label-for="uname">
         <b-form-input 
                                       id="uname"
