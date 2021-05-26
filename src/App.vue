@@ -1,44 +1,37 @@
 <template>
   <div id="app">
-    <TitleBar  @logout="logout" :token="accessToken" :designation="designation"/>
-    <Welcome v-if="!loggedIn" @loginUser="loginUser"/>
-    <Cards v-bind:sensors="sensors" @refresh="fetchData" v-else :token="accessToken"/>
+    <TitleBar  /> 
+    <router-view></router-view>
   </div>
 </template>
 
 <script>
 
-import Welcome from './components/Welcome.vue'
 import TitleBar from './components/TitleBar.vue'
-import Cards from './components/Cards.vue'
 
 export default {
   name: 'App',
   components: {
     TitleBar,
-    Cards,
-    Welcome
   },
   data () {
     return {
-      sensors: null,
-      accessToken: null,
-      loggedIn: false,
-      designation: null,
-      msg: ""
     }
   },
   async created () {
-    this.getAccessToken()
-    if(this.loggedIn) {
-      this.fetchData()
-      setInterval(() => {
-        this.fetchData()
-      }, 30000)
+    if(this.$store.getters.getLogInStatus === true) {
+      this.$router.push({name: 'Dashboard'})
     }
-    this.msg = process.env.VUE_APP_HOST
+   // this.getAccessToken()
+   // if(this.loggedIn) {
+   //   this.fetchData()
+   //   setInterval(() => {
+   //     this.fetchData()
+   //   }, 30000)
+   // }
+
   },
-  watch: {
+  /*watch: {
     '$route': 'fetchData'
   },
   methods: {
@@ -93,7 +86,7 @@ export default {
       this.loggedIn = false
       window.location.reload()
     },
-  }
+  }*/
 }
 </script>
 

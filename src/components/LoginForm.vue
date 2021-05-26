@@ -30,23 +30,14 @@ export default {
   name: 'LoginForm',
   methods: {
     async login() {
-      const cred = {
-        username: this.form.uname,
-        password: this.form.pwd
-      }
-      let resp = await fetch(process.env.VUE_APP_HOST + '/user/login', {
-        headers: {"Content-Type": "application/json"},
-        mode: 'cors',
-        cache: 'default',
-        method: 'POST',
-        body: "" + JSON.stringify(cred) + ""
+      const uname = this.form.uname
+      const pwd = this.form.pwd
+      this.$store.dispatch('login', {
+        uname,
+        pwd
       })
-      if(resp.status == 200) {
-        const cred = await resp.json();
-        this.$emit('login', cred);
-      } else {
-        alert("Invalid Username or password.")
-      }
+        .then(() => this.$router.push({ name: "Dashboard" }))
+        .catch((e) => alert(e))
     }
   },
   data() {
