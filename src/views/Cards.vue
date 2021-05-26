@@ -10,7 +10,7 @@
           </b-button>
     </div>
       <b-modal class='long' id="nodeForm" title="Add new Node" hide-footer>
-        <AddNodeForm > </AddNodeForm>
+        <AddNodeForm :token="this.token"> </AddNodeForm>
       </b-modal>
       <hr>
       <b-card 
@@ -23,7 +23,7 @@
       <hr>
       <!-- <b-modal class='long' :id="'trend' + sensor.uid" title='Trend' hide-footer> -->
       <!--   <h3>{{ sensor.uid }}</h3> -->
-      <!--   <Trend :uid="sensor.uid" > </Trend> -->
+      <!--   <Trend :uid="sensor.uid" :token="token"> </Trend> -->
       <!-- </b-modal> -->
       <b-card-text >
         <table>
@@ -76,7 +76,7 @@
             <DeleteIcon title="Delete Node" class="action-btn delete" />
           </td>
           <td>
-            <ChartLine title="See Node Trend" class="action-btn chart" @click="goToTrend(sensor.uid)"/>
+            <ChartLine title="See Node Trend" class="action-btn chart" @click=""/>
           </td>
         </tr>
         </table>
@@ -87,12 +87,11 @@
 
 <script>
 
-import AddNodeForm from '@/components/AddNode.vue'
+import AddNodeForm from './AddNode.vue'
 
 import PlusIcon from 'vue-material-design-icons/PlusCircle.vue'
 import DeleteIcon from 'vue-material-design-icons/Delete.vue'
 import ChartLine from 'vue-material-design-icons/ChartLine.vue'
-import { mapGetters } from 'vuex'
 
 export default {
   name: 'Cards',
@@ -104,29 +103,12 @@ export default {
   },
   data() {
     return {
-      fetchSensors: null
     }
   },
-  mounted() {
-    console.log(this.$store.getters.getAccessToken)
-    if(this.$store.getters.getAccessToken == null) {
-      alert("Please Login First")
-      this.$router.push('/')
-    }
-    this.fetchSensors = setTimeout(
-      () => {
-        this.$store.dispatch('fetchSensors')
-      }
-    )
-    // this.$store
-  },
-  computed: {
-    ...mapGetters({sensors: 'getSensors'})
 
-  },
   methods: {
     goToTrend(uid) {
-      this.$router.push({name: 'Trend', params: {uid: uid}})
+      this.$router.push({name: 'Trend'}, {uid: uid})
     },
     checkOK(range, val) {
       return (range.min <= val && val <= range.max)
@@ -182,5 +164,9 @@ export default {
 
   .value {
     font-weight: bold;
+  }
+
+  .addnode {
+
   }
   </style>

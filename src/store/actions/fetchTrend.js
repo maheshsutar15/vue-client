@@ -1,10 +1,23 @@
 const fetchTrend = async (state, uid) => {
-      const res = await fetch(process.env.VUE_APP_HOST + `/node/readings/all/${this.uid}`, {
+  return new Promise(resolve => {
+    console.log(uid)
+
+    fetch(process.env.VUE_APP_HOST + `/node/readings/all/${uid}`, {
       headers: new Headers({
         'Authorization': 'Bearer '+state.getters.getAccessToken
       })
     })
-
+      .then(res => {
+        return res.json()
+      })
+      .then(data => {
+        console.log(data)
+        resolve(data)
+      })
+      .catch(e => {
+        alert(e)
+      })
+  })
 
 }
 export default fetchTrend

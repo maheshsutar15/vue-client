@@ -3,9 +3,23 @@
     <b-navbar type="dark" class="titlebar">
       <b-navbar-brand href="#">Atechno Embedded Solutions Pvt Ltd</b-navbar-brand>
       <b-navbar-nav class="ml-auto operations" v-if="loggedIn">
+        <b-nav-item>
         <strong class="hostname">{{ ip }}</strong>
-        <HumanIcon class="ico" title="Add User" @click="$bvModal.show('regForm')"/> 
-        <LogoutIcon class="ico" title="Logout" v-on:click="logout()"/>
+        </b-nav-item>
+        <b-nav-item-dropdown right text="Options">
+          <b-dropdown-item @click="$bvModal.show('regForm')">
+            <HumanIcon class="ico" title="Add User"/> 
+            <strong>Add User</strong>
+          </b-dropdown-item>
+          <b-dropdown-item v-on:click="goToProfile()">
+            <FaceProfile class="ico" title="Profile"  />
+            <strong>Profile</strong>
+          </b-dropdown-item>
+          <b-dropdown-item v-on:click="logout()">
+            <LogoutIcon class="ico" title="Logout" />
+            <strong>Logout</strong>
+          </b-dropdown-item>
+        </b-nav-item-dropdown>
       </b-navbar-nav>
     </b-navbar>
     <b-modal  id='regForm' title="Add new user" hide-footer>
@@ -23,6 +37,7 @@ import RegisterForm from './RegisterForm.vue'
 
 import LogoutIcon from 'vue-material-design-icons/Logout.vue';
 import HumanIcon from 'vue-material-design-icons/HumanMale.vue'; 
+import FaceProfile from 'vue-material-design-icons/Account.vue'; 
 import { mapGetters } from 'vuex';
 
 export default {
@@ -30,7 +45,8 @@ export default {
   components: {
     RegisterForm,
     LogoutIcon,
-    HumanIcon
+    HumanIcon,
+    FaceProfile
   },
   computed: {
     ...mapGetters({
@@ -48,6 +64,9 @@ export default {
           })
       }
     },
+    goToProfile() {
+      this.$router.push({name: 'Profile'})
+    }
   },
   data() {
     return {
@@ -69,7 +88,7 @@ export default {
 }
 
 .ico {
-  color: white;
+  color: black;
 }
 .full_height {
   height: 100%;

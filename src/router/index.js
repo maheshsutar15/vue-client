@@ -10,14 +10,19 @@ const routes = [
     component: () => import('../views/Welcome.vue')
   },
   {
-    path: '/dasboard',
+    path: '/dashboard',
     name: 'Dashboard',
     component: () => import('../views/Dashboard.vue')
   },
   {
-    path: '/trend/:id',
-    name: 'Dashboard',
-    component: () => import('../views/Trend.js')
+    path: '/trend/:uid',
+    name: 'Trend',
+    component: () => import('../views/Trends.vue')
+  },
+  {
+    path: '/profile',
+    name: 'Profile',
+    component: () => import('../views/Profile.vue')
   }
 ]
 
