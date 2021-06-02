@@ -21,10 +21,6 @@
       class="card"
       >
       <hr>
-      <!-- <b-modal class='long' :id="'trend' + sensor.uid" title='Trend' hide-footer> -->
-      <!--   <h3>{{ sensor.uid }}</h3> -->
-      <!--   <Trend :uid="sensor.uid" > </Trend> -->
-      <!-- </b-modal> -->
       <b-card-text >
         <table>
           <tr>
@@ -113,16 +109,14 @@ export default {
       alert("Please Login First")
       this.$router.push('/')
     }
-    this.fetchSensors = setTimeout(
+    this.fetchSensors = setInterval(
       () => {
         this.$store.dispatch('fetchSensors')
       }
-    )
-    // this.$store
+    , 3000)
   },
   computed: {
     ...mapGetters({sensors: 'getSensors'})
-
   },
   methods: {
     goToTrend(uid) {

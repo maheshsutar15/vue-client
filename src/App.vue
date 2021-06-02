@@ -22,71 +22,8 @@ export default {
     if(this.$store.getters.getLogInStatus === true) {
       this.$router.push({name: 'Dashboard'})
     }
-   // this.getAccessToken()
-   // if(this.loggedIn) {
-   //   this.fetchData()
-   //   setInterval(() => {
-   //     this.fetchData()
-   //   }, 30000)
-   // }
 
-  },
-  /*watch: {
-    '$route': 'fetchData'
-  },
-  methods: {
-    async fetchData () {
-      const res = await fetch(process.env.VUE_APP_HOST + '/node', {
-        headers: new Headers({
-          'Authorization': 'Bearer '+this.accessToken
-        })
-      });
-      let sensorsList = await res.json();
-      for(let i = 0; i < sensorsList.length; i++) {
-        const res = await fetch(process.env.VUE_APP_HOST + `/node/readings/${sensorsList[i].uid}`, {
-          headers: new Headers({
-            'Authorization': 'Bearer '+this.accessToken
-          })
-        })
-
-        const readings = await res.json()
-
-        sensorsList[i].readings = {
-          co2: readings.co2,
-          pressure: readings.pressure,
-          humidity: readings.humidity,
-          temperature: readings.temperature
-        }
-      }
-      this.sensors = sensorsList;
-    },
-    async getAccessToken() {
-      this.accessToken  = localStorage.getItem('accessToken')
-      this.designation = localStorage.getItem('designation')
-      if(this.accessToken) {
-        this.loggedIn = true;
-      }
-    },
-    async loginUser(cred) {
-      localStorage.setItem('accessToken', cred.accessToken)
-      this.accessToken  = localStorage.getItem('accessToken')
-      localStorage.setItem('designation', cred.designation)
-      this.designation = localStorage.getItem('designation')
-      this.fetchData()
-      setInterval(() => {
-        this.fetchData()
-      }, 30000)
-      this.loggedIn = true
-    },
-    async logout() {
-      this.accessToken = null
-      localStorage.removeItem('accessToken')
-      this.designation = null
-      localStorage.removeItem('designation')
-      this.loggedIn = false
-      window.location.reload()
-    },
-  }*/
+  }
 }
 </script>
 
