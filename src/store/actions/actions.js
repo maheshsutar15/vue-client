@@ -6,6 +6,8 @@ import addNode from './addNode'
 import deleteNode from './deleteNode'
 import fetchTrend from './fetchTrend'
 import fetchProfile from './fetchProfile'
+import sendResetLink from './sendResetLink'
+import resetPassword from './resetPassword'
 
 const updateSensors = (state, newSensorList) => {
   state.commit('updateSensors', newSensorList)
@@ -36,5 +38,7 @@ export default  {
   addNode,
   deleteNode,
   fetchTrend,
-  fetchProfile 
+  sendResetLink,
+  fetchProfile,
+  resetPassword
 }

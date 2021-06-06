@@ -1,5 +1,5 @@
 const fetchTrend = async (state, uid) => {
-  return new Promise(resolve => {
+  return new Promise((resolve, reject) => {
     console.log(uid)
 
     fetch(process.env.VUE_APP_HOST + `/node/readings/all/${uid}`, {
@@ -15,7 +15,7 @@ const fetchTrend = async (state, uid) => {
         resolve(data)
       })
       .catch(e => {
-        alert(e)
+        reject(e)
       })
   })
 

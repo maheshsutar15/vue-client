@@ -1,26 +1,31 @@
 <template>
   <div>
-    <b-navbar type="dark" class="titlebar">
-      <b-navbar-brand href="#">Atechno Embedded Solutions Pvt Ltd</b-navbar-brand>
-      <b-navbar-nav class="ml-auto operations" v-if="loggedIn">
-        <b-nav-item>
-        <strong class="hostname">{{ ip }}</strong>
-        </b-nav-item>
-        <b-nav-item-dropdown right text="Options">
-          <b-dropdown-item @click="$bvModal.show('regForm')">
-            <HumanIcon class="ico" title="Add User"/> 
-            <strong>Add User</strong>
-          </b-dropdown-item>
-          <b-dropdown-item v-on:click="goToProfile()">
-            <FaceProfile class="ico" title="Profile"  />
-            <strong>Profile</strong>
-          </b-dropdown-item>
-          <b-dropdown-item v-on:click="logout()">
-            <LogoutIcon class="ico" title="Logout" />
-            <strong>Logout</strong>
-          </b-dropdown-item>
-        </b-nav-item-dropdown>
-      </b-navbar-nav>
+    <b-navbar toggleable="lg" type="dark" class="titlebar">
+      <b-navbar-toggle target="nav-collapse" v-if="loggedIn"></b-navbar-toggle>
+
+      <b-navbar-brand href="/dashboard">Atechno Embedded Solutions </b-navbar-brand>
+      <b-collapse id="nav-collapse" is-nav v-if="loggedIn">
+        <b-navbar-nav class="ml-auto operations" >
+          <b-nav-item>
+            <strong class="hostname">{{ ip }}</strong>
+          </b-nav-item>
+          <b-nav-item-dropdown right text="Options">
+            <b-dropdown-item @click="$bvModal.show('regForm')">
+              <HumanIcon class="ico" title="Add User"/> 
+              <strong>Add User</strong>
+            </b-dropdown-item>
+            <b-dropdown-item v-on:click="goToProfile()">
+              <FaceProfile class="ico" title="Profile"  />
+              <strong>Profile</strong>
+            </b-dropdown-item>
+            <b-dropdown-item v-on:click="logout()">
+              <LogoutIcon class="ico" title="Logout" />
+              <strong>Logout</strong>
+            </b-dropdown-item>
+          </b-nav-item-dropdown>
+        </b-navbar-nav>
+      </b-collapse>
+
     </b-navbar>
     <b-modal  id='regForm' title="Add new user" hide-footer>
       <RegisterForm class="full_height" v-if="designation == 'admin'"></RegisterForm>
@@ -56,13 +61,20 @@ export default {
   },
   methods: {
     async logout() {
-      const confirmation = confirm("Are you sure you want to logout?")
-      if(confirmation) {
-        this.$store.dispatch('logout')
-          .then(() => {
-            this.$router.push({ name: "Home" })
-          })
-      }
+      this.$bvModal.msgBoxConfirm("Are you sure you want to logout?")
+        .then(confirmation => {
+          if(confirmation) {
+            this.$store.dispatch('logout')
+              .then(() => {
+                this.$router.push({ name: "Home" })
+              })
+          }
+        })
+        .catch(e => {
+          this.message = e.message
+          this.$bvModal.msgBoxOk(e.message)
+        })
+
     },
     goToProfile() {
       this.$router.push({name: 'Profile'})
@@ -70,7 +82,9 @@ export default {
   },
   data() {
     return {
-      ip: window.location.host
+      ip: window.location.host,
+      message: ''
+
     }
   }
 };

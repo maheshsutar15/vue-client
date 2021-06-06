@@ -1,25 +1,29 @@
 <template>
   <div class="container mt-3 outer">
     <h1>Profile</h1>
-    <div class="container inner">
-      <table v-if="!!user" cell-spacing="5">
-        <tr>
-          <td>Username</td>
-          <td>{{ user.username }}</td>
-        </tr>
-        <tr>
-          <td>Email</td>
-          <td>{{ user.email }}</td>
-        </tr>
-        <tr>
-          <td>Institute</td>
-          <td>{{ user.institute }}</td>
-        </tr>
-        <tr>
-          <td>Designation</td>
-          <td>{{ user.designation }}</td>
-        </tr>
-      </table>
+    <hr>
+    <div class="container">
+      <div v-if="!!user" >
+        <div class="detail">
+          <h3>Username</h3>
+          <h5>{{ user.username }}</h5>
+        </div>
+        <div class="detail">
+          <h3>Email</h3>
+          <h5>{{ user.email }}</h5>
+        </div>
+        <div class="detail">
+          <h3>Institue</h3>
+          <h5>{{ user.institute }}</h5>
+        </div>
+        <div class="detail">
+          <h3>Desigation</h3>
+          <h5>{{ user.designation }}</h5>
+        </div>
+      </div>
+      <div v-else>
+        Please log in first
+      </div>
     </div>
   </div>
 </template>
@@ -29,27 +33,27 @@ export default {
   name: 'Profile',
   data() {
     return {
-      user: null
+      user: null,
     }
   },
   mounted() {
-    this.$store.dispatch('fetchProfile')
-    .then(user => this.user = user)
-    console.log(this.user)
+    if(this.$store.getters.getLogInStatus) {
+      this.$store.dispatch('fetchProfile')
+        .then(user => {
+          this.user = user
+        })
+    }
   }
 }
 </script>
 
 <style>
-.inner {
-  border: 1px solid black;
-  border-radius: 8px;
+.detail {
+  margin: 2px 2px;
+  display: inline;
 }
-table {
-  margin: auto;
+
+h3, h5 {
   text-align: left;
-}
-td {
-  margin: 10px 10px;
 }
 </style>

@@ -18,9 +18,15 @@ export default new Vuex.Store({
     accessToken: getJWT(),
     loggedIn: !!getJWT(),
     designation: getLocalDesignation(),
-    msg: ""
+    loading: true
   },
   mutations: {
+    loaded(state) {
+      state.loading = false
+    },
+    loading(state) {
+      state.loading = true
+    },
     updateSensors(state, newSensorList) {
       state.sensors = newSensorList
     },
@@ -52,6 +58,7 @@ export default new Vuex.Store({
     getSensors: state => state.sensors,
     getAccessToken: state => state.accessToken,
     getDesignation: state => state.designation,
-    getLogInStatus: state => state.loggedIn
+    getLogInStatus: state => state.loggedIn,
+    isLoading: state => state.loading
   }
 })

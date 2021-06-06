@@ -14,13 +14,17 @@ const login = async (state, form) => {
       .then(resp => resp.json())
       .then(data => {
         console.log({data})
-        state.commit('setToken', data.accessToken)
-        state.commit('setLoggedIn', true)
-        state.commit('setDesignation', data.designation)
-        resolve()
+        if(data.message) {
+          reject(data.message)
+        } else {
+          state.commit('setToken', data.accessToken)
+          state.commit('setLoggedIn', true)
+          state.commit('setDesignation', data.designation)
+          resolve()
+        }
       }).catch((err) => {
-        alert(err.message)
-        reject()
+
+        reject(err.message)
       })
   })
 }

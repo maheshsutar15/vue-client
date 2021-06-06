@@ -1,20 +1,23 @@
 const addNode = async (state, node) => {
-  console.log(node)
-  let resp = await fetch(process.env.VUE_APP_HOST + '/node/add', {
-    headers: new Headers({
-      'Authorization': 'Bearer ' + state.getters.getAccessToken,
-      'Content-Type': 'application/json'
-    }),
-    mode: 'cors',
-    cache: 'default',
-    method: 'POST',
-    body: "" + JSON.stringify(node) + ""
+  return new Promise((res, rej) => {
+    fetch(process.env.VUE_APP_HOST + '/node/add', {
+      headers: new Headers({
+        'Authorization': 'Bearer ' + state.getters.getAccessToken,
+        'Content-Type': 'application/json'
+      }),
+      mode: 'cors',
+      cache: 'default',
+      method: 'POST',
+      body: "" + JSON.stringify(node) + ""
+    }).then(resp => {
+      if(resp.status == 201) {
+        res()
+      } else {
+        resp.json().then(data => {
+          rej(data.msg)
+        })
+      }
+    })
   })
-  let data = await resp.json()
-  if(resp.status == 201) {
-    alert("Node Added")
-  } else {
-    alert(`Could Not Add Node ${data.msg}`)
-  }
 }
 export default addNode;

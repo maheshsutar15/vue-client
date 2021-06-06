@@ -1,15 +1,17 @@
 const deleteNode = async (state, uid) => {
-  let resp = await fetch(process.env.VUE_APP_HOST + '/node/' + uid, {
-    method: "DELETE",
-    headers: new Headers({
-      "Authorization": "Bearer " + state.getters.getAccessToken
+  return new Promise((res, rej) => {
+    fetch(process.env.VUE_APP_HOST + '/node/' + uid, {
+      method: "DELETE",
+      headers: new Headers({
+        "Authorization": "Bearer " + state.getters.getAccessToken
+      })
+    }).then(resp => resp.json()).then(msg => {
+      if(msg.message == "Deleted Successfully") {
+        res()
+      } else {
+        rej()
+      }
     })
-  });
-  let msg = await resp.json();
-  if(msg.message == "Deleted Successfully") {
-    window.location.reload()
-  } else {
-    alert("Could not delete");
-  }
+  })
 }
 export default deleteNode

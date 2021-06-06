@@ -38,9 +38,6 @@
 
 export default {
   name: 'Form',
-  props: {
-    token: String
-  },
   methods: {
     async addNode() {
       let node = {
@@ -65,7 +62,14 @@ export default {
         }
       }
       this.$store.dispatch('addNode', node)
-      window.location.reload()
+        .then(() => {
+          this.$bvModal.msgBoxOk('Node Added')
+            .then(() => {
+              this.$bvModal.hide('nodeForm')
+              this.$store.dispatch('fetchSensors', 1)
+            })
+        })
+        .catch((msg) => this.$bvModal.msgBoxOk('Could not Add node: ' + msg)) 
     }
   },
   data() {

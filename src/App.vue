@@ -1,7 +1,9 @@
 <template>
   <div id="app">
     <TitleBar  /> 
-    <router-view></router-view>
+    <div class="container">
+      <router-view></router-view>
+    </div>
   </div>
 </template>
 
@@ -33,5 +35,8 @@ export default {
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   margin-top: 0px;
+}
+.container {
+  margin-top: 40px;
 }
 </style>

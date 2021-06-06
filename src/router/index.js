@@ -25,6 +25,16 @@ const routes = [
     component: () => import('../views/Profile.vue')
   },
   {
+    path: '/forgot-password',
+    name: 'Forgot',
+    component: () => import('../views/Forgot.vue')
+  },
+  {
+    path: '/password-reset/:token',
+    name: 'Reset',
+    component: () => import('../views/ResetPassword.vue')
+  },
+  {
     path: '/:catchAll(.*)',
     component: () => import('../views/NotFound.vue')
   }

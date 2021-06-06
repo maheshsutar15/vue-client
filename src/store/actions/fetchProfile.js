@@ -1,5 +1,5 @@
 const fetchProfile = async (state) => {
-  return new Promise( resolve => {
+  return new Promise( (resolve, reject) => {
     fetch(process.env.VUE_APP_HOST + `/user/about`, {
       headers: new Headers({
         'Authorization': 'Bearer '+state.getters.getAccessToken
@@ -12,7 +12,7 @@ const fetchProfile = async (state) => {
         resolve(data.user)
       })
       .catch(e => {
-        alert(e)
+        reject(e)
       })
   })
 }

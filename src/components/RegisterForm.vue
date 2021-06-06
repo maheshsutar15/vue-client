@@ -29,6 +29,12 @@ export default {
   methods: {
     async registerUser() {
       this.$store.dispatch('register', this.regUserForm)
+        .then(() => {
+          this.$bvModal.msgBoxOk('Registered Successfully')
+          this.$router.push({name: 'Welcome'})
+        }).catch((e) => {
+          this.$bvModal.msgBoxOk('Could not Register: ' + e)
+        })
     }
   },
   data() {

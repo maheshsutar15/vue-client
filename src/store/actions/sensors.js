@@ -1,10 +1,12 @@
-const fetchSensors = async (state) => {
+const fetchSensors = async (state, redraw) => {
+  if(redraw) {
+    state.commit('loading')
+  }
   const res = await fetch(process.env.VUE_APP_HOST + '/node', {
     headers: new Headers({
       'Authorization': 'Bearer '+state.getters.getAccessToken
     })
   });
-  console.log(state)
   let sensorsList = await res.json();
   for(let i = 0; i < sensorsList.length; i++) {
     const res = await fetch(process.env.VUE_APP_HOST + `/node/readings/${sensorsList[i].uid}`, {
@@ -23,6 +25,7 @@ const fetchSensors = async (state) => {
     }
   }
   state.commit('updateSensors', sensorsList)
+  state.commit('loaded')
 
 }
 export default fetchSensors;
