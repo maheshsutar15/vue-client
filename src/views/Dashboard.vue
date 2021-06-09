@@ -40,19 +40,19 @@
                                      :class="{ok : checkOK(sensor.temperatureRange, sensor.readings.temperature),
                                               notok : !checkOK(sensor.temperatureRange, sensor.readings.temperature)}"
                                      >
-                                     {{ sensor.readings.temperature || '-' }}
+                                     {{ sensor.readings.temperature || '-' }} &deg;C
                                  </td>
                                </tr>
-                               <tr>
-                                 <td>Humidity</td>
-                                 <td 
-                                     class="value"
-                                     :class="{ok : checkOK(sensor.humidityRange, sensor.readings.humidity),
-                                              notok : !checkOK(sensor.humidityRange, sensor.readings.humidity)}"
-                                     >
-                                     {{ sensor.readings.humidity || '-' }}
-                                 </td>
-                               </tr>
+                               <!-- <tr> -->
+                               <!--   <td>Humidity</td> -->
+                               <!--   <td --> 
+                               <!--       class="value" -->
+                               <!--       :class="{ok : checkOK(sensor.humidityRange, sensor.readings.humidity), -->
+                               <!--                notok : !checkOK(sensor.humidityRange, sensor.readings.humidity)}" -->
+                               <!--       > -->
+                               <!--       {{ sensor.readings.humidity || '-' }} -->
+                               <!--   </td> -->
+                               <!-- </tr> -->
                                <tr>
                                  <td>CO<sub>2</sub></td>
                                  <td
@@ -60,7 +60,7 @@
                                      :class="{ok : checkOK(sensor.co2Range, sensor.readings.co2),
                                               notok : !checkOK(sensor.co2Range, sensor.readings.co2)}"
                                      >
-                                     {{ sensor.readings.co2 || '-'}}
+                                     {{ sensor.readings.co2 || '-'}} ppm
                                  </td>
                                </tr>
                                <tr>
@@ -70,7 +70,7 @@
                                      :class="{ok : checkOK(sensor.pressureRange, sensor.readings.pressure),
                                               notok : !checkOK(sensor.pressureRange, sensor.readings.pressure)}"
                                      >
-                                     {{ sensor.readings.pressure || '-' }}
+                                     {{ sensor.readings.pressure || '-' }} bar 
                                  </td>
                                </tr>
                                <tr>
@@ -171,7 +171,7 @@ td {
   height: 200px;
 }
 .card {
-  width: 10rem;
+  width: 12rem;
   float: left;
   margin: 8px 8px;
 }

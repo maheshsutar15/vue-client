@@ -20,10 +20,10 @@
       <b-form-input class="range" type="number" id="node_pressurex" v-model="addNodeForm.pressurex" placeholder="Enter Pressure Max"></b-form-input>
     </b-form-group>
 
-    <b-form-group label="Humidity Range: " label-for="node_humidityr" description="Please enter Pressure Range" >
-      <b-form-input class="range" type="number" id="node_humidityn" v-model="addNodeForm.humidityn" placeholder="Enter Humidity Min"></b-form-input>
-      <b-form-input class="range" type="number" id="node_humidityx" v-model="addNodeForm.humidityx" placeholder="Enter Humidity Max"></b-form-input>
-    </b-form-group>
+    <!-- <b-form-group label="Humidity Range: " label-for="node_humidityr" description="Please enter Pressure Range" > -->
+    <!--   <b-form-input class="range" type="number" id="node_humidityn" v-model="addNodeForm.humidityn" placeholder="Enter Humidity Min"></b-form-input> -->
+    <!--   <b-form-input class="range" type="number" id="node_humidityx" v-model="addNodeForm.humidityx" placeholder="Enter Humidity Max"></b-form-input> -->
+    <!-- </b-form-group> -->
 
     <b-form-group label="Temperature Range: " label-for="node_temperaturer" description="Please enter Temperature Range" >
       <b-form-input class="range" type="number" id="node_temperaturen" v-model="addNodeForm.temperaturen" placeholder="Enter Temperature Min"></b-form-input>

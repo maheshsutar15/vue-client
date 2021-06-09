@@ -10,7 +10,7 @@ export default {
         // readings = data
         console.log(readings)
         const co2 = readings.map(r => r.co2)
-        const humidity = readings.map(r => r.humidity)
+        // const humidity = readings.map(r => r.humidity)
         const pressure = readings.map(r => r.pressure)
         const temperature = readings.map(r => r.temperature)
         const datetime = readings.map(r => r.datetime)
@@ -33,11 +33,11 @@ export default {
               backgroundColor: '#ff00ff24',
               data: temperature
             },
-            {
-              label: 'Humidity',
-              backgroundColor: '#8f422100',
-              data: humidity
-            },
+            // {
+            //   label: 'Humidity',
+            //   backgroundColor: '#8f422100',
+            //   data: humidity
+            // },
           ]
         }
         this.renderChart(chartdata, this.options)
