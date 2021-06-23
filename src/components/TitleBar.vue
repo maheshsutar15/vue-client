@@ -1,17 +1,17 @@
 <template>
   <div>
-    <b-navbar toggleable="lg" type="dark" class="titlebar">
+    <b-navbar toggleable="lg" type="light" class="titlebar">
       <b-navbar-toggle target="nav-collapse" v-if="loggedIn"></b-navbar-toggle>
 
-      <b-navbar-brand href="/dashboard">Atechno Embedded Solutions </b-navbar-brand>
+      <b-navbar-brand href="/dashboard">
+        <img src="../assets/logo.png" alt="ATechno Embedded Solutions" width="32px" height="32px">
+        ATechno Embedded Solutions
+      </b-navbar-brand>
       <b-collapse id="nav-collapse" is-nav v-if="loggedIn">
         <b-navbar-nav class="ml-auto operations" >
-          <b-nav-item>
-            <strong class="hostname">{{ ip }}</strong>
-          </b-nav-item>
           <b-nav-item-dropdown right text="Options">
             <b-dropdown-item @click="$bvModal.show('regForm')">
-              <HumanIcon class="ico" title="Add User"/> 
+              <HumanIcon class="ico" title="Add User"/>
               <strong>Add User</strong>
             </b-dropdown-item>
             <b-dropdown-item v-on:click="goToProfile()">
@@ -41,8 +41,8 @@
 import RegisterForm from './RegisterForm.vue'
 
 import LogoutIcon from 'vue-material-design-icons/Logout.vue';
-import HumanIcon from 'vue-material-design-icons/HumanMale.vue'; 
-import FaceProfile from 'vue-material-design-icons/Account.vue'; 
+import HumanIcon from 'vue-material-design-icons/HumanMale.vue';
+import FaceProfile from 'vue-material-design-icons/Account.vue';
 import { mapGetters } from 'vuex';
 
 export default {
@@ -98,7 +98,11 @@ export default {
 }
 
 .titlebar {
+  background-color: maroon;
+
+  background-color: #FCFFDB;
   background-color: #539;
+  background-color: #ccc;
 }
 
 .ico {
@@ -106,8 +110,5 @@ export default {
 }
 .full_height {
   height: 100%;
-}
-.hostname {
-  color: white;
 }
 </style>

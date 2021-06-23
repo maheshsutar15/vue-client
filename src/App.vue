@@ -1,9 +1,10 @@
 <template>
   <div id="app">
-    <TitleBar  /> 
+    <TitleBar  />
     <div class="container">
       <router-view></router-view>
     </div>
+   <!-- TODO: <footer>copyright © &copyright; 2021 colorcode.is</footer> -->
   </div>
 </template>
 
@@ -21,6 +22,7 @@ export default {
     }
   },
   async created () {
+    // console.log(window.location.pathname === '/pas')
     if(this.$store.getters.getLogInStatus === true) {
       this.$router.push({name: 'Dashboard'})
     }
@@ -30,9 +32,24 @@ export default {
 </script>
 
 <style>
+/*
+html, #app {
+  background-color: #efefef;
+}
+*/
+
+html, #app {
+  background-color: #ddd;
+
+}
+
+hr {
+  border-color: white;
+}
+/*
+*/
+
 #app {
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
   text-align: center;
   margin-top: 0px;
 }

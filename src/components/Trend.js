@@ -13,7 +13,8 @@ export default {
         // const humidity = readings.map(r => r.humidity)
         const pressure = readings.map(r => r.pressure)
         const temperature = readings.map(r => r.temperature)
-        const datetime = readings.map(r => r.datetime)
+        const datetime = readings.map(r => new Date(r.datetime).toLocaleString(undefined, {timeZone: 'Asia/Kolkata'}))
+        // console.log(typeof datetime[0])
 
         let chartdata = {
           labels: datetime,

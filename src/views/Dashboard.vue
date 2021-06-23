@@ -4,85 +4,109 @@
       <AddNodeForm > </AddNodeForm>
     </b-modal>
     <div class="row">
-      <b-button
-          variant="outline-primary"
-          @click="$bvModal.show('nodeForm')"
-          >
-          <PlusIcon class="addnode"/>
-          Add New Node
-      </b-button>
+      <table>
+        <tr>
+          <div>
+            <b-button
+                variant="outline-primary"
+                @click="$bvModal.show('nodeForm')"
+                style="float: left;"
+                >
+                <PlusIcon class="addnode"/>
+                Add New Node
+            </b-button>
+          </div>
+          <div style="float: right; text-align: right;">
+            <strong>
+              {{ ip }}
+            </strong>
+          </div>
+        </tr>
+      </table>
     </div>
     <hr>
     <vue-loaders-ball-beat color="grey" scale="1" v-if="!sensors || loading"></vue-loaders-ball-beat>
     <div class="container" v-if="sensors && !loading">
-      <b-card 
-                           v-for="sensor in sensors"
-                           v-bind:key="sensor._id"
-                           v-bind:title="sensor.uid"
-                           v-bind:sub-title="sensor.name"
-                           class="card"
-                           >
-                           <hr>
-                           <b-card-text >
-                             <table>
-                               <tr>
-                                 <td>
-                                   <strong class="info">{{ sensor.machineName }}</strong>
-                                 </td>
-        <td>
-          <strong class="info">{{ sensor.location }}</strong>
-        </td>
-                               </tr>
-                               <tr>
-                                 <td>Temperature</td>
-                                 <td
-                                     class="value"
-                                     :class="{ok : checkOK(sensor.temperatureRange, sensor.readings.temperature),
-                                              notok : !checkOK(sensor.temperatureRange, sensor.readings.temperature)}"
-                                     >
-                                     {{ sensor.readings.temperature || '-' }} &deg;C
-                                 </td>
-                               </tr>
-                               <!-- <tr> -->
-                               <!--   <td>Humidity</td> -->
-                               <!--   <td --> 
-                               <!--       class="value" -->
-                               <!--       :class="{ok : checkOK(sensor.humidityRange, sensor.readings.humidity), -->
-                               <!--                notok : !checkOK(sensor.humidityRange, sensor.readings.humidity)}" -->
-                               <!--       > -->
-                               <!--       {{ sensor.readings.humidity || '-' }} -->
-                               <!--   </td> -->
-                               <!-- </tr> -->
-                               <tr>
-                                 <td>CO<sub>2</sub></td>
-                                 <td
-                                     class="value"
-                                     :class="{ok : checkOK(sensor.co2Range, sensor.readings.co2),
-                                              notok : !checkOK(sensor.co2Range, sensor.readings.co2)}"
-                                     >
-                                     {{ sensor.readings.co2 || '-'}} ppm
-                                 </td>
-                               </tr>
-                               <tr>
-                                 <td>Pressure</td>
-                                 <td
-                                     class="value"
-                                     :class="{ok : checkOK(sensor.pressureRange, sensor.readings.pressure),
-                                              notok : !checkOK(sensor.pressureRange, sensor.readings.pressure)}"
-                                     >
-                                     {{ sensor.readings.pressure || '-' }} bar 
-                                 </td>
-                               </tr>
-                               <tr>
-                                 <td @click="deleteNode(sensor.uid)">
-                                   <DeleteIcon title="Delete Node" class="action-btn delete" />
-                                 </td>
-                                 <td>
-                                   <ChartLine title="See Node Trend" class="action-btn chart" @click="goToTrend(sensor.uid)"/>
-                                 </td>
-                               </tr>
-                             </table>
-                           </b-card-text>
+      <b-card
+          v-for="sensor in sensors"
+          v-bind:key="sensor._id"
+          v-bind:title="'UID: ' + sensor.uid"
+          v-bind:sub-title="sensor.name"
+          class="card drk"
+          >
+          <hr>
+          <b-card-text >
+            <table>
+              <tr>
+                <td>
+                  Machine
+                </td>
+            <td class="value" >
+              {{ sensor.machineName }}
+            </td>
+              </tr>
+        <tr>
+          <td>
+            Location
+          </td>
+          <td class="value">
+            {{ sensor.location }}
+          </td>
+        </tr>
+        <tr>
+          <td>Temperature</td>
+          <td
+              class="value"
+              :class="{
+                       ok : checkOK(sensor.temperatureRange, sensor.readings.temperature),
+                       notok : !checkOK(sensor.temperatureRange, sensor.readings.temperature)}"
+              >
+              {{ sensor.readings.temperature || '-' }} &deg;C
+          </td>
+        </tr>
+        <tr>
+          <td>Humidity</td>
+          <td
+              class="value"
+              :class="{
+                       ok : checkOK(sensor.humidityRange, sensor.readings.humidity),
+                       notok : !checkOK(sensor.humidityRange, sensor.readings.humidity)}"
+              >
+              {{ sensor.readings.humidity || '-' }} %
+          </td>
+        </tr>
+        <tr>
+          <td>CO<sub>2</sub></td>
+          <td
+              class="value"
+              :class="{
+                       ok : checkOK(sensor.co2Range, sensor.readings.co2),
+                       notok : !checkOK(sensor.co2Range, sensor.readings.co2)}"
+              >
+              {{ sensor.readings.co2 || '-'}} ppm
+          </td>
+        </tr>
+        <tr>
+          <td>Pressure</td>
+          <td
+              class="value"
+              :class="{
+                       ok : checkOK(sensor.pressureRange, sensor.readings.pressure),
+                       notok : !checkOK(sensor.pressureRange, sensor.readings.pressure)}"
+              >
+              {{ sensor.readings.pressure || '-' }} bar
+          </td>
+        </tr>
+        <tr>
+          <td @click="deleteNode(sensor.uid)">
+            <DeleteIcon title="Delete Node" class="action-btn delete" />
+          </td>
+          <td>
+            <ChartLine title="See Node Trend" class="action-btn chart" @click="goToTrend(sensor.uid)"/>
+          </td>
+        </tr>
+            </table>
+          </b-card-text>
       </b-card>
     </div>
   </div>
@@ -110,6 +134,7 @@ export default {
   data() {
     return {
       fetchSensors: null,
+      ip: window.location.host
     }
   },
   mounted() {
@@ -148,7 +173,7 @@ export default {
                   .then(() => {
 
                   })
-                    this.$store.dispatch('fetchSensors', 1)
+                this.$store.dispatch('fetchSensors', 1)
               })
               .catch(() => this.$bvModal.msgBoxOk('Could not delete ' + uid))
           }
@@ -165,15 +190,34 @@ export default {
 
 <style scoped>
 td {
-  font-size: 11pt;
+  font-size: 13pt;
 }
 .container {
-  height: 200px;
+  min-height: 200px;
 }
 .card {
-  width: 12rem;
+  width: 14rem;
   float: left;
   margin: 8px 8px;
+  padding: 15px 2px;
+  padding-left: 10px;
+}
+
+.full_neu {
+  border-radius: 15px;
+  box-shadow: inset -3px -3px 5px rgba(255, 255, 255, 0.2), inset 3px 3px 15px rgba(0, 0, 0, 0.3);
+  background-color: #efefef;
+  border: none;
+}
+
+.shadow_neu {
+  box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+}
+
+.drk {
+  background-color: #111111dd;
+  color: #fefefe;
+  box-shadow: 4px 4px 25px rgba(128, 128, 128, .7);
 }
 
 .card-body {
@@ -181,7 +225,11 @@ td {
 }
 
 table {
-  width: 90%;
+  width: 95%;
+}
+
+table.card {
+  width: 95%;
   text-align: left;
 }
 
@@ -195,22 +243,26 @@ table {
 
 .ok {
   color: #689D6A;
-}
-
-.info {
-  text-transform: capitalize;
+  color: lime;
 }
 
 .notok {
   color: #CC241D;
+  color: red;
 }
 
 .long {
   height: 100%;
 }
 
+td {
+  text-align: left;
+}
+
 .value {
   font-weight: bold;
-  text-align: center;
+  text-align: right;
+  text-transform: capitalize;
 }
+
 </style>

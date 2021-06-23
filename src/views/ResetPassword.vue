@@ -31,6 +31,10 @@ export default {
       nomatch: false
     }
   },
+  created() {
+    console.log(window.location.pathname)
+
+  },
   methods: {
     changePwd() {
       if(this.pwd === this.cpwd && this.pwd != '') {
@@ -38,7 +42,7 @@ export default {
           token: this.token,
           pwd: this.pwd
         })
-          .then(data => { 
+          .then(data => {
             if(data) {
               this.$router.push({"name": "Home"})
             }
