@@ -29,7 +29,6 @@ export default {
     if(this.$store.getters.getLogInStatus === true) {
       this.$router.push({name: 'Dashboard'})
     }
-
   }
 }
 </script>

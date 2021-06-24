@@ -30,12 +30,12 @@ const routes = [
     component: () => import('../views/Forgot.vue')
   },
   {
-    path: '/passwordreset/:token',
+    path: '/passwordreset',
     name: 'Reset',
     component: () => import('../views/ResetPassword.vue')
   },
   {
-    path: '/aboutus',
+    path: '/aboutus/:token',
     name: 'About',
     component: () => import('../views/AboutUs.vue')
   },

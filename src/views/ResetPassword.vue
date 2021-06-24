@@ -27,7 +27,7 @@ export default {
     return {
       pwd: '',
       cpwd: '',
-      token: this.$route.params.token,
+      token: this.$route.query.token,
       nomatch: false
     }
   },
