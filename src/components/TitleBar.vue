@@ -18,6 +18,9 @@
               <FaceProfile class="ico" title="Profile"  />
               <strong>Profile</strong>
             </b-dropdown-item>
+            <b-dropdown-item v-on:click="goToAboutUs()">
+              <Info class="ico" title="About Us"></Info>
+              <strong>About Us</strong></b-dropdown-item>
             <b-dropdown-item v-on:click="logout()">
               <LogoutIcon class="ico" title="Logout" />
               <strong>Logout</strong>
@@ -43,6 +46,7 @@ import RegisterForm from './RegisterForm.vue'
 import LogoutIcon from 'vue-material-design-icons/Logout.vue';
 import HumanIcon from 'vue-material-design-icons/HumanMale.vue';
 import FaceProfile from 'vue-material-design-icons/Account.vue';
+import Info from 'vue-material-design-icons/Information.vue';
 import { mapGetters } from 'vuex';
 
 export default {
@@ -51,7 +55,8 @@ export default {
     RegisterForm,
     LogoutIcon,
     HumanIcon,
-    FaceProfile
+    FaceProfile,
+    Info
   },
   computed: {
     ...mapGetters({
@@ -78,6 +83,9 @@ export default {
     },
     goToProfile() {
       this.$router.push({name: 'Profile'})
+    },
+    goToAboutUs() {
+      this.$router.push({name: 'About'})
     }
   },
   data() {

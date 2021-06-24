@@ -21,7 +21,8 @@ const fetchSensors = async (state, redraw) => {
       co2: readings.co2,
       pressure: readings.pressure,
       humidity: readings.humidity,
-      temperature: readings.temperature
+      temperature: readings.temperature,
+      timestamp: new Date(readings.datetime).toLocaleString(undefined, {timeZone: 'Asia/Kolkata'})
     }
   }
   state.commit('updateSensors', sensorsList)

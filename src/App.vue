@@ -4,7 +4,10 @@
     <div class="container">
       <router-view></router-view>
     </div>
-   <!-- TODO: <footer>copyright © &copyright; 2021 colorcode.is</footer> -->
+   <footer class="main">
+     Copyright &copy; 2021 ATES OPL.
+     All Rights Reserved.
+   </footer>
   </div>
 </template>
 
@@ -22,7 +25,7 @@ export default {
     }
   },
   async created () {
-    // console.log(window.location.pathname === '/pas')
+    console.log(window.location.pathname ); //=== '/passwordreset')
     if(this.$store.getters.getLogInStatus === true) {
       this.$router.push({name: 'Dashboard'})
     }
@@ -55,5 +58,15 @@ hr {
 }
 .container {
   margin-top: 40px;
+}
+
+footer.main {
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  padding: 4px 10px;
+  height: 30px;
+  background-color: #ccc;
+  text-align: left;
 }
 </style>

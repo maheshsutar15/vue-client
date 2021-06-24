@@ -6,21 +6,32 @@
     <div class="row">
       <table>
         <tr>
-          <div>
-            <b-button
-                variant="outline-primary"
-                @click="$bvModal.show('nodeForm')"
-                style="float: left;"
-                >
-                <PlusIcon class="addnode"/>
-                Add New Node
-            </b-button>
-          </div>
-          <div style="float: right; text-align: right;">
-            <strong>
-              {{ ip }}
-            </strong>
-          </div>
+          <td>
+            <div>
+              <b-button
+                  variant="outline-primary"
+                  @click="$bvModal.show('nodeForm')"
+                  style="float: left;"
+                  >
+                  <PlusIcon class="addnode"/>
+                  Add New Node
+              </b-button>
+            </div>
+          </td>
+          <td>
+            <div>
+              <h2 style="text-align: center;">
+                Central Monitoring System
+              </h2>
+            </div>
+          </td>
+          <td>
+            <div style="float: right; text-align: right;">
+              <strong>
+                {{ ip }}
+              </strong>
+            </div>
+          </td>
         </tr>
       </table>
     </div>
@@ -97,15 +108,23 @@
               {{ sensor.readings.pressure || '-' }} bar
           </td>
         </tr>
-        <tr>
-          <td @click="deleteNode(sensor.uid)">
-            <DeleteIcon title="Delete Node" class="action-btn delete" />
-          </td>
-          <td>
-            <ChartLine title="See Node Trend" class="action-btn chart" @click="goToTrend(sensor.uid)"/>
-          </td>
-        </tr>
             </table>
+            <hr>
+            <table>
+
+              <tr>
+                <td @click="deleteNode(sensor.uid)">
+                  <DeleteIcon title="Delete Node" class="action-btn delete" />
+                </td>
+                <td class="value">
+                  <ChartLine title="See Node Trend" class="action-btn chart" @click="goToTrend(sensor.uid)"/>
+                </td>
+              </tr>
+            </table>
+            <hr>
+            <div>
+              Last Updated at: {{ sensor.readings.timestamp }}
+            </div>
           </b-card-text>
       </b-card>
     </div>
@@ -217,7 +236,8 @@ td {
 .drk {
   background-color: #111111dd;
   color: #fefefe;
-  box-shadow: 4px 4px 25px rgba(128, 128, 128, .7);
+  box-shadow: 5px 5px 30px rgba(128, 128, 128, .8);
+  border-radius: 15px;
 }
 
 .card-body {
@@ -257,6 +277,11 @@ table.card {
 
 td {
   text-align: left;
+}
+
+tr.separator {
+  border-top: 2px white inset;
+  padding-bottom: 0px;
 }
 
 .value {

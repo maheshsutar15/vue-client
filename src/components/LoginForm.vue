@@ -1,9 +1,9 @@
 <template>
   <div class="container">
     <h1> Login </h1>
-    <bForm>
+    <bForm variant="dark">
     <b-form-group label="Username:" label-for="uname">
-      <b-form-input 
+      <b-form-input
                                     id="uname"
                                     v-model="form.uname"
                                     placeholder="Enter username"
@@ -12,7 +12,7 @@
       </b-form-input>
     </b-form-group>
     <b-form-group label="Password" label-for="pwd">
-      <b-form-input 
+      <b-form-input
                                    id="pwd"
                                    v-model="form.pwd"
                                    placeholder="Enter Password"
