@@ -45,9 +45,6 @@
           v-bind:sub-title="sensor.name"
           class="card drk"
           >
-          {{ sensor }}
-          <br>
-          {{ sensor.readings }}
           <hr>
           <b-card-text >
             <table>
