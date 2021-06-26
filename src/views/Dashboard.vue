@@ -14,19 +14,19 @@
                   style="float: left;"
                   >
                   <PlusIcon class="addnode"/>
-                  Add New Node
+                  Add Node
               </b-button>
             </div>
           </td>
           <td>
             <div>
-              <h2 style="text-align: center;">
+              <h2 class="project_title">
                 Central Monitoring System
               </h2>
             </div>
           </td>
           <td>
-            <div style="float: right; text-align: right;">
+            <div style="float: right; text-align: right; font-size: 10pt;">
               <strong>
                 {{ ip }}
               </strong>
@@ -45,6 +45,9 @@
           v-bind:sub-title="sensor.name"
           class="card drk"
           >
+          {{ sensor }}
+          <br>
+          {{ sensor.readings }}
           <hr>
           <b-card-text >
             <table>
@@ -94,7 +97,7 @@
                        ok : checkOK(sensor.co2Range, sensor.readings.co2),
                        notok : !checkOK(sensor.co2Range, sensor.readings.co2)}"
               >
-              {{ sensor.readings.co2 || '-'}} ppm
+              {{ sensor.readings.co2 || '-'}} %
           </td>
         </tr>
         <tr>
@@ -140,7 +143,8 @@ import DeleteIcon from 'vue-material-design-icons/Delete.vue'
 import ChartLine from 'vue-material-design-icons/ChartLine.vue';
 import 'vue-loaders/dist/vue-loaders.css';
 
-import { mapGetters } from 'vuex'
+import { mapGetters, mapActions } from 'vuex';
+import { checkSensors, sendNotification } from '@/common/notifcation.service';
 
 export default {
   name: 'Cards',
@@ -156,7 +160,7 @@ export default {
       ip: window.location.host
     }
   },
-  mounted() {
+  async mounted() {
     if(this.$store.getters.getAccessToken == null) {
       this.$bvModal.msgBoxOk('Please Login')
       this.$router.push('/')
@@ -166,11 +170,19 @@ export default {
         if(this.$store.getters.getLogInStatus) {
           this.$store.dispatch('fetchSensors', 0)
         }
+        checkSensors(this.$store.getters.getSensors, this.$store.getters.getFaulties)
+          .then(newFaulties=> {
+            this.$store.commit('setFaulties', newFaulties)
+            sendNotification(newFaulties)
+          })
+          .catch(() => {})
       }
       , 3000)
+    await window.Notification.requestPermission()
   },
   computed: {
-    ...mapGetters({sensors: 'getSensors', loading: 'isLoading'})
+    ...mapGetters({sensors: 'getSensors', loading: 'isLoading'}),
+    ...mapActions('notifications', ['add']),
   },
   methods: {
     close() {
@@ -236,7 +248,7 @@ td {
 .drk {
   background-color: #111111dd;
   color: #fefefe;
-  box-shadow: 5px 5px 30px rgba(128, 128, 128, .8);
+  box-shadow: 6px 6px 35px rgba(128, 128, 128, .8);
   border-radius: 15px;
 }
 
@@ -284,10 +296,19 @@ tr.separator {
   padding-bottom: 0px;
 }
 
+.container {
+  height: auto;
+}
+
 .value {
   font-weight: bold;
   text-align: right;
   text-transform: capitalize;
+}
+
+.project_title {
+  font-size: 12pt;
+  text-align: center;
 }
 
 </style>

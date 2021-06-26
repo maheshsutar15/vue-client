@@ -5,7 +5,7 @@
 
       <b-navbar-brand href="/dashboard">
         <img src="../assets/logo.png" alt="ATechno Embedded Solutions" width="32px" height="32px">
-        ATechno Embedded Solutions
+        {{ isMobile ? 'ATES OPL' : 'ATechno Embedded Solutions' }}
       </b-navbar-brand>
       <b-collapse id="nav-collapse" is-nav v-if="loggedIn">
         <b-navbar-nav class="ml-auto operations" >
@@ -58,6 +58,12 @@ export default {
     FaceProfile,
     Info
   },
+  mounted() {
+      window.addEventListener('resize', () => {
+        let size = window.screen.width;
+        this.isMobile = size <= 760;
+      });
+  },
   computed: {
     ...mapGetters({
       loggedIn: 'getLogInStatus',
@@ -86,11 +92,12 @@ export default {
     },
     goToAboutUs() {
       this.$router.push({name: 'About'})
-    }
+    },
   },
   data() {
     return {
       ip: window.location.host,
+      isMobile: false,
       message: ''
 
     }

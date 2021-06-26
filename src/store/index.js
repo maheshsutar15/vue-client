@@ -18,7 +18,8 @@ export default new Vuex.Store({
     accessToken: getJWT(),
     loggedIn: !!getJWT(),
     designation: getLocalDesignation(),
-    loading: true
+    loading: true,
+    faulties: Array()
   },
   mutations: {
     loaded(state) {
@@ -48,6 +49,9 @@ export default new Vuex.Store({
     purgeDesignation(state) {
       state.designation = null
       purgeLocalDesignation()
+    },
+    setFaulties(state, newFaulties) {
+      state.faulties.push(...newFaulties)
     }
 
   },
@@ -59,6 +63,7 @@ export default new Vuex.Store({
     getAccessToken: state => state.accessToken,
     getDesignation: state => state.designation,
     getLogInStatus: state => state.loggedIn,
-    isLoading: state => state.loading
+    isLoading: state => state.loading,
+    getFaulties: state => state.faulties
   }
 })
