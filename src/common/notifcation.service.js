@@ -36,15 +36,19 @@ export function sendNotification(sensors) {
     sensorsList += `${sensor} `
   }
   console.log(sensors)
-  navigator.serviceWorker.register('sw.js')
 
   new Notification("There are few faulty sensors that require attention", {
     body: sensorsList
   })
-  navigator.serviceWorker.ready.then((r) => {
-    r.showNotification("There are few faulty sensors that require attention", {
-      body: sensorsList
-    })
+  navigator.serviceWorker.register('sw.js')
+  Notification.requestPermission((r) => {
+    if( r === 'granted' ) {
+      navigator.serviceWorker.ready.then((reg) => {
+        reg.showNotification("There are few faulty sensors", {
+          body: sensorsList
+        })
+      })
+    }
   })
 }
 

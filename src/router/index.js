@@ -15,9 +15,14 @@ const routes = [
     component: () => import('../views/Dashboard.vue')
   },
   {
-    path: '/trend/:uid',
-    name: 'Trend',
+    path: '/trends/',
+    name: 'Trends',
     component: () => import('../views/Trends.vue')
+  },
+  {
+    path: '/graph/:uid/:from/:to',
+    name: 'Graph',
+    component: () => import('../views/Graph.vue')
   },
   {
     path: '/profile',

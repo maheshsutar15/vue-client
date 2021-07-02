@@ -11,18 +11,21 @@
               <b-button
                   variant="outline-primary"
                   @click="$bvModal.show('nodeForm')"
-                  style="float: left;"
+                  style="float: left; margin-right: 10px"
                   >
                   <PlusIcon class="addnode"/>
                   Add Node
               </b-button>
             </div>
-          </td>
-          <td>
-            <div>
-              <h2 class="project_title">
-                Central Monitoring System
-              </h2>
+            <div >
+              <b-button
+                  variant="outline-primary"
+                  @click="goToTrend()"
+                  style="float: left;"
+                  >
+                  <ChartLine class="addnode"/>
+                  See trend
+              </b-button>
             </div>
           </td>
           <td>
@@ -116,9 +119,12 @@
                 <td @click="deleteNode(sensor.uid)">
                   <DeleteIcon title="Delete Node" class="action-btn delete" />
                 </td>
-                <td class="value">
-                  <ChartLine title="See Node Trend" class="action-btn chart" @click="goToTrend(sensor.uid)"/>
+                <td class="value" @click="sendCSV(sensor.uid)">
+                  <DownloadIcon title="Get the Node readings in CSV" class="action-btn download" />
                 </td>
+                <!-- <td class="value"> -->
+                <!--   <ChartLine title="See Node Trend" class="action-btn chart" @click="goToTrend(sensor.uid)"/> -->
+                <!-- </td> -->
               </tr>
             </table>
             <hr>
@@ -138,6 +144,8 @@ import AddNodeForm from '@/components/AddNode.vue'
 import PlusIcon from 'vue-material-design-icons/PlusCircle.vue'
 import DeleteIcon from 'vue-material-design-icons/Delete.vue'
 import ChartLine from 'vue-material-design-icons/ChartLine.vue';
+import DownloadIcon from  'vue-material-design-icons/Download.vue'
+
 import 'vue-loaders/dist/vue-loaders.css';
 
 import { mapGetters, mapActions } from 'vuex';
@@ -150,6 +158,7 @@ export default {
     DeleteIcon,
     PlusIcon,
     AddNodeForm,
+    DownloadIcon
   },
   data() {
     return {
@@ -162,6 +171,7 @@ export default {
       this.$bvModal.msgBoxOk('Please Login')
       this.$router.push('/')
     }
+    navigator.serviceWorker.register('sw.js')
     this.fetchSensors = setInterval(
       () => {
         if(this.$store.getters.getLogInStatus) {
@@ -182,11 +192,24 @@ export default {
     ...mapActions('notifications', ['add']),
   },
   methods: {
+    async sendCSV(uid) {
+      try {
+        const resp = await fetch(process.env.VUE_APP_HOST + `/node/getcsv/${uid}`)
+        const data = await resp.json()
+        if(data) {
+          this.$bvModal.msgBoxOk(data.msg)
+        }
+      }
+      catch (err) {
+        this.$bvModal.msgBoxOk(err.message)
+      }
+
+    },
     close() {
       this.$bvModal.hide('nodeForm');
     },
-    goToTrend(uid) {
-      this.$router.push({name: 'Trend', params: {uid: uid}})
+    goToTrend() {
+  this.$router.push({name: 'Trends'})
     },
     checkOK(range, val) {
       return (range.min <= val && val <= range.max)
@@ -267,7 +290,7 @@ table.card {
 }
 
 .chart {
-  color: blue;
+  color: skyblue;
 }
 
 .ok {
@@ -306,6 +329,10 @@ tr.separator {
 .project_title {
   font-size: 12pt;
   text-align: center;
+}
+
+.download {
+  color: #fff;
 }
 
 </style>
