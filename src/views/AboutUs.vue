@@ -3,16 +3,19 @@
     <h1>About Us</h1>
     <hr>
     <img src="../assets/logo.png" alt="ATES" width="200px" height="200px"/>
+    <h3>An ISO 9001:2015 Certified Company</h3>
     <p>
-Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.
-</p>
-{{token}}
-    <!-- <table> -->
-    <!--   <tr> -->
-    <!--     <td>Parameter</td> -->
-    <!--     <td>Value</td> -->
-    <!--   </tr> -->
-    <!-- </table> -->
+    ATechno Embedded Solutions OPC PRiveate Limited is an OEM in the field of IIOT and wireless technology having ISO9001:2015 certification.
+    All the manufacture products are CE marked and NABL calibrated.
+    </p>
+    <p>
+    ATechno Embedded Solutions has provide complete wireless solutions for cold
+    chain management, Smart maintenance management and agriculture management
+    (Industry 4.0), Company has developed centralized monitoring system (data
+    logger) for cold chain management which measure Temperature, Humidity, CO2,
+    Pressure. Also developed wireless smart maintenance support system for
+    industrial applications which measure Voltage Current, Energy, Power.
+    </p>
   </div>
 </template>
 
@@ -33,10 +36,8 @@ export default {
   height: 100%;
   text-align: center;
 }
-table {
-  text-align: center;
-}
 p {
   margin: 10px;
+  text-align: left;
 }
 </style>
