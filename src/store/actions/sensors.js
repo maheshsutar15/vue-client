@@ -22,6 +22,7 @@ const fetchSensors = async (state, redraw) => {
       pressure: readings.pressure,
       humidity: readings.humidity,
       temperature: readings.temperature,
+      battery: readings.battery,
       timestamp: new Date(readings.datetime).toLocaleString(undefined, {timeZone: 'Asia/Kolkata'})
     }
   }

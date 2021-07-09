@@ -111,6 +111,15 @@
               {{ sensor.readings.pressure || '-' }} bar
           </td>
         </tr>
+        <tr>
+          <td>Battery</td>
+          <td class="value" :style="{ok : true}">
+            <!-- {{ sensor.readings.battery }} % -->
+            <BatteryFull v-if="parseInt(sensor.readings.battery) >= 90" class="ok" />
+            <BatteryHalf class="notbad" v-else-if="parseInt(sensor.readings.battery) >= 20 && parseInt(sensor.readings.battery ) < 90"/>
+            <BatteryLow class="notok" v-else/>
+          </td>
+        </tr>
             </table>
             <hr>
             <table>
@@ -145,6 +154,9 @@ import PlusIcon from 'vue-material-design-icons/PlusCircle.vue'
 import DeleteIcon from 'vue-material-design-icons/Delete.vue'
 import ChartLine from 'vue-material-design-icons/ChartLine.vue';
 import DownloadIcon from  'vue-material-design-icons/Download.vue'
+import BatteryFull from 'vue-material-design-icons/Battery.vue';
+import BatteryHalf from 'vue-material-design-icons/Battery50.vue';
+import BatteryLow from 'vue-material-design-icons/BatteryLow.vue';
 
 import 'vue-loaders/dist/vue-loaders.css';
 
@@ -158,7 +170,10 @@ export default {
     DeleteIcon,
     PlusIcon,
     AddNodeForm,
-    DownloadIcon
+    DownloadIcon,
+    BatteryFull,
+    BatteryHalf,
+    BatteryLow
   },
   data() {
     return {
@@ -212,6 +227,7 @@ export default {
   this.$router.push({name: 'Trends'})
     },
     checkOK(range, val) {
+      // const diff = diff
       return (range.min <= val && val <= range.max)
     },
     async deleteNode(uid) {
@@ -324,6 +340,10 @@ tr.separator {
   font-weight: bold;
   text-align: right;
   text-transform: capitalize;
+}
+
+.notbad {
+  color: orange;
 }
 
 .project_title {
