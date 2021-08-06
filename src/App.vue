@@ -4,10 +4,10 @@
     <div class="container">
       <router-view></router-view>
     </div>
-   <footer class="main">
-     Copyright &copy; 2021 ATES OPL.
-     All Rights Reserved.
-   </footer>
+    <footer class="main">
+      Copyright &copy; 2021 ATES OPL.
+      All Rights Reserved.
+    </footer>
   </div>
 </template>
 
@@ -34,22 +34,22 @@ export default {
 </script>
 
 <style>
+html, #app {
+  background-color: #fff;
+}
+
 /*
 html, #app {
-  background-color: #efefef;
-}
-*/
-
-html, #app {
-  background-color: #ddd;
+background-color: #ddd;
 
 }
+ */
 
 hr {
   border-color: white;
 }
 /*
-*/
+ */
 
 #app {
   text-align: center;

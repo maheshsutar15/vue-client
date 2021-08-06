@@ -69,7 +69,7 @@ export default {
               this.$store.dispatch('fetchSensors', 1)
             })
         })
-        .catch((msg) => this.$bvModal.msgBoxOk('Could not Add node: ' + msg)) 
+        .catch((msg) => this.$bvModal.msgBoxOk('Could not Add node: ' + msg))
     }
   },
   data() {

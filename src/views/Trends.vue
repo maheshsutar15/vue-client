@@ -53,7 +53,7 @@ export default {
   },
   methods: {
     watchTrend() {
-      this.$router.push({name: 'Graph', params: { uid: this.uid, from : this.start, to: this.end }})
+      this.$router.push({name: 'GraphHigh', params: { uid: this.uid, from : this.start, to: this.end }})
     }
   }
 }

@@ -25,6 +25,11 @@ const routes = [
     component: () => import('../views/Graph.vue')
   },
   {
+    path: '/graph2/:uid/:from/:to',
+    name: 'GraphHigh',
+    component: () => import('../views/GraphHigh.vue')
+  },
+  {
     path: '/profile',
     name: 'Profile',
     component: () => import('../views/Profile.vue')

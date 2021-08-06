@@ -1,6 +1,6 @@
 <template>
   <div>
-    <b-navbar toggleable="lg" type="light" class="titlebar">
+    <b-navbar toggleable="lg" type="dark" class="titlebar">
       <b-navbar-toggle target="nav-collapse" v-if="loggedIn"></b-navbar-toggle>
 
       <b-navbar-brand href="/dashboard">
@@ -115,9 +115,9 @@ export default {
 .titlebar {
   background-color: maroon;
 
+  background-color: #ccc;
   background-color: #FCFFDB;
   background-color: #539;
-  background-color: #ccc;
 }
 
 .ico {
