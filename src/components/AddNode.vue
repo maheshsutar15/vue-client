@@ -10,32 +10,51 @@
       <b-form-input id="node_mac" v-model="addNodeForm.mac" placeholder="Enter Machine"></b-form-input>
     </b-form-group>
 
-    <b-form-group label="CO2 Range: " label-for="node_co2r" description="Please enter CO2 Range" >
+    <b-form-checkbox
+      id="_isTemp" v-model="isTemp" name="checkbox1"
+    >
+    Temperature
+    </b-form-checkbox>
+
+    <b-form-group v-if="isTemp" label="Temperature Range: " label-for="node_temperaturer" description="Please enter Temperature Range" >
+      <b-form-input class="range" type="number" id="node_temperaturen" v-model="addNodeForm.temperaturen" placeholder="Enter Temperature Min"></b-form-input>
+      <b-form-input class="range" type="number" id="node_temperaturex" v-model="addNodeForm.temperaturex" placeholder="Enter Temperature Max"></b-form-input>
+    </b-form-group>
+
+    <b-form-checkbox
+      id="_isHum" v-model="isHum" name="checkbox2"
+    >
+    Humidity
+    </b-form-checkbox>
+
+    <b-form-group v-if="isHum" label="Humidity Range: " label-for="node_humidityr" description="Please enter Pressure Range" >
+      <b-form-input class="range" type="number" id="node_humidityn" v-model="addNodeForm.humidityn" placeholder="Enter Humidity Min"></b-form-input>
+      <b-form-input class="range" type="number" id="node_humidityx" v-model="addNodeForm.humidityx" placeholder="Enter Humidity Max"></b-form-input>
+    </b-form-group>
+
+    <b-form-checkbox
+      id="_isCO2" v-model="isCO2" name="checkbox3"
+    >
+    CO<sub>2</sub>
+    </b-form-checkbox>
+
+    <b-form-group v-if="isCO2" label="CO2 Range: " label-for="node_co2r" description="Please enter CO2 Range" >
       <b-form-input class="range" type="number" id="node_co2n" v-model="addNodeForm.co2n" placeholder="Enter CO2 Min"></b-form-input>
       <b-form-input class="range" type="number" id="node_co2x" v-model="addNodeForm.co2x" placeholder="Enter CO2 Max"></b-form-input>
     </b-form-group>
 
-    <b-form-group label="Pressure Range: " label-for="node_pressurer" description="Please enter Pressure Range" >
-      <b-form-input class="range" type="number" id="node_pressuren" v-model="addNodeForm.pressuren" placeholder="Enter Pressure Min"></b-form-input>
-      <b-form-input class="range" type="number" id="node_pressurex" v-model="addNodeForm.pressurex" placeholder="Enter Pressure Max"></b-form-input>
-    </b-form-group>
-
-    <!-- <b-form-group label="Humidity Range: " label-for="node_humidityr" description="Please enter Pressure Range" > -->
-    <!--   <b-form-input class="range" type="number" id="node_humidityn" v-model="addNodeForm.humidityn" placeholder="Enter Humidity Min"></b-form-input> -->
-    <!--   <b-form-input class="range" type="number" id="node_humidityx" v-model="addNodeForm.humidityx" placeholder="Enter Humidity Max"></b-form-input> -->
+    <!-- <b-form-group v-if="isTemp" label="Pressure Range: " label-for="node_pressurer" description="Please enter Pressure Range" > -->
+    <!--   <b-form-input class="range" type="number" id="node_pressuren" v-model="addNodeForm.pressuren" placeholder="Enter Pressure Min"></b-form-input> -->
+    <!--   <b-form-input class="range" type="number" id="node_pressurex" v-model="addNodeForm.pressurex" placeholder="Enter Pressure Max"></b-form-input> -->
     <!-- </b-form-group> -->
+    <hr>
 
-    <b-form-group label="Temperature Range: " label-for="node_temperaturer" description="Please enter Temperature Range" >
-      <b-form-input class="range" type="number" id="node_temperaturen" v-model="addNodeForm.temperaturen" placeholder="Enter Temperature Min"></b-form-input>
-      <b-form-input class="range" type="number" id="node_temperaturex" v-model="addNodeForm.temperaturex" placeholder="Enter Temperature Max"></b-form-input>
-    </b-form-group>
     <b-button @click="addNode()" variant="primary">Add Node</b-button>
 
   </b-form>
 </template>
 
 <script>
-
 export default {
   name: 'Form',
   methods: {
@@ -59,7 +78,10 @@ export default {
         humidityRange: {
           min: this.addNodeForm.humidityn,
           max: this.addNodeForm.humidityx
-        }
+        },
+        isTemp: this.isTemp,
+        isHum: this.isHum,
+        isCO2: this.isCO2
       }
       this.$store.dispatch('addNode', node)
         .then(() => {
@@ -86,7 +108,14 @@ export default {
         pressurex: 100,
         humidityn: 0,
         humidityx: 100,
-      }
+        // isTempNode: false,
+        // isHum: false,
+        // isCO2: false
+      },
+
+      isTemp: false,
+      isHum: false,
+      isCO2: false
     }
   }
 }

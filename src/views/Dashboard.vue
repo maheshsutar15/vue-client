@@ -40,8 +40,8 @@
     </div>
     <div class="summary">
       <b>Summary</b>  <br>
-      {{ faultyNodes.length }} Faulty nodes <br>
-      {{ healthyNodes.length }} Healthy nodes
+      {{ faultyNodes && faultyNodes.length }} Faulty nodes <br>
+      {{ healthyNodes && healthyNodes.length }} Healthy nodes
     </div>
     <hr>
     <vue-loaders-ball-beat color="grey" scale="1" v-if="!sensors || loading"></vue-loaders-ball-beat>
@@ -96,6 +96,9 @@ export default {
           this.$store.dispatch('fetchSensors', 0)
         }
 //        console.log(this.$store.getters.getSensors)
+        if(this.$store.getters.getSensors == null) {
+          return
+        }
         this.healthyNodes = this.$store.getters.getSensors.filter((node) => {
           return (
             this.checkOK(node.temperatureRange, node.readings.temperature) &&

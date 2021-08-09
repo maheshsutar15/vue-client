@@ -18,10 +18,9 @@ const fetchSensors = async (state, redraw) => {
     const readings = await res.json()
 
     sensorsList[i].readings = {
-      co2: readings.co2,
-      pressure: readings.pressure,
-      humidity: readings.humidity,
       temperature: readings.temperature,
+      humidity: readings.humidity,
+      co2: readings.co2,
       battery: readings.battery,
       timestamp: new Date(readings.datetime)
     }

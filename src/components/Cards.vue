@@ -9,7 +9,7 @@
         >
 
         <!-- <strong v-if="checkOffline(sensor) "> -->
-          Offline since {{ checkOffline(sensor) }} days
+          Offline since {{ checkOffline(sensor) }} hrs
         <!-- </strong> -->
 
       <hr>
@@ -31,7 +31,7 @@
       {{ sensor.location }}
     </td>
   </tr>
-  <tr>
+  <tr v-if="sensor.isTemperature">
     <td>Temperature</td>
     <td
         class="value"
@@ -42,7 +42,7 @@
         {{ sensor.readings.temperature || '-' }} &deg;C
     </td>
   </tr>
-  <tr>
+  <tr v-if="sensor.isHumidity">
     <td>Humidity</td>
     <td
         class="value"
@@ -53,7 +53,7 @@
         {{ sensor.readings.humidity || '-' }} %
     </td>
   </tr>
-  <tr>
+  <tr v-if="sensor.isCO2">
     <td>CO<sub>2</sub></td>
     <td
         class="value"
@@ -64,17 +64,17 @@
         {{ sensor.readings.co2 || '-'}} %
     </td>
   </tr>
-  <tr>
-    <td>Pressure</td>
-    <td
-        class="value"
-        :class="{
-                 ok : checkOK(sensor.pressureRange, sensor.readings.pressure),
-                 notok : !checkOK(sensor.pressureRange, sensor.readings.pressure)}"
-        >
-        {{ sensor.readings.pressure || '-' }} bar
-    </td>
-  </tr>
+  <!-- <tr> -->
+  <!--   <td>Pressure</td> -->
+  <!--   <td -->
+  <!--       class="value" -->
+  <!--       :class="{ -->
+  <!--                ok : checkOK(sensor.pressureRange, sensor.readings.pressure), -->
+  <!--                notok : !checkOK(sensor.pressureRange, sensor.readings.pressure)}" -->
+  <!--       > -->
+  <!--       {{ sensor.readings.pressure || '-' }} bar -->
+  <!--   </td> -->
+  <!-- </tr> -->
   <tr>
     <td>Battery</td>
     <td class="value" :style="{ok : true}">
@@ -157,7 +157,7 @@ export default {
     },
     checkOffline(sensor) {
       const dt = sensor.readings.timestamp
-      const dateDiff_hrs = Math.floor((new Date() - dt) / 1000 / 36 / 24) / 100;
+      const dateDiff_hrs = Math.floor((new Date() - dt) / 1000 / 3600 ) ;
       return dateDiff_hrs
     }
 
