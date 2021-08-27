@@ -17,7 +17,7 @@
             id="start"
             v-model="start"
             placeholder="Enter start Date"
-            type="date"
+            type="datetime-local"
             required>
 
         </b-form-input>
@@ -27,7 +27,7 @@
             id="end"
             v-model="end"
             placeholder="enter end date"
-            type="date"
+            type="datetime-local"
             required>
 
         </b-form-input>

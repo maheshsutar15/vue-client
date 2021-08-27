@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h1>Trend </h1>
+    <h1>Trend for {{ uid }} </h1>
     <vue-loaders-ball-beat color="grey" scale="1" v-if="loading"></vue-loaders-ball-beat>
 
     <highcharts :options="chartOptions" v-else></highcharts>
@@ -17,7 +17,6 @@ export default {
   async mounted() {
     this.$store.dispatch('fetchTrend', this.$route.params.uid)
       .then( readings => {
-        console.log(this.$route.params.uid)
         console.log(this.from, this.to)
 
         const fromDate = Date.parse(this.from)
