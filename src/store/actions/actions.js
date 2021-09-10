@@ -3,6 +3,7 @@ import register from './register'
 import fetchSensors from './sensors'
 import logout from './logout'
 import addNode from './addNode'
+import modifyNode from './modifyNode'
 import deleteNode from './deleteNode'
 import fetchTrend from './fetchTrend'
 import fetchProfile from './fetchProfile'
@@ -36,6 +37,7 @@ export default  {
   fetchSensors,
   logout,
   addNode,
+  modifyNode,
   deleteNode,
   fetchTrend,
   sendResetLink,

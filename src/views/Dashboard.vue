@@ -100,21 +100,16 @@ export default {
           return
         }
         this.healthyNodes = this.$store.getters.getSensors.filter((node) => {
-          return (
-            this.checkOK(node.temperatureRange, node.readings.temperature) &&
-            this.checkOK(node.humidityRange, node.readings.humidity) &&
-            this.checkOK(node.pressureRange, node.readings.pressure) &&
-            this.checkOK(node.co2Range, node.readings.co2)
-          )
+          const co2_ok = !(node.isCO2 ^ this.checkOK(node.co2Range, node.readings.co2))
+          const temp_ok = !(node.isTemperature ^ this.checkOK(node.temperatureRange, node.readings.temperature))
+          const hum_ok = !(node.isHumidity ^ this.checkOK(node.humidityRange, node.readings.humidity))
+          return co2_ok && temp_ok && hum_ok
         })
-
         this.faultyNodes = this.$store.getters.getSensors.filter((node) => {
-          return !(
-            this.checkOK(node.temperatureRange, node.readings.temperature) &&
-            this.checkOK(node.humidityRange, node.readings.humidity) &&
-            this.checkOK(node.pressureRange, node.readings.pressure) &&
-            this.checkOK(node.co2Range, node.readings.co2)
-          )
+          const co2_ok = !(node.isCO2 ^ this.checkOK(node.co2Range, node.readings.co2))
+          const temp_ok = !(node.isTemperature ^ this.checkOK(node.temperatureRange, node.readings.temperature))
+          const hum_ok = !(node.isHumidity ^ this.checkOK(node.humidityRange, node.readings.humidity))
+          return !(co2_ok && temp_ok && hum_ok)
         })
 
         checkSensors(this.$store.getters.getSensors, this.$store.getters.getFaulties)
@@ -132,14 +127,10 @@ export default {
     ...mapActions('notifications', ['add']),
   },
   methods: {
-    close() {
-      this.$bvModal.hide('nodeForm');
-    },
     goToTrend() {
       this.$router.push({name: 'Trends'})
     },
     checkOK(range, val) {
-      // const diff = diff
       return (range.min <= val && val <= range.max)
     },
     async deleteNode(uid) {

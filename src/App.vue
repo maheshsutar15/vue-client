@@ -25,7 +25,6 @@ export default {
     }
   },
   async created () {
-    console.log(window.location.pathname ); //=== '/passwordreset')
     if(this.$store.getters.getLogInStatus === true) {
       this.$router.push({name: 'Dashboard'})
     }

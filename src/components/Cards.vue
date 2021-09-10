@@ -1,137 +1,157 @@
 <template >
-  <div class="container">
-    <b-card
-        v-for="sensor in sensors"
-        v-bind:key="sensor._id"
-        v-bind:title="'UID: ' + sensor.uid"
-        v-bind:sub-title="sensor.name"
-        class="card drk"
-        >
+  <div>
+    <div>
+      <b-modal class="long" id="modifyForm" title="Modify Node" hide-footer>
+        <ModifyNodeForm :sensor="currentNode"/>
+      </b-modal>
+    </div>
+    <div class="container">
+      <b-card
+          v-for="sensor in sensors"
+          v-bind:key="sensor._id"
+          v-bind:title="'UID: ' + sensor.uid"
+          v-bind:sub-title="sensor.name"
+          class="card drk"
+          >
 
-        <!-- <strong v-if="checkOffline(sensor) "> -->
           Offline since {{ checkOffline(sensor) }} hrs
+          <!-- <strong v-if="checkOffline(sensor) "> -->
         <!-- </strong> -->
 
-      <hr>
-      <b-card-text >
-        <table>
-          <tr>
-            <td>
-              Machine
-            </td>
-        <td class="value" >
-          {{ sensor.machineName }}
-        </td>
-          </tr>
-  <tr>
-    <td>
-      Location
-    </td>
-    <td class="value">
-      {{ sensor.location }}
-    </td>
-  </tr>
-  <tr v-if="sensor.isTemperature">
-    <td>Temperature</td>
-    <td
-        class="value"
-        :class="{
-                 ok : checkOK(sensor.temperatureRange, sensor.readings.temperature),
-                 notok : !checkOK(sensor.temperatureRange, sensor.readings.temperature)}"
-        >
-        {{ sensor.readings.temperature || '-' }} &deg;C
-    </td>
-  </tr>
-  <tr v-if="sensor.isHumidity">
-    <td>Humidity</td>
-    <td
-        class="value"
-        :class="{
-                 ok : checkOK(sensor.humidityRange, sensor.readings.humidity),
-                 notok : !checkOK(sensor.humidityRange, sensor.readings.humidity)}"
-        >
-        {{ sensor.readings.humidity || '-' }} %
-    </td>
-  </tr>
-  <tr v-if="sensor.isCO2">
-    <td>CO<sub>2</sub></td>
-    <td
-        class="value"
-        :class="{
-                 ok : checkOK(sensor.co2Range, sensor.readings.co2),
-                 notok : !checkOK(sensor.co2Range, sensor.readings.co2)}"
-        >
-        {{ sensor.readings.co2 || '-'}} %
-    </td>
-  </tr>
-  <!-- <tr> -->
-  <!--   <td>Pressure</td> -->
-  <!--   <td -->
-  <!--       class="value" -->
-  <!--       :class="{ -->
-  <!--                ok : checkOK(sensor.pressureRange, sensor.readings.pressure), -->
-  <!--                notok : !checkOK(sensor.pressureRange, sensor.readings.pressure)}" -->
-  <!--       > -->
-  <!--       {{ sensor.readings.pressure || '-' }} bar -->
-  <!--   </td> -->
-  <!-- </tr> -->
-  <tr>
-    <td>Battery</td>
-    <td class="value" :style="{ok : true}">
-      <!-- {{ sensor.readings.battery }} % -->
-      <BatteryFull v-if="parseInt(sensor.readings.battery) >= 90" class="ok" />
-      <BatteryHalf class="notbad" v-else-if="parseInt(sensor.readings.battery) >= 20 && parseInt(sensor.readings.battery ) < 90"/>
-      <BatteryLow class="notok" v-else/>
-    </td>
-  </tr>
-        </table>
         <hr>
-        <table>
+        <!-- {{ sensor }} -->
+        <b-card-text >
+          <table>
+            <tr>
+              <td>
+                Machine
+              </td>
+          <td class="value" >
+            {{ sensor.machineName }}
+          </td>
+            </tr>
+            <tr>
+              <td>
+                Location
+              </td>
+              <td class="value">
+                {{ sensor.location }}
+              </td>
+            </tr>
+            <tr v-if="sensor.isTemperature">
+              <td>Temperature</td>
+              <td
+                  class="value"
+                  :class="{
+                           ok : checkOK(sensor.temperatureRange, sensor.readings.temperature),
+                           notok : !checkOK(sensor.temperatureRange, sensor.readings.temperature)}"
+                  >
+                  {{ sensor.readings.temperature || '-' }} &deg;C
+              </td>
+            </tr>
+            <tr v-if="sensor.isHumidity">
+              <td>Humidity</td>
+              <td
+                  class="value"
+                  :class="{
+                           ok : checkOK(sensor.humidityRange, sensor.readings.humidity),
+                           notok : !checkOK(sensor.humidityRange, sensor.readings.humidity)}"
+                  >
+                  {{ sensor.readings.humidity || '-' }} %
+              </td>
+            </tr>
+            <tr v-if="sensor.isCO2">
+              <td>CO<sub>2</sub></td>
+              <td
+                  class="value"
+                  :class="{
+                           ok : checkOK(sensor.co2Range, sensor.readings.co2),
+                           notok : !checkOK(sensor.co2Range, sensor.readings.co2)}"
+                  >
+                  {{ sensor.readings.co2 || '-'}} %
+              </td>
+            </tr>
+            <!-- <tr> -->
+            <!--   <td>Pressure</td> -->
+            <!--   <td -->
+            <!--       class="value" -->
+            <!--       :class="{ -->
+            <!--                ok : checkOK(sensor.pressureRange, sensor.readings.pressure), -->
+            <!--                notok : !checkOK(sensor.pressureRange, sensor.readings.pressure)}" -->
+            <!--       > -->
+            <!--       {{ sensor.readings.pressure || '-' }} bar -->
+            <!--   </td> -->
+            <!-- </tr> -->
+            <tr>
+              <td>Battery</td>
+              <td class="value" :style="{ok : true}">
+                <!-- {{ sensor.readings.battery }} % -->
+                <BatteryFull v-if="parseInt(sensor.readings.battery) >= 90" class="ok" />
+                <BatteryHalf class="notbad" v-else-if="parseInt(sensor.readings.battery) >= 20 && parseInt(sensor.readings.battery ) < 90"/>
+                <BatteryLow class="notok" v-else/>
+              </td>
+            </tr>
+          </table>
+          <hr>
+          <table>
 
-          <tr>
-            <td @click="deleteNode(sensor.uid)">
-              <DeleteIcon title="Delete Node" class="action-btn delete" />
-            </td>
-            <td class="value" >
-              <a :href="`${server}/node/getcsv/${sensor.uid}`" target="_blank">
-                <DownloadIcon title="Get the Node readings in CSV" class="action-btn download" />
-              </a>
-            </td>
-          </tr>
-        </table>
-        <hr>
-        <div>
-          Last Updated at: {{ sensor.readings.timestamp }}
-        </div>
-      </b-card-text>
-    </b-card>
+            <tr>
+              <td @click="deleteNode(sensor.uid)">
+                <DeleteIcon title="Delete Node" class="action-btn delete" />
+              </td>
+              <!-- <td class="value" > -->
+              <!--   <DownloadIcon :href="`${server}/node/getcsv/${sensor.uid}`" title="Get the Node readings in CSV" class="action-btn download" /> -->
+              <!-- </td> -->
+              <td class="value" >
+                <Pencil @click="showModify(sensor)" title="Edit the node" class="action-btn" />
+              </td>
+            </tr>
+          </table>
+          <hr>
+          <div>
+            Last Updated at: {{ sensor.readings.timestamp }}
+          </div>
+        </b-card-text>
+      </b-card>
+    </div>
   </div>
 </template>
 
 <script>
 
+import ModifyNodeForm from '@/components/ModifyNode.vue'
+
 import DeleteIcon from 'vue-material-design-icons/Delete.vue';
-import DownloadIcon from  'vue-material-design-icons/Download.vue';
+//import DownloadIcon from  'vue-material-design-icons/Download.vue';
 import BatteryFull from 'vue-material-design-icons/Battery.vue';
 import BatteryLow from 'vue-material-design-icons/BatteryLow.vue';
 import BatteryHalf from 'vue-material-design-icons/Battery50.vue';
+import Pencil from 'vue-material-design-icons/Pencil.vue';
 
 export default {
   name: 'Cards',
   props: [ 'sensors', ],
   data() {
     return {
-      server: process.env.VUE_APP_HOST
+      server: process.env.VUE_APP_HOST,
+      currentNode: null
     }
   },
   components: {
     DeleteIcon,
-    DownloadIcon,
+    //DownloadIcon,
     BatteryFull,
     BatteryHalf,
-    BatteryLow
+    ModifyNodeForm,
+    BatteryLow,
+    Pencil
   },
   methods: {
+    showModify(node) {
+      this.currentNode = node
+      this.$bvModal.show('modifyForm')
+      //this.$bvModal.hide('modForm')
+    },
     checkOK(range, val) {
       return (range.min <= val && val <= range.max)
     },
@@ -220,6 +240,10 @@ table.card {
 .ok {
   color: #689D6A;
   color: lime;
+}
+
+.long {
+  height: 100%;
 }
 
 .notok {

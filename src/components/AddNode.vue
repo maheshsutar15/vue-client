@@ -56,7 +56,7 @@
 
 <script>
 export default {
-  name: 'Form',
+  name: 'AddNodeForm',
   methods: {
     async addNode() {
       let node = {
