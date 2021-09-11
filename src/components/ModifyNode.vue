@@ -88,22 +88,38 @@ export default {
         .catch((msg) => this.$bvModal.msgBoxOk('Could not modified node: ' + msg))
     }
   },
+  created() {
+    this.modifyNodeForm = {
+      uid: this.sensor.uid,
+      loc: this.sensor.location,
+      mac: this.sensor.machineName,
+      co2n: parseFloat(this.sensor.co2Range.min),
+      co2x: parseFloat(this.sensor.co2Range.max),
+      temperaturen: parseFloat(this.sensor.temperatureRange.min),
+      temperaturex: parseFloat(this.sensor.temperatureRange.max),
+      humidityn: parseFloat(this.sensor.humidityRange.min),
+      humidityx: parseFloat(this.sensor.humidityRange.max),
+    }
+    this.isTemp = this.sensor.isTemperature,
+    this.isHum= this.sensor.isHumidity,
+    this.isCO2 = this.sensor.isCO2
+  },
   data() {
     return {
       modifyNodeForm: {
-        uid: this.sensor.uid,
-        loc: this.sensor.location,
-        mac: this.sensor.machineName,
-        co2n: parseFloat(this.sensor.co2Range.min),
-        co2x: parseFloat(this.sensor.co2Range.max),
-        temperaturen: parseFloat(this.sensor.temperatureRange.min),
-        temperaturex: parseFloat(this.sensor.temperatureRange.min),
-        humidityn: parseFloat(this.sensor.humidityRange.min),
-        humidityx: parseFloat(this.sensor.humidityRange.min),
+      uid: null,
+      loc: null,
+      mac: null,
+      co2n: null,
+      co2x: null,
+      temperaturen: null,
+      temperaturex: null,
+      humidityn: null,
+      humidityx: null,
       },
-      isTemp: this.sensor.isTemp,
-      isHum: this.sensor.isHum,
-      isCO2: this.sensor.isCO2
+      isTemp: null,
+      isHum: null,
+      isCO2: null
     }
   }
 }
