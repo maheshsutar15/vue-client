@@ -100,15 +100,15 @@ export default {
           return
         }
         this.healthyNodes = this.$store.getters.getSensors.filter((node) => {
-          const co2_ok = !(node.isCO2 ^ this.checkOK(node.co2Range, node.readings.co2))
-          const temp_ok = !(node.isTemperature ^ this.checkOK(node.temperatureRange, node.readings.temperature))
-          const hum_ok = !(node.isHumidity ^ this.checkOK(node.humidityRange, node.readings.humidity))
+          const co2_ok = this.applyLogic(node.isCO2, this.checkOK(node.co2Range, node.readings.co2))
+          const temp_ok = this.applyLogic(node.isTemperature, this.checkOK(node.temperatureRange, node.readings.temperature))
+          const hum_ok = this.applyLogic(node.isHumidity, this.checkOK(node.humidityRange, node.readings.humidity))
           return co2_ok && temp_ok && hum_ok
         })
         this.faultyNodes = this.$store.getters.getSensors.filter((node) => {
-          const co2_ok = !(node.isCO2 ^ this.checkOK(node.co2Range, node.readings.co2))
-          const temp_ok = !(node.isTemperature ^ this.checkOK(node.temperatureRange, node.readings.temperature))
-          const hum_ok = !(node.isHumidity ^ this.checkOK(node.humidityRange, node.readings.humidity))
+          const co2_ok = this.applyLogic(node.isCO2, this.checkOK(node.co2Range, node.readings.co2))
+          const temp_ok = this.applyLogic(node.isTemperature, this.checkOK(node.temperatureRange, node.readings.temperature))
+          const hum_ok = this.applyLogic(node.isHumidity, this.checkOK(node.humidityRange, node.readings.humidity))
           return !(co2_ok && temp_ok && hum_ok)
         })
 
@@ -127,6 +127,9 @@ export default {
     ...mapActions('notifications', ['add']),
   },
   methods: {
+    applyLogic(a, b) {
+      return (a && b) || !a;
+    },
     goToTrend() {
       this.$router.push({name: 'Trends'})
     },
