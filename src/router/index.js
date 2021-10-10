@@ -50,7 +50,7 @@ const routes = [
     component: () => import('../views/ResetPassword.vue')
   },
   {
-    path: '/aboutus/:token',
+    path: '/aboutus',
     name: 'About',
     component: () => import('../views/AboutUs.vue')
   },

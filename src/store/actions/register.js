@@ -3,6 +3,7 @@ const register = async (state, regUserForm) => {
     let usr = {
       username: regUserForm.username,
       password: regUserForm.password,
+      masterPassword: regUserForm.masterPassword,
       email: regUserForm.email,
       institute: regUserForm.institute,
       designation: regUserForm.designation
@@ -19,10 +20,14 @@ const register = async (state, regUserForm) => {
     }).then(r => r.json())
       .then(data => {
         console.log({data})
-        state.commit('setToken', data.accessToken)
-        state.commit('setLoggedIn', true)
-        state.commit('setDesignation', data.designation)
-        resolve()
+        if (data.msg) {
+          reject(data.msg)
+        } else {
+          state.commit('setToken', data.accessToken)
+          state.commit('setLoggedIn', true)
+          state.commit('setDesignation', data.designation)
+          resolve()
+        }
       }).catch(e => {
         reject(e)
       })

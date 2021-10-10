@@ -5,21 +5,17 @@
         <ModifyNodeForm :sensor="currentNode"/>
       </b-modal>
     </div>
-    <div class="container">
+    <div class="container" v-if="sensors.length > 0">
       <b-card
           v-for="sensor in sensors"
           v-bind:key="sensor._id"
-          v-bind:title="'UID: ' + sensor.uid"
-          v-bind:sub-title="sensor.name"
+          v-bind:title="`UID: ${sensor.uid}`"
+          v-bind:sub-title="sensor.readings.user"
           class="card drk"
           >
 
-          Offline since {{ checkOffline(sensor) }} hrs
-          <!-- <strong v-if="checkOffline(sensor) "> -->
-        <!-- </strong> -->
-
+          Offline since {{ checkOffline(sensor) }}
         <hr>
-        <!-- {{ sensor }} -->
         <b-card-text >
           <table>
             <tr>
@@ -71,24 +67,12 @@
                   {{ sensor.readings.co2 || '-'}} %
               </td>
             </tr>
-            <!-- <tr> -->
-            <!--   <td>Pressure</td> -->
-            <!--   <td -->
-            <!--       class="value" -->
-            <!--       :class="{ -->
-            <!--                ok : checkOK(sensor.pressureRange, sensor.readings.pressure), -->
-            <!--                notok : !checkOK(sensor.pressureRange, sensor.readings.pressure)}" -->
-            <!--       > -->
-            <!--       {{ sensor.readings.pressure || '-' }} bar -->
-            <!--   </td> -->
-            <!-- </tr> -->
             <tr>
               <td>Battery</td>
               <td class="value" :style="{ok : true}">
-                <!-- {{ sensor.readings.battery }} % -->
-                <BatteryFull v-if="parseInt(sensor.readings.battery) >= 90" class="ok" />
-                <BatteryHalf class="notbad" v-else-if="parseInt(sensor.readings.battery) >= 20 && parseInt(sensor.readings.battery ) < 90"/>
-                <BatteryLow class="notok" v-else/>
+                <BatteryFull title="Battery Full" v-if="parseInt(sensor.readings.battery) >= 90" class="ok" />
+                <BatteryHalf title="Battery Normal" class="notbad" v-else-if="parseInt(sensor.readings.battery) >= 20 && parseInt(sensor.readings.battery ) < 90"/>
+                <BatteryLow title="Battery Critical" class="notok" v-else/>
               </td>
             </tr>
           </table>
@@ -99,9 +83,6 @@
               <td @click="deleteNode(sensor.uid)">
                 <DeleteIcon title="Delete Node" class="action-btn delete" />
               </td>
-              <!-- <td class="value" > -->
-              <!--   <DownloadIcon :href="`${server}/node/getcsv/${sensor.uid}`" title="Get the Node readings in CSV" class="action-btn download" /> -->
-              <!-- </td> -->
               <td class="value" >
                 <Pencil @click="showModify(sensor)" title="Edit the node" class="action-btn" />
               </td>
@@ -109,10 +90,13 @@
           </table>
           <hr>
           <div>
-            Last Updated at: {{ sensor.readings.timestamp }}
+            Last Updated at: {{ formatDate(sensor.readings.datetime )}}
           </div>
         </b-card-text>
       </b-card>
+    </div>
+    <div v-else>
+      <h3>No nodes in this category</h3>
     </div>
   </div>
 </template>
@@ -122,7 +106,7 @@
 import ModifyNodeForm from '@/components/ModifyNode.vue'
 
 import DeleteIcon from 'vue-material-design-icons/Delete.vue';
-//import DownloadIcon from  'vue-material-design-icons/Download.vue';
+import 'vue-loaders/dist/vue-loaders.css';
 import BatteryFull from 'vue-material-design-icons/Battery.vue';
 import BatteryLow from 'vue-material-design-icons/BatteryLow.vue';
 import BatteryHalf from 'vue-material-design-icons/Battery50.vue';
@@ -176,11 +160,16 @@ export default {
         })
     },
     checkOffline(sensor) {
-      const dt = sensor.readings.timestamp
+      const dt = Date.parse(sensor.readings.datetime)
       const dateDiff_hrs = Math.floor((new Date() - dt) / 1000 / 3600 ) ;
-      return dateDiff_hrs
+      if (dateDiff_hrs > 24) {
+        return Math.floor(dateDiff_hrs / 24) + " days"
+      }
+      return dateDiff_hrs + " hrs"
+    },
+    formatDate(date) {
+      return new Date(date).toLocaleString('en-IN')
     }
-
   }
 }
 

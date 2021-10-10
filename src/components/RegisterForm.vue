@@ -11,6 +11,9 @@
       <b-form-group label="Password: " label-for="reg_pwd" description="Please enter strong password" >
         <b-form-input id="reg_pwd" v-model="regUserForm.password" type="password" placeholder="Your password here" ></b-form-input>
       </b-form-group>
+      <b-form-group label="Master Password: " label-for="reg_mpwd" description="Please enter the master password" >
+        <b-form-input id="reg_mpwd" v-model="regUserForm.masterPassword" type="password" placeholder="Your system's master password here" ></b-form-input>
+      </b-form-group>
       <b-form-group label="Institute" label-for="reg_institute" description="This should be consistent with your other users" >
         <b-form-input id="reg_institute" v-model="regUserForm.institute" placeholder="The name of your institue" ></b-form-input>
       </b-form-group>
@@ -31,9 +34,15 @@ export default {
       this.$store.dispatch('register', this.regUserForm)
         .then(() => {
           this.$bvModal.msgBoxOk('Registered Successfully')
-          this.$router.push({name: 'Welcome'})
+            .catch(() => {
+              this.$root.$off('bv::modal::hide')
+            })
+          this.$router.push({name: 'Dashboard'})
         }).catch((e) => {
           this.$bvModal.msgBoxOk('Could not Register: ' + e)
+            .then(() => {
+              console.log(e)
+            })
         })
     }
   },
@@ -42,6 +51,7 @@ export default {
       regUserForm: {
         username: '',
         password: '',
+        masterPassword: '',
         email: '',
         institute: '',
         designation: null
@@ -54,6 +64,9 @@ export default {
         { value: 'maintenance', text: 'Observer' }
       ]
     }
+  },
+  beforeDestroy() {
+    this.$root.$off('bv::modal::hide')
   }
 }
 </script>

@@ -44,7 +44,6 @@
       {{ healthyNodes && healthyNodes.length }} Healthy nodes
     </div>
     <hr>
-    <vue-loaders-ball-beat color="grey" scale="1" v-if="!sensors || loading"></vue-loaders-ball-beat>
     <b-tabs>
       <b-tab title="Faulty">
         <Cards v-if="sensors && !loading" :sensors="faultyNodes"/>
@@ -53,6 +52,7 @@
         <Cards v-if="sensors && !loading" :sensors="healthyNodes"/>
       </b-tab>
     </b-tabs>
+    <vue-loaders-ball-beat color="grey" scale="1" v-if="!sensors || loading"></vue-loaders-ball-beat>
   </div>
 </template>
 
@@ -80,8 +80,8 @@ export default {
       fetchSensors: null,
       ip: window.location.host,
       server: process.env.VUE_APP_HOST,
-      healthyNodes: null,
-      faultyNodes: null,
+      healthyNodes: [],
+      faultyNodes: [],
     }
   },
   async mounted() {
@@ -95,7 +95,6 @@ export default {
         if(this.$store.getters.getLogInStatus) {
           this.$store.dispatch('fetchSensors', 0)
         }
-//        console.log(this.$store.getters.getSensors)
         if(this.$store.getters.getSensors == null) {
           return
         }
@@ -120,6 +119,7 @@ export default {
           .catch(() => {})
       }
       , 3000)
+    window.appInterval = this.fetchSensors
     await window.Notification.requestPermission()
   },
   computed: {

@@ -12,7 +12,7 @@
 
         </b-form-input>
       </b-form-group>
-      <b-form-group label="Start Date:" label-for="start">
+      <b-form-group label="Start Date and Time:" label-for="start">
         <b-form-input
             id="start"
             v-model="start"
@@ -22,7 +22,7 @@
 
         </b-form-input>
       </b-form-group>
-      <b-form-group label="End Date:" label-for="end">
+      <b-form-group label="End Date and Time:" label-for="end">
         <b-form-input
             id="end"
             v-model="end"

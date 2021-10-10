@@ -20,7 +20,8 @@
                                    required>
       </b-form-input>
     </b-form-group>
-    <router-link to='/forgot-password'>Forgot Password?</router-link>
+
+    <a class="link" @click="redirectToForgot()">Forgot Password?</a>
     <hr>
     <b-button v-on:click="login()" variant="primary">Submit </b-button>
     </bForm>
@@ -55,6 +56,13 @@ export default {
             pwd: ''
           }
         })
+    },
+    redirectToForgot() {
+      if(process.env.VUE_APP_ENV === 'intranet') {
+        this.$router.push({ name: 'ForgotIntra' })
+      } else {
+        this.$router.push({ name: 'Forgot' })
+      }
     }
   },
   data() {
@@ -80,4 +88,8 @@ h1 {
   text-align: left;
 }
 
+
+.link {
+  color: blue;
+}
 </style>
