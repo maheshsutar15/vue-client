@@ -95,21 +95,24 @@ export default {
         if(this.$store.getters.getLogInStatus) {
           this.$store.dispatch('fetchSensors', 0)
         }
-        if(this.$store.getters.getSensors == null) {
+        if(this.$store.getters.getSensors.length == 0) {
           return
         }
+        console.log(this.$store.getters.getSensors[1].datetime)
         this.healthyNodes = this.$store.getters.getSensors.filter((node) => {
           const co2_ok = this.applyLogic(node.isCO2, this.checkOK(node.co2Range, node.readings.co2))
           const temp_ok = this.applyLogic(node.isTemperature, this.checkOK(node.temperatureRange, node.readings.temperature))
           const hum_ok = this.applyLogic(node.isHumidity, this.checkOK(node.humidityRange, node.readings.humidity))
           return co2_ok && temp_ok && hum_ok
         })
+          .sort((a, b) => { return Date.parse(b.readings.datetime) - Date.parse(a.readings.datetime) })
         this.faultyNodes = this.$store.getters.getSensors.filter((node) => {
           const co2_ok = this.applyLogic(node.isCO2, this.checkOK(node.co2Range, node.readings.co2))
           const temp_ok = this.applyLogic(node.isTemperature, this.checkOK(node.temperatureRange, node.readings.temperature))
           const hum_ok = this.applyLogic(node.isHumidity, this.checkOK(node.humidityRange, node.readings.humidity))
           return !(co2_ok && temp_ok && hum_ok)
         })
+          .sort((a, b) => { return Date.parse(b.readings.datetime) - Date.parse(a.readings.datetime) })
 
         checkSensors(this.$store.getters.getSensors, this.$store.getters.getFaulties)
           .then(newFaulties=> {

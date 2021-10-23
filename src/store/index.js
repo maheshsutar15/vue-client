@@ -14,7 +14,7 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
-    sensors: null,
+    sensors: [],
     accessToken: getJWT(),
     loggedIn: !!getJWT(),
     designation: getLocalDesignation(),

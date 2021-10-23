@@ -20,11 +20,6 @@ const routes = [
     component: () => import('../views/Trends.vue')
   },
   {
-    path: '/graph/:uid/:from/:to',
-    name: 'Graph',
-    component: () => import('../views/Graph.vue')
-  },
-  {
     path: '/graph2/:uid/:from/:to',
     name: 'GraphHigh',
     component: () => import('../views/GraphHigh.vue')
@@ -48,6 +43,11 @@ const routes = [
     path: '/passwordreset',
     name: 'Reset',
     component: () => import('../views/ResetPassword.vue')
+  },
+  {
+    path: '/logs',
+    name: 'Logs',
+    component: () => import('../views/Logs.vue')
   },
   {
     path: '/aboutus',

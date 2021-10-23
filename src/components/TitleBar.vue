@@ -14,6 +14,10 @@
               <HumanIcon class="ico" title="Add User"/>
               <strong>Add User</strong>
             </b-dropdown-item>
+            <b-dropdown-item v-if="designation === 'admin'" v-on:click="goToLogs()">
+              <LogsIcon class="ico" title="Logs"  />
+              <strong>Logs</strong>
+            </b-dropdown-item>
             <b-dropdown-item v-on:click="goToProfile()">
               <FaceProfile class="ico" title="Profile"  />
               <strong>Profile</strong>
@@ -47,6 +51,7 @@ import LogoutIcon from 'vue-material-design-icons/Logout.vue';
 import HumanIcon from 'vue-material-design-icons/HumanMale.vue';
 import FaceProfile from 'vue-material-design-icons/Account.vue';
 import Info from 'vue-material-design-icons/Information.vue';
+import LogsIcon from 'vue-material-design-icons/Library.vue'
 import { mapGetters } from 'vuex';
 
 export default {
@@ -56,6 +61,7 @@ export default {
     LogoutIcon,
     HumanIcon,
     FaceProfile,
+    LogsIcon,
     Info
   },
   mounted() {
@@ -89,6 +95,9 @@ export default {
     },
     goToProfile() {
       this.$router.push({name: 'Profile'})
+    },
+    goToLogs() {
+      this.$router.push({ name: 'Logs' })
     },
     goToAboutUs() {
       this.$router.push({name: 'About'})

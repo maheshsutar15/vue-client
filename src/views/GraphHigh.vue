@@ -4,16 +4,16 @@
     <vue-loaders-ball-beat color="grey" scale="1" v-if="loading"></vue-loaders-ball-beat>
     <div v-else>
 
-      <!-- <VueJsonToCsv -->
-      <!--     :json-data="chartData" -->
-      <!--     :csv-title="`${uid}.data`" -->
-      <!--     :labels="{ datetime: {title: date}, co2: { title: CO2 }, temperature: { title: Temperature }, humidity: { title: Humidity } }" -->
-      <!--     > -->
-      <!--     <button class="dw-icon"> -->
-      <!--       <DownloadIcon/> -->
-      <!--       Download -->
-      <!--     </button> -->
-      <!-- </VueJsonToCsv> -->
+      <VueJsonToCsv
+          :json-data="chartData"
+          :csv-title="`${uid}.data`"
+          :labels="{ datetime: {title: date}, co2: { title: CO2 }, temperature: { title: Temperature }, humidity: { title: Humidity } }"
+          >
+          <button class="dw-icon">
+            <DownloadIcon/>
+            Download
+          </button>
+      </VueJsonToCsv>
 
       <highcharts :options="chartOptions"></highcharts>
     </div>
@@ -21,15 +21,15 @@
 </template>
 
 <script>
-// import VueJsonToCsv from 'vue-json-to-csv'
-// import DownloadIcon from 'vue-material-design-icons/Download.vue'
+import VueJsonToCsv from 'vue-json-to-csv'
+import DownloadIcon from 'vue-material-design-icons/Download.vue'
 import {Chart} from 'highcharts-vue'
 export default {
   name: 'GraphHigh',
   components: {
     highcharts: Chart,
-    // VueJsonToCsv,
-    // DownloadIcon
+    VueJsonToCsv,
+    DownloadIcon
   },
   async created() {
     this.$store.dispatch('fetchTrend', this.$route.params.uid)
@@ -93,18 +93,12 @@ export default {
           humidity
         })
 
-        this.chartData.push(...filteredReadings)
+        this.chartData.push(...csvData)
 
         this.chartOptions.series[0].data.push(...temperature)
         this.chartOptions.series[1].data.push(...humidity)
         this.chartOptions.series[2].data.push(...co2)
         this.chartOptions.series[3].data.push(...pressure)
-
-        for(let i = 0; i < 3; i++) {
-          if(this.chartOptions.series[i].data.length == 0) {
-            delete this.chartOptions.series[i]
-          }
-        }
 
         this.loading = false
       })

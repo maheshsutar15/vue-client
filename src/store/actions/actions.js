@@ -9,6 +9,7 @@ import fetchTrend from './fetchTrend'
 import fetchProfile from './fetchProfile'
 import sendResetLink from './sendResetLink'
 import resetPassword from './resetPassword'
+import fetchLogs from './fetchLogs'
 
 const updateSensors = (state, newSensorList) => {
   state.commit('updateSensors', newSensorList)
@@ -42,5 +43,6 @@ export default  {
   fetchTrend,
   sendResetLink,
   fetchProfile,
+  fetchLogs,
   resetPassword
 }
