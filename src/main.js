@@ -7,6 +7,7 @@ import store from './store'
 import router from './router'
 import VueLoaders from 'vue-loaders'
 import HighchartsVue from 'highcharts-vue'
+import './registerServiceWorker'
 
 Vue.config.productionTip = false
 

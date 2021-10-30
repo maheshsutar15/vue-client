@@ -98,7 +98,6 @@ export default {
         if(this.$store.getters.getSensors.length == 0) {
           return
         }
-        console.log(this.$store.getters.getSensors[1].datetime)
         this.healthyNodes = this.$store.getters.getSensors.filter((node) => {
           const co2_ok = this.applyLogic(node.isCO2, this.checkOK(node.co2Range, node.readings.co2))
           const temp_ok = this.applyLogic(node.isTemperature, this.checkOK(node.temperatureRange, node.readings.temperature))
