@@ -1,7 +1,7 @@
 <template>
   <div class="container">
     <h1> Register New User </h1>
-    <b-form>
+    <b-form class="main-form">
       <b-form-group label="Username: " label-for="reg_username" description="Please enter unique username." >
         <b-form-input v-model="regUserForm.username" id="reg_username" placeholder="Enter username"></b-form-input>
       </b-form-group>
@@ -71,4 +71,8 @@ export default {
 }
 </script>
 
-<style></style>
+<style>
+.main-form {
+  margin-bottom: 10px;
+}
+</style>

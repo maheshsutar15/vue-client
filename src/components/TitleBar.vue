@@ -10,13 +10,17 @@
       <b-collapse id="nav-collapse" is-nav v-if="loggedIn">
         <b-navbar-nav class="ml-auto operations" >
           <b-nav-item-dropdown right text="Options">
-            <b-dropdown-item @click="$bvModal.show('regForm')">
+            <!-- <b-dropdown-item @click="$bvModal.show('regForm')"> -->
               <HumanIcon class="ico" title="Add User"/>
-              <strong>Add User</strong>
-            </b-dropdown-item>
+            <!--   <strong>Add User</strong> -->
+            <!-- </b-dropdown-item> -->
             <b-dropdown-item v-if="designation === 'admin'" v-on:click="goToLogs()">
               <LogsIcon class="ico" title="Logs"  />
               <strong>Logs</strong>
+            </b-dropdown-item>
+            <b-dropdown-item v-on:click="goToLogs()">
+              <ManageUsers class="ico" title="ManageUsers"  />
+              <strong>Manage Users</strong>
             </b-dropdown-item>
             <b-dropdown-item v-on:click="goToProfile()">
               <FaceProfile class="ico" title="Profile"  />
@@ -52,6 +56,7 @@ import HumanIcon from 'vue-material-design-icons/HumanMale.vue';
 import FaceProfile from 'vue-material-design-icons/Account.vue';
 import Info from 'vue-material-design-icons/Information.vue';
 import LogsIcon from 'vue-material-design-icons/Library.vue'
+import ManageUsers from 'vue-material-design-icons/AccountMultiple.vue'
 import { mapGetters } from 'vuex';
 
 export default {
@@ -62,6 +67,7 @@ export default {
     HumanIcon,
     FaceProfile,
     LogsIcon,
+    ManageUsers,
     Info
   },
   mounted() {

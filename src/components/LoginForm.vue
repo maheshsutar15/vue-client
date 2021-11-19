@@ -1,5 +1,5 @@
 <template>
-  <div class="container">
+  <div class="container" @keydown.enter="login">
     <h1> Login </h1>
     <bForm variant="dark">
     <b-form-group label="Username:" label-for="uname">

@@ -4,7 +4,7 @@
     <div class="container">
       <router-view></router-view>
     </div>
-    <footer class="main">
+    <footer class="main" v-if="this.$route.meta.footer">
       Copyright &copy; 2021 ATES OPL.
       All Rights Reserved.
     </footer>

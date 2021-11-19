@@ -11,6 +11,7 @@
         <Created v-if="log.action === '0'"/>
         <Updated v-if="log.action === '1'"/>
         <Deleted v-if="log.action === '2'"/>
+        <LoggedIn v-if="log.action === '6'"/>
         User <b>{{ log.user }}</b>
         {{ getActions(log.action) }}
         {{ getEntity(log.entity) }}
@@ -29,6 +30,7 @@
 <script>
 import Created from 'vue-material-design-icons/PlusBox.vue'
 import Updated from 'vue-material-design-icons/Update.vue'
+import LoggedIn from 'vue-material-design-icons/Login.vue'
 import Deleted from 'vue-material-design-icons/Delete.vue'
 
 import { mapGetters } from 'vuex'
@@ -45,7 +47,7 @@ import { mapGetters } from 'vuex'
       Created,
       Updated,
       Deleted,
-      // LoggedIn
+      LoggedIn
     },
     computed: {
       ...mapGetters({
@@ -58,6 +60,10 @@ import { mapGetters } from 'vuex'
           'created new',
           'updated existing',
           'deleted',
+          '',
+          '',
+          '',
+          'Logged In',
         ][idx]
       },
       getEntity(idx) {
