@@ -10,15 +10,11 @@
       <b-collapse id="nav-collapse" is-nav v-if="loggedIn">
         <b-navbar-nav class="ml-auto operations" >
           <b-nav-item-dropdown right text="Options">
-            <!-- <b-dropdown-item @click="$bvModal.show('regForm')"> -->
-              <HumanIcon class="ico" title="Add User"/>
-            <!--   <strong>Add User</strong> -->
-            <!-- </b-dropdown-item> -->
-            <b-dropdown-item v-if="designation === 'admin'" v-on:click="goToLogs()">
+            <b-dropdown-item v-if="designation === 'admin' || designation === 'superadmin'" v-on:click="goToLogs()">
               <LogsIcon class="ico" title="Logs"  />
               <strong>Logs</strong>
             </b-dropdown-item>
-            <b-dropdown-item v-on:click="goToLogs()">
+            <b-dropdown-item v-on:click="goToManageUsers()">
               <ManageUsers class="ico" title="ManageUsers"  />
               <strong>Manage Users</strong>
             </b-dropdown-item>
@@ -28,31 +24,23 @@
             </b-dropdown-item>
             <b-dropdown-item v-on:click="goToAboutUs()">
               <Info class="ico" title="About Us"></Info>
-              <strong>About Us</strong></b-dropdown-item>
-            <b-dropdown-item v-on:click="logout()">
-              <LogoutIcon class="ico" title="Logout" />
-              <strong>Logout</strong>
+              <strong>About Us</strong>
             </b-dropdown-item>
           </b-nav-item-dropdown>
+          <b-nav-item v-on:click="logout()">
+            <LogoutIcon class="ico dark" title="Logout" />
+            <strong>Logout</strong>
+          </b-nav-item>
         </b-navbar-nav>
       </b-collapse>
 
     </b-navbar>
-    <b-modal  id='regForm' title="Add new user" hide-footer>
-      <RegisterForm class="full_height" v-if="designation == 'admin'"></RegisterForm>
-      <div v-else>
-        <b-alert show variant="warning">Only admins can add new users.</b-alert>
-      </div>
-    </b-modal>
   </div>
 </template>
 
 <script>
 
-import RegisterForm from './RegisterForm.vue'
-
 import LogoutIcon from 'vue-material-design-icons/Logout.vue';
-import HumanIcon from 'vue-material-design-icons/HumanMale.vue';
 import FaceProfile from 'vue-material-design-icons/Account.vue';
 import Info from 'vue-material-design-icons/Information.vue';
 import LogsIcon from 'vue-material-design-icons/Library.vue'
@@ -62,19 +50,17 @@ import { mapGetters } from 'vuex';
 export default {
   name: 'TitleBar',
   components: {
-    RegisterForm,
     LogoutIcon,
-    HumanIcon,
     FaceProfile,
     LogsIcon,
     ManageUsers,
     Info
   },
   mounted() {
-      window.addEventListener('resize', () => {
-        let size = window.screen.width;
-        this.isMobile = size <= 760;
-      });
+    window.addEventListener('resize', () => {
+      let size = window.screen.width;
+      this.isMobile = size <= 760;
+    });
   },
   computed: {
     ...mapGetters({
@@ -108,6 +94,9 @@ export default {
     goToAboutUs() {
       this.$router.push({name: 'About'})
     },
+    goToManageUsers() {
+      this.$router.push({name: 'ManageUsers'})
+    },
   },
   data() {
     return {
@@ -133,12 +122,13 @@ export default {
   background-color: #ccc;
   background-color: #FCFFDB;
   background-color: #539;
+  box-shadow: #222 1px 1px 15px;
 }
 
 .ico {
   color: black;
 }
-.full_height {
-  height: 100%;
+.dark {
+  color: white;
 }
 </style>

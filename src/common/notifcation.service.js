@@ -8,17 +8,17 @@ export function checkSensors(sensors, faulties) {
       let humidityRange = sensor.humidityRange
       let temperatureRange = sensor.temperatureRange
       let pressureRange  = sensor.pressureRange 
-      let readings = sensor.readings ?? 0
+      let reading = sensor.reading ?? 0
 
-      if(readings == 0) faulty.push(sensor.uid)
+      if(reading == 0) faulty.push(sensor.uid)
       if(
-        readings.co2 < co2Range.min || readings.co2 > co2Range.max
+        reading.co2 < co2Range.min || reading.co2 > co2Range.max
         ||
-        readings.pressure < pressureRange.min || readings.pressure > pressureRange.max
+        reading.pressure < pressureRange.min || reading.pressure > pressureRange.max
         ||
-        readings.temperature < temperatureRange.min || readings.temperature > temperatureRange.max
+        reading.temperature < temperatureRange.min || reading.temperature > temperatureRange.max
         ||
-        readings.humidity < humidityRange.min || readings.humidity > humidityRange.max
+        reading.humidity < humidityRange.min || reading.humidity > humidityRange.max
       ) {
         if(!faulties.includes(sensor.uid)) {
           faulty.push(sensor.uid)

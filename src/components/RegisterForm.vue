@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-    <h1> Register New User </h1>
+    <h2> Register New User </h2>
     <b-form class="main-form">
       <b-form-group label="Username: " label-for="reg_username" description="Please enter unique username." >
         <b-form-input v-model="regUserForm.username" id="reg_username" placeholder="Enter username"></b-form-input>
@@ -11,9 +11,9 @@
       <b-form-group label="Password: " label-for="reg_pwd" description="Please enter strong password" >
         <b-form-input id="reg_pwd" v-model="regUserForm.password" type="password" placeholder="Your password here" ></b-form-input>
       </b-form-group>
-      <b-form-group label="Master Password: " label-for="reg_mpwd" description="Please enter the master password" >
-        <b-form-input id="reg_mpwd" v-model="regUserForm.masterPassword" type="password" placeholder="Your system's master password here" ></b-form-input>
-      </b-form-group>
+      <!-- <b-form-group label="Master Password: " label-for="reg_mpwd" description="Please enter the master password" > -->
+      <!--   <b-form-input id="reg_mpwd" v-model="regUserForm.masterPassword" type="password" placeholder="Your system's master password here" ></b-form-input> -->
+      <!-- </b-form-group> -->
       <b-form-group label="Institute" label-for="reg_institute" description="This should be consistent with your other users" >
         <b-form-input id="reg_institute" v-model="regUserForm.institute" placeholder="The name of your institue" ></b-form-input>
       </b-form-group>
@@ -37,7 +37,8 @@ export default {
             .catch(() => {
               this.$root.$off('bv::modal::hide')
             })
-          this.$router.push({name: 'Dashboard'})
+          // this.$router.push({name: 'Dashboard'})
+          this.$root.$off('bv::modal::hide')
         }).catch((e) => {
           this.$bvModal.msgBoxOk('Could not Register: ' + e)
             .then(() => {
@@ -51,7 +52,7 @@ export default {
       regUserForm: {
         username: '',
         password: '',
-        masterPassword: '',
+        // masterPassword: '',
         email: '',
         institute: '',
         designation: null
@@ -74,5 +75,6 @@ export default {
 <style>
 .main-form {
   margin-bottom: 10px;
+  margin-top: 0px;
 }
 </style>

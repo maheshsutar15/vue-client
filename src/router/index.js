@@ -29,7 +29,7 @@ const routes = [
     }
   },
   {
-    path: '/graph2/:uid/:from/:to',
+    path: '/graph/:uid/:from/:to',
     name: 'GraphHigh',
     component: () => import('../views/GraphHigh.vue'),
     meta: {
@@ -66,6 +66,14 @@ const routes = [
     component: () => import('../views/ResetPassword.vue'),
     meta: {
       footer: true,
+    }
+  },
+  {
+    path: '/manage-users',
+    name: 'ManageUsers',
+    component: () => import('../views/ManageUsers.vue'),
+    meta: {
+      footer: false,
     }
   },
   {

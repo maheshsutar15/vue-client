@@ -2,6 +2,11 @@
   <div id="app">
     <TitleBar  />
     <div class="container">
+      <b-breadcrumb :items="[
+                            { text: 'Home', href: '/' },
+                            { text: $route.name, href: $route.path }
+                            ]">
+      </b-breadcrumb>
       <router-view></router-view>
     </div>
     <footer class="main" v-if="this.$route.meta.footer">
@@ -24,11 +29,6 @@ export default {
     return {
     }
   },
-  async created () {
-    if(this.$store.getters.getLogInStatus === true) {
-      this.$router.push({name: 'Dashboard'})
-    }
-  }
 }
 </script>
 
@@ -39,7 +39,7 @@ html, #app {
 
 /*
 html, #app {
-background-color: #ddd;
+  background-color: #ddd;
 
 }
  */

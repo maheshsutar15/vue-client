@@ -14,7 +14,8 @@ const register = async (state, regUserForm) => {
       method: "post",
       headers: {
         "Content-Type": "application/json",
-        "Accept": "*/*"
+        "Accept": "*/*",
+        "Authorization": "Bearer " + state.getters.getAccessToken
       },
       body: JSON.stringify(usr)
     }).then(r => r.json())
@@ -23,9 +24,9 @@ const register = async (state, regUserForm) => {
         if (data.msg) {
           reject(data.msg)
         } else {
-          state.commit('setToken', data.accessToken)
-          state.commit('setLoggedIn', true)
-          state.commit('setDesignation', data.designation)
+          // state.commit('setToken', data.accessToken)
+          // state.commit('setLoggedIn', true)
+          // state.commit('setDesignation', data.designation)
           resolve()
         }
       }).catch(e => {

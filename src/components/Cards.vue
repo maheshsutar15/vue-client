@@ -10,7 +10,7 @@
           v-for="sensor in sensors"
           v-bind:key="sensor._id"
           v-bind:title="`UID: ${sensor.uid}`"
-          v-bind:sub-title="sensor.readings.user"
+          v-bind:sub-title="sensor.reading.user"
           class="card drk"
           >
 
@@ -39,10 +39,10 @@
               <td
                   class="value"
                   :class="{
-                           ok : checkOK(sensor.temperatureRange, sensor.readings.temperature),
-                           notok : !checkOK(sensor.temperatureRange, sensor.readings.temperature)}"
+                           ok : checkOK(sensor.temperatureRange, sensor.reading.temperature),
+                           notok : !checkOK(sensor.temperatureRange, sensor.reading.temperature)}"
                   >
-                  {{ sensor.readings.temperature || '-' }} &deg;C
+                  {{ sensor.reading.temperature || '-' }} &deg;C
               </td>
             </tr>
             <tr v-if="sensor.isHumidity">
@@ -50,10 +50,10 @@
               <td
                   class="value"
                   :class="{
-                           ok : checkOK(sensor.humidityRange, sensor.readings.humidity),
-                           notok : !checkOK(sensor.humidityRange, sensor.readings.humidity)}"
+                           ok : checkOK(sensor.humidityRange, sensor.reading.humidity),
+                           notok : !checkOK(sensor.humidityRange, sensor.reading.humidity)}"
                   >
-                  {{ sensor.readings.humidity || '-' }} %
+                  {{ sensor.reading.humidity || '-' }} %
               </td>
             </tr>
             <tr v-if="sensor.isCO2">
@@ -61,17 +61,17 @@
               <td
                   class="value"
                   :class="{
-                           ok : checkOK(sensor.co2Range, sensor.readings.co2),
-                           notok : !checkOK(sensor.co2Range, sensor.readings.co2)}"
+                           ok : checkOK(sensor.co2Range, sensor.reading.co2),
+                           notok : !checkOK(sensor.co2Range, sensor.reading.co2)}"
                   >
-                  {{ sensor.readings.co2 || '-'}} %
+                  {{ sensor.reading.co2 || '-'}} %
               </td>
             </tr>
             <tr>
               <td>Battery</td>
               <td class="value" :style="{ok : true}">
-                <BatteryFull title="Battery Full" v-if="parseInt(sensor.readings.battery) >= 90" class="ok" />
-                <BatteryHalf title="Battery Normal" class="notbad" v-else-if="parseInt(sensor.readings.battery) >= 20 && parseInt(sensor.readings.battery ) < 90"/>
+                <BatteryFull title="Battery Full" v-if="parseInt(sensor.reading.battery) >= 90" class="ok" />
+                <BatteryHalf title="Battery Normal" class="notbad" v-else-if="parseInt(sensor.reading.battery) >= 20 && parseInt(sensor.reading.battery ) < 90"/>
                 <BatteryLow title="Battery Critical" class="notok" v-else/>
               </td>
             </tr>
@@ -90,7 +90,7 @@
           </table>
           <hr>
           <div>
-            Last Updated at: {{ formatDate(sensor.readings.datetime )}}
+            Last Updated at: {{ formatDate(sensor.reading.datetime )}}
           </div>
         </b-card-text>
       </b-card>
@@ -160,7 +160,7 @@ export default {
         })
     },
     checkOffline(sensor) {
-      const dt = Date.parse(sensor.readings.datetime)
+      const dt = Date.parse(sensor.reading.datetime)
       const dateDiff_hrs = Math.floor((new Date() - dt) / 1000 / 3600 ) ;
       if (dateDiff_hrs > 24) {
         return Math.floor(dateDiff_hrs / 24) + " days"

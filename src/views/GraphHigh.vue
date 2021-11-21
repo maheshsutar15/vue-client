@@ -1,20 +1,18 @@
 <template>
   <div>
     <h1>Trend for {{ uid }} </h1>
-    <vue-loaders-ball-beat color="grey" scale="1" v-if="loading"></vue-loaders-ball-beat>
+    <vue-loaders-ball-beat color="grey" scale="1" v-if="loading"/>
     <div v-else>
-
       <VueJsonToCsv
           :json-data="chartData"
-          :csv-title="`${uid}.data`"
-          :labels="{ datetime: {title: date}, co2: { title: CO2 }, temperature: { title: Temperature }, humidity: { title: Humidity } }"
+          :csv-title="`${this.uid}.data`"
+          :labels="{ date: {title: 'Datetime'}, co2: { title: 'CO2' }, temperature: { title: 'Temperature' }, humidity: { title: 'Humidity' } }"
           >
-          <button class="dw-icon">
+          <b-button variant="primary">
             <DownloadIcon/>
             Download
-          </button>
+          </b-button>
       </VueJsonToCsv>
-
       <highcharts :options="chartOptions"></highcharts>
     </div>
   </div>
@@ -24,6 +22,7 @@
 import VueJsonToCsv from 'vue-json-to-csv'
 import DownloadIcon from 'vue-material-design-icons/Download.vue'
 import {Chart} from 'highcharts-vue'
+
 export default {
   name: 'GraphHigh',
   components: {
@@ -31,14 +30,16 @@ export default {
     VueJsonToCsv,
     DownloadIcon
   },
-  async created() {
-    this.$store.dispatch('fetchTrend', this.$route.params.uid)
-      .then( readings => {
-        console.log(this.from, this.to)
+  created() {
+    this.loading = true
+  },
+  async mounted() {
+    this.$store.dispatch('fetchTrend', this.uid)
+      .then( reading => {
 
         const fromDate = Date.parse(this.from)
         const toDate = Date.parse(this.to)
-        const filteredReadings = readings.filter(reading => {
+        const filteredReadings = reading.filter(reading => {
           const dt = Date.parse(reading.datetime)
           const cond = dt >= fromDate && dt <= toDate
           console.log(cond)
@@ -49,7 +50,7 @@ export default {
 
         let co2 = []
         let humidity = []
-        let pressure = []
+        // let pressure = []
         let temperature = []
 
         console.log(filteredReadings)
@@ -74,10 +75,10 @@ export default {
             parseFloat(reading.temperature) || 0
           ])
 
-          pressure.push([
-            date,
-            parseFloat(reading.pressure) || 0
-          ])
+          // pressure.push([
+          //   date,
+          //   parseFloat(reading.pressure) || 0
+          // ])
 
           humidity.push([
             date,
@@ -89,7 +90,7 @@ export default {
         console.log({
           temperature,
           co2,
-          pressure,
+          // pressure,
           humidity
         })
 
@@ -98,10 +99,10 @@ export default {
         this.chartOptions.series[0].data.push(...temperature)
         this.chartOptions.series[1].data.push(...humidity)
         this.chartOptions.series[2].data.push(...co2)
-        this.chartOptions.series[3].data.push(...pressure)
+        // this.chartOptions.series[3].data.push(...pressure)
 
-        this.loading = false
       })
+     this.loading = false
   },
   data() {
     return {
@@ -138,21 +139,9 @@ export default {
             name: 'CO2',
             data: []
           },
-          {
-            name: 'Pressure',
-            data: []
-          },
-
         ]
       }
     }
   }
 }
 </script>
-
-<style>
-.dw-icon {
-  background: transparent;
-  border: none
-}
-</style>

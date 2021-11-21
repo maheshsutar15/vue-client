@@ -4,39 +4,33 @@
       <AddNodeForm > </AddNodeForm>
     </b-modal>
     <div class="row">
-      <table>
-        <tr>
-          <td>
-            <div>
-              <b-button
-                  variant="outline-primary"
-                  @click="$bvModal.show('nodeForm')"
-                  style="float: left; margin-right: 10px"
-                  >
-                  <PlusIcon class="addnode"/>
-                  Add Node
-              </b-button>
-            </div>
-            <div >
-              <b-button
-                  variant="outline-primary"
-                  @click="goToTrend()"
-                  style="float: left;"
-                  >
-                  <ChartLine class="addnode"/>
-                  See trend
-              </b-button>
-            </div>
-          </td>
-          <td>
-            <div style="float: right; text-align: right; font-size: 10pt;">
-              <strong>
-                {{ ip }}
-              </strong>
-            </div>
-          </td>
-        </tr>
-      </table>
+      <div class="col-md-2">
+        <b-button
+            variant="outline-primary"
+            @click="$bvModal.show('nodeForm')"
+            style="float: left; margin-right: 10px"
+            >
+            <PlusIcon class="addnode"/>
+            Add Node
+        </b-button>
+      </div>
+      <div class="col-md-2">
+        <b-button
+            variant="outline-primary"
+            @click="goToTrend()"
+            style="float: left;"
+            >
+            <ChartLine class="addnode"/>
+            See trend
+        </b-button>
+      </div>
+      <div class="col-md-8">
+        <div style="float: right; text-align: right; font-size: 10pt;">
+          <strong>
+            {{ ip }}
+          </strong>
+        </div>
+      </div>
     </div>
     <div class="summary">
       <b>Summary</b>  <br>
@@ -98,20 +92,23 @@ export default {
         if(this.$store.getters.getSensors.length == 0) {
           return
         }
-        this.healthyNodes = this.$store.getters.getSensors.filter((node) => {
-          const co2_ok = this.applyLogic(node.isCO2, this.checkOK(node.co2Range, node.readings.co2))
-          const temp_ok = this.applyLogic(node.isTemperature, this.checkOK(node.temperatureRange, node.readings.temperature))
-          const hum_ok = this.applyLogic(node.isHumidity, this.checkOK(node.humidityRange, node.readings.humidity))
-          return co2_ok && temp_ok && hum_ok
-        })
-          .sort((a, b) => { return Date.parse(b.readings.datetime) - Date.parse(a.readings.datetime) })
-        this.faultyNodes = this.$store.getters.getSensors.filter((node) => {
-          const co2_ok = this.applyLogic(node.isCO2, this.checkOK(node.co2Range, node.readings.co2))
-          const temp_ok = this.applyLogic(node.isTemperature, this.checkOK(node.temperatureRange, node.readings.temperature))
-          const hum_ok = this.applyLogic(node.isHumidity, this.checkOK(node.humidityRange, node.readings.humidity))
-          return !(co2_ok && temp_ok && hum_ok)
-        })
-          .sort((a, b) => { return Date.parse(b.readings.datetime) - Date.parse(a.readings.datetime) })
+        if (this.$store.getters.getSensors.length != 0) {
+
+          this.healthyNodes = this.$store.getters.getSensors.filter((node) => {
+            const co2_ok = this.applyLogic(node.isCO2, this.checkOK(node.co2Range, node.reading.co2))
+            const temp_ok = this.applyLogic(node.isTemperature, this.checkOK(node.temperatureRange, node.reading.temperature))
+            const hum_ok = this.applyLogic(node.isHumidity, this.checkOK(node.humidityRange, node.reading.humidity))
+            return co2_ok && temp_ok && hum_ok
+          })
+            .sort((a, b) => { return Date.parse(b.reading.datetime) - Date.parse(a.reading.datetime) })
+          this.faultyNodes = this.$store.getters.getSensors.filter((node) => {
+            const co2_ok = this.applyLogic(node.isCO2, this.checkOK(node.co2Range, node.reading.co2))
+            const temp_ok = this.applyLogic(node.isTemperature, this.checkOK(node.temperatureRange, node.reading.temperature))
+            const hum_ok = this.applyLogic(node.isHumidity, this.checkOK(node.humidityRange, node.reading.humidity))
+            return !(co2_ok && temp_ok && hum_ok)
+          })
+            .sort((a, b) => { return Date.parse(b.reading.datetime) - Date.parse(a.reading.datetime) })
+        }
 
         checkSensors(this.$store.getters.getSensors, this.$store.getters.getFaulties)
           .then(newFaulties=> {

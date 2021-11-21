@@ -1,5 +1,5 @@
 <template>
-  <div v-if="designation === 'admin'" class="logs">
+  <div v-if="designation === 'admin' || designation === 'superadmin'" class="logs">
     <h3>Recent acitivites</h3>
     <hr>
     <b-list-group>
@@ -39,7 +39,6 @@ import { mapGetters } from 'vuex'
     data() {
       return {
         logs: [
-          { _id: 'lol' }
         ]
       }
     },
@@ -63,7 +62,7 @@ import { mapGetters } from 'vuex'
           '',
           '',
           '',
-          'Logged In',
+          'Logged in as',
         ][idx]
       },
       getEntity(idx) {

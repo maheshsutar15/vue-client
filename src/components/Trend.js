@@ -6,15 +6,15 @@ export default {
   async mounted() {
 
     this.$store.dispatch('fetchTrend', this.$route.params.uid)
-      .then( readings => {
-        // readings = data
+      .then( reading => {
+        // reading = data
         console.log(this.$route.params.uid)
         console.log(this.from, this.to)
 
         // Filter Readings
         const fromDate = Date.parse(this.from)
         const toDate = Date.parse(this.to)
-        const filteredReadings = readings.filter(reading => {
+        const filteredReadings = reading.filter(reading => {
           const dt = Date.parse(reading.datetime)
           return dt >= fromDate && dt <= toDate
         })

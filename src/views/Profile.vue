@@ -13,11 +13,11 @@
           <h5>{{ user.email }}</h5>
         </div>
         <div class="detail">
-          <h3>Institue</h3>
+          <h3>Institute</h3>
           <h5>{{ user.institute }}</h5>
         </div>
         <div class="detail">
-          <h3>Desigation</h3>
+          <h3>Designation</h3>
           <h5>{{ user.designation }}</h5>
         </div>
       </div>

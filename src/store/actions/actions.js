@@ -9,6 +9,7 @@ import fetchTrend from './fetchTrend'
 import fetchProfile from './fetchProfile'
 import sendResetLink from './sendResetLink'
 import resetPassword from './resetPassword'
+import deleteUser from './deleteUser'
 import fetchLogs from './fetchLogs'
 
 const updateSensors = (state, newSensorList) => {
@@ -44,5 +45,6 @@ export default  {
   sendResetLink,
   fetchProfile,
   fetchLogs,
+  deleteUser,
   resetPassword
 }
