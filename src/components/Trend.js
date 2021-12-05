@@ -21,10 +21,8 @@ export default {
 
         const co2 = filteredReadings.map(r => r.co2)
         const humidity = filteredReadings.map(r => r.humidity)
-        const pressure = filteredReadings.map(r => r.pressure)
         const temperature = filteredReadings.map(r => r.temperature)
         const datetime = filteredReadings.map(r => new Date(r.datetime).toLocaleString(undefined, {timeZone: 'Asia/Kolkata'}))
-        // console.log(typeof datetime[0])
 
         let chartdata = {
           labels: datetime,
@@ -33,12 +31,12 @@ export default {
               label: 'CO2',
               data: co2,
             },
-            {
-              label: 'Pressure',
-              backgroundColor: '#00000024',
-              color: '#ff0000',
-              data: pressure
-            },
+            // {
+            //   label: 'Pressure',
+            //   backgroundColor: '#00000024',
+            //   color: '#ff0000',
+            //   data: pressure
+            // },
             {
               label: 'Temperature',
               backgroundColor: '#ff00ff24',
@@ -48,7 +46,7 @@ export default {
               label: 'Humidity',
               backgroundColor: '#8f422100',
               data: humidity
-            },
+            }
           ]
         }
         this.renderChart(chartdata, this.options)

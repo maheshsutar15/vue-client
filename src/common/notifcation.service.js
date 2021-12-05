@@ -33,23 +33,10 @@ export function checkSensors(sensors, faulties) {
 export function sendNotification(sensors) {
   let sensorsList = "Faulty sensors are : "
   for(let sensor of sensors) {
-    sensorsList += `${sensor} `
+    sensorsList += `${sensor.uid} `
   }
   console.log(sensors)
-
-  new Notification("There are few faulty sensors that require attention", {
-    body: sensorsList
-  })
-  navigator.serviceWorker.register('sw.js')
-  Notification.requestPermission((r) => {
-    if( r === 'granted' ) {
-      navigator.serviceWorker.ready.then((reg) => {
-        reg.showNotification("There are few faulty sensors", {
-          body: sensorsList
-        })
-      })
-    }
-  })
+  return sensorsList
 }
 
 

@@ -42,22 +42,17 @@ export default {
         const filteredReadings = reading.filter(reading => {
           const dt = Date.parse(reading.datetime)
           const cond = dt >= fromDate && dt <= toDate
-          console.log(cond)
           return cond
         })
         const csvData = []
-
 
         let co2 = []
         let humidity = []
         // let pressure = []
         let temperature = []
 
-        console.log(filteredReadings)
-
         for(let reading of filteredReadings) {
           let date = new Date(reading.datetime).toLocaleString(undefined, {timeZone: 'Asia/Kolkata'})
-          console.log(reading)
           csvData.push({
             date: date,
             co2: parseFloat(reading.co2 || 0),
@@ -75,11 +70,6 @@ export default {
             parseFloat(reading.temperature) || 0
           ])
 
-          // pressure.push([
-          //   date,
-          //   parseFloat(reading.pressure) || 0
-          // ])
-
           humidity.push([
             date,
             parseFloat(reading.humidity) || 0
@@ -87,19 +77,11 @@ export default {
 
         }
 
-        console.log({
-          temperature,
-          co2,
-          // pressure,
-          humidity
-        })
-
         this.chartData.push(...csvData)
 
         this.chartOptions.series[0].data.push(...temperature)
         this.chartOptions.series[1].data.push(...humidity)
         this.chartOptions.series[2].data.push(...co2)
-        // this.chartOptions.series[3].data.push(...pressure)
 
       })
      this.loading = false
@@ -122,6 +104,10 @@ export default {
           }
         },
         xAxis: {
+          type: 'datetime',
+          labels: {
+            format: '{value:%Y-%b-%e}'
+          },
           title: {
             text: "Timestamps",
           }

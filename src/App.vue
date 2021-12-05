@@ -29,6 +29,11 @@ export default {
     return {
     }
   },
+  mounted() {
+    this.$notification.show('NIV CMS', {
+      body: 'Hello, App has been initialised.'
+    }, {})
+  }
 }
 </script>
 

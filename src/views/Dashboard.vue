@@ -59,7 +59,7 @@ import PlusIcon from 'vue-material-design-icons/PlusCircle.vue';
 import ChartLine from 'vue-material-design-icons/ChartLine.vue';
 
 import { mapGetters, mapActions } from 'vuex';
-import { checkSensors, sendNotification } from '@/common/notifcation.service';
+import { sendNotification } from '@/common/notifcation.service';
 
 export default {
   name: 'Dashboard',
@@ -83,13 +83,13 @@ export default {
       this.$bvModal.msgBoxOk('Please Login')
       this.$router.push('/')
     }
-    navigator.serviceWorker.register('sw.js')
+    // navigator.serviceWorker.register('sw.js')
     this.fetchSensors = setInterval(
       () => {
-        if(this.$store.getters.getLogInStatus) {
-          this.$store.dispatch('fetchSensors', 0)
-        }
         if(this.$store.getters.getSensors.length == 0) {
+          if(this.$store.getters.getLogInStatus) {
+            this.$store.dispatch('fetchSensors', 0)
+          }
           return
         }
         if (this.$store.getters.getSensors.length != 0) {
@@ -110,16 +110,27 @@ export default {
             .sort((a, b) => { return Date.parse(b.reading.datetime) - Date.parse(a.reading.datetime) })
         }
 
-        checkSensors(this.$store.getters.getSensors, this.$store.getters.getFaulties)
-          .then(newFaulties=> {
-            this.$store.commit('setFaulties', newFaulties)
-            sendNotification(newFaulties)
-          })
-          .catch(() => {})
+        this.$store.commit('setFaulties', this.faultyNodes)
+        console.log(this.faultyNodes)
+        if(this.$store.getters.getLogInStatus) {
+          this.$store.dispatch('fetchSensors', 0)
+        }
+        return
       }
       , 3000)
+
+    const appIn2 = setInterval(() => {
+        const notifBody = sendNotification(this.faultyNodes)
+        console.log(notifBody)
+        this.$notification.show('There are few faulty nodes', {
+          body: notifBody
+        }, {})
+    }, 30 * 60 * 1000)
+
+    console.log(this.$store.getters.getFaulties.length)
     window.appInterval = this.fetchSensors
-    await window.Notification.requestPermission()
+    window.notificationInterval = appIn2
+    // await window.Notification.requestPermission()
   },
   computed: {
     ...mapGetters({sensors: 'getSensors', loading: 'isLoading'}),
