@@ -1,17 +1,20 @@
-const fetchTrend = async (state, uid) => {
+const fetchTrend = async (state, {uid, from, to}) => {
   return new Promise((resolve, reject) => {
-    console.log(uid)
-
-    fetch(process.env.VUE_APP_HOST + `/node/readings/all/${uid}`, {
+    fetch(process.env.VUE_APP_HOST + `/node/readings/all/`, {
       headers: new Headers({
-        'Authorization': 'Bearer '+state.getters.getAccessToken
-      })
+        'Authorization': 'Bearer '+state.getters.getAccessToken,
+        'Content-Type': 'application/json'
+      }),
+      mode: 'cors',
+      cache: 'default',
+      method: 'POST',
+      body: "" + JSON.stringify({ uid, to, from }) + ""
     })
       .then(res => {
         return res.json()
       })
       .then(data => {
-        console.log(data)
+        console.log(data.length)
         resolve(data)
       })
       .catch(e => {

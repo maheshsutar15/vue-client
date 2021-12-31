@@ -1,9 +1,13 @@
 import login from './login'
 import register from './register'
+import verify from './verify'
 import fetchSensors from './sensors'
 import logout from './logout'
 import addNode from './addNode'
 import modifyNode from './modifyNode'
+import getArchived from './getArchivedNodes'
+import archiveNode from './archiveNode'
+import unarchiveNode from './unarchiveNode'
 import deleteNode from './deleteNode'
 import fetchTrend from './fetchTrend'
 import fetchProfile from './fetchProfile'
@@ -11,6 +15,9 @@ import sendResetLink from './sendResetLink'
 import resetPassword from './resetPassword'
 import deleteUser from './deleteUser'
 import fetchLogs from './fetchLogs'
+import getAllBackups from './getAllBackups'
+import createBackup from './createBackup'
+import deleteBackup from './deleteBackup'
 
 const updateSensors = (state, newSensorList) => {
   state.commit('updateSensors', newSensorList)
@@ -36,15 +43,22 @@ export default  {
   setDesignation,
   login,
   register,
+  verify,
   fetchSensors,
   logout,
   addNode,
   modifyNode,
+  getArchived,
+  archiveNode,
+  unarchiveNode,
   deleteNode,
   fetchTrend,
   sendResetLink,
   fetchProfile,
   fetchLogs,
   deleteUser,
-  resetPassword
+  resetPassword,
+  getAllBackups,
+  createBackup,
+  deleteBackup
 }

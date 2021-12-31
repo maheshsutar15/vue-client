@@ -2,8 +2,6 @@ const register = async (state, regUserForm) => {
   return new Promise((resolve, reject) => {
     let usr = {
       username: regUserForm.username,
-      password: regUserForm.password,
-      masterPassword: regUserForm.masterPassword,
       email: regUserForm.email,
       institute: regUserForm.institute,
       designation: regUserForm.designation
@@ -24,9 +22,6 @@ const register = async (state, regUserForm) => {
         if (data.msg) {
           reject(data.msg)
         } else {
-          // state.commit('setToken', data.accessToken)
-          // state.commit('setLoggedIn', true)
-          // state.commit('setDesignation', data.designation)
           resolve()
         }
       }).catch(e => {

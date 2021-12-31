@@ -1,6 +1,6 @@
-const fetchLogs = async (state) => {
+const getArchived = async (state) => {
   return new Promise( (resolve, reject) => {
-    fetch(process.env.VUE_APP_HOST + `/activities`, {
+    fetch(process.env.VUE_APP_HOST + `/node/archived`, {
       headers: new Headers({
         'Authorization': 'Bearer '+state.getters.getAccessToken
       })
@@ -9,7 +9,7 @@ const fetchLogs = async (state) => {
         return res.json()
       })
       .then(data => {
-        resolve(data.updates)
+        resolve(data)
       })
       .catch(e => {
         reject(e)
@@ -17,4 +17,4 @@ const fetchLogs = async (state) => {
   })
 }
 
-export default fetchLogs
+export default getArchived

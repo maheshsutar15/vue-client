@@ -5,7 +5,7 @@
         <ModifyNodeForm :sensor="currentNode"/>
       </b-modal>
     </div>
-    <div class="container" v-if="sensors.length > 0">
+    <div class="container" v-if="sensors.length > 0 && !loading">
       <b-card
           v-for="sensor in sensors"
           v-bind:key="sensor._id"
@@ -13,8 +13,6 @@
           v-bind:sub-title="sensor.reading.user"
           class="card drk"
           >
-
-          Offline since {{ checkOffline(sensor) }}
         <hr>
         <b-card-text >
           <table>
@@ -32,6 +30,14 @@
               </td>
               <td class="value">
                 {{ sensor.location }}
+              </td>
+            </tr>
+            <tr>
+              <td>
+                Sub-location
+              </td>
+              <td class="value">
+                {{ sensor.sublocation || "" }}
               </td>
             </tr>
             <tr v-if="sensor.isTemperature">
@@ -90,7 +96,9 @@
           </table>
           <hr>
           <div>
-            Last Updated at: {{ formatDate(sensor.reading.datetime )}}
+            Last Updated at: {{ formatDate(sensor.reading.datetime )}},
+            <br>
+            {{ checkOffline(sensor) }} ago
           </div>
         </b-card-text>
       </b-card>
@@ -111,6 +119,7 @@ import BatteryFull from 'vue-material-design-icons/Battery.vue';
 import BatteryLow from 'vue-material-design-icons/BatteryLow.vue';
 import BatteryHalf from 'vue-material-design-icons/Battery50.vue';
 import Pencil from 'vue-material-design-icons/Pencil.vue';
+import { mapGetters } from 'vuex';
 
 export default {
   name: 'Cards',
@@ -130,6 +139,9 @@ export default {
     BatteryLow,
     Pencil
   },
+  computed: {
+    ...mapGetters({loading: 'isLoading'})
+  },
   methods: {
     showModify(node) {
       this.currentNode = node
@@ -143,12 +155,9 @@ export default {
       this.$bvModal.msgBoxConfirm("Are you sure you want to delete the node "+ uid)
         .then(confirmation => {
           if(confirmation) {
-            this.$store.dispatch('deleteNode', uid)
+            this.$store.dispatch('archiveNode', uid)
               .then(() => {
-                this.$bvModal.msgBoxOk('Successfully Deleted ' + uid)
-                  .then(() => {
-
-                  })
+                this.$bvToast.toast('Successfully Deleted ' + uid)
                 this.$store.dispatch('fetchSensors', 1)
               })
               .catch(() => this.$bvModal.msgBoxOk('Could not delete ' + uid))

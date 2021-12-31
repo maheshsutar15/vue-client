@@ -12,31 +12,31 @@
 
         </b-form-input>
       </b-form-group>
-      <b-form-group label="Start Date and Time:" label-for="start">
-        <b-form-input
-            id="start"
-            v-model="start"
-            placeholder="Enter start Date"
-            type="datetime-local"
-            required>
+      <div class="row">
+        <b-form-group class="col-md-6" label="Start Date and Time:" label-for="start">
+          <b-form-input
+              id="start"
+              v-model="start"
+              placeholder="Enter start Date"
+              type="datetime-local"
+              required>
 
-        </b-form-input>
-      </b-form-group>
-      <b-form-group label="End Date and Time:" label-for="end">
-        <b-form-input
-            id="end"
-            v-model="end"
-            placeholder="enter end date"
-            type="datetime-local"
-            required>
+          </b-form-input>
+        </b-form-group>
+        <b-form-group class="col-md-6" label="End Date and Time:" label-for="end">
+          <b-form-input
+              id="end"
+              v-model="end"
+              placeholder="enter end date"
+              type="datetime-local"
+              required>
 
-        </b-form-input>
-      </b-form-group>
-
-      <b-button v-on:click="watchTrend()" variant="primary">Submit </b-button>
+          </b-form-input>
+        </b-form-group>
+      </div>
+      <b-button v-on:click="watchTrend()" variant="primary">Watch Trend </b-button>
       </bForm>
     </div>
-    <!-- <Trend v-if="dataready" class="constrained" :start="start" :end="end"></Trend> -->
   </div>
 </template>
 
@@ -53,7 +53,10 @@ export default {
   },
   methods: {
     watchTrend() {
-      this.$router.push({name: 'GraphHigh', params: { uid: this.uid, from : this.start, to: this.end }})
+      console.log(this.start, this.end)
+      let from = this.start + ':00.000Z'
+      let to = this.end + ':00.000Z'
+      this.$router.push({name: 'GraphHigh', params: { uid: this.uid, from : from, to: to}})
     }
   }
 }

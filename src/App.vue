@@ -1,8 +1,8 @@
 <template>
   <div id="app">
-    <TitleBar  />
+    <TitleBar />
     <div class="container">
-      <b-breadcrumb :items="[
+      <b-breadcrumb class="no-print" :items="[
                             { text: 'Home', href: '/' },
                             { text: $route.name, href: $route.path }
                             ]">
@@ -61,6 +61,10 @@ hr {
 }
 .container {
   margin-top: 40px;
+}
+
+@media print {
+  .no-print { display: none; }
 }
 
 footer.main {

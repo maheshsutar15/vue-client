@@ -8,6 +8,9 @@ const fetchSensors = async (state, redraw) => {
     })
   });
   let sensorsList = await res.json();
+  sensorsList.sort((a, b) => {
+    return ('' + a.uid).localeCompare(b.uid)
+  })
   state.commit('updateSensors', sensorsList)
   state.commit('loaded')
 }

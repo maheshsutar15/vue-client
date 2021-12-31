@@ -12,7 +12,11 @@
           <b-nav-item-dropdown right text="Options">
             <b-dropdown-item v-if="designation === 'admin' || designation === 'superadmin'" v-on:click="goToLogs()">
               <LogsIcon class="ico" title="Logs"  />
-              <strong>Logs</strong>
+              <strong>Acitvity Logs</strong>
+            </b-dropdown-item>
+            <b-dropdown-item v-if="designation === 'admin' || designation === 'superadmin'" v-on:click="goToAdminDashboard()">
+              <DashboardIcon class="ico" title="Logs"  />
+              <strong>Admin Dashboard</strong>
             </b-dropdown-item>
             <b-dropdown-item v-on:click="goToManageUsers()">
               <ManageUsers class="ico" title="ManageUsers"  />
@@ -44,6 +48,7 @@ import LogoutIcon from 'vue-material-design-icons/Logout.vue';
 import FaceProfile from 'vue-material-design-icons/Account.vue';
 import Info from 'vue-material-design-icons/Information.vue';
 import LogsIcon from 'vue-material-design-icons/Library.vue'
+import DashboardIcon from 'vue-material-design-icons/ViewDashboard.vue'
 import ManageUsers from 'vue-material-design-icons/AccountMultiple.vue'
 import { mapGetters } from 'vuex';
 
@@ -53,6 +58,7 @@ export default {
     LogoutIcon,
     FaceProfile,
     LogsIcon,
+    DashboardIcon,
     ManageUsers,
     Info
   },
@@ -97,7 +103,10 @@ export default {
     goToManageUsers() {
       this.$router.push({name: 'ManageUsers'})
     },
-  },
+    goToAdminDashboard() {
+      this.$router.push({name: 'AdminDashboard'})
+    },
+ },
   data() {
     return {
       ip: window.location.host,

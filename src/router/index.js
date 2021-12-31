@@ -77,6 +77,14 @@ const routes = [
     }
   },
   {
+    path: '/admin-dashboard',
+    name: 'AdminDashboard',
+    component: () => import('../views/AdminDashboard.vue'),
+    meta: {
+      footer: false,
+    }
+  },
+  {
     path: '/logs',
     name: 'Logs',
     component: () => import('../views/Logs.vue'),

@@ -6,6 +6,9 @@
       <b-form-group label="Location: " label-for="node_loc" description="Please enter Location" >
         <b-form-input id="node_loc" v-model="modifyNodeForm.loc" placeholder="Enter Location"></b-form-input>
       </b-form-group>
+      <b-form-group label="Sublocation: " label-for="node_sloc" description="Please enter sub Location" >
+        <b-form-input id="node_sloc" v-model="modifyNodeForm.sloc" placeholder="Enter Sublocation"></b-form-input>
+      </b-form-group>
       <b-form-group label="Machine: " label-for="node_mac" description="Please enter Machine name" >
         <b-form-input id="node_mac" v-model="modifyNodeForm.mac" placeholder="Enter Machine"></b-form-input>
       </b-form-group>
@@ -56,6 +59,7 @@ export default {
       let node = {
         uid: this.modifyNodeForm.uid,
         location: this.modifyNodeForm.loc,
+        sublocation: this.modifyNodeForm.sloc,
         machineName: this.modifyNodeForm.mac,
         co2Range: {
           min: this.modifyNodeForm.co2n,
@@ -92,6 +96,7 @@ export default {
     this.modifyNodeForm = {
       uid: this.sensor.uid,
       loc: this.sensor.location,
+      sloc: this.sensor.sublocation,
       mac: this.sensor.machineName,
       co2n: parseFloat(this.sensor.co2Range.min),
       co2x: parseFloat(this.sensor.co2Range.max),
@@ -109,6 +114,7 @@ export default {
       modifyNodeForm: {
       uid: null,
       loc: null,
+      sloc: null,
       mac: null,
       co2n: null,
       co2x: null,

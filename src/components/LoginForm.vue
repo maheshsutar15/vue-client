@@ -28,6 +28,7 @@
     <bModal ref="resp" title="Server Response" hide-footer>
     <AlertBox :message="message"></AlertBox>
     </bModal>
+
   </div>
 </template>
 

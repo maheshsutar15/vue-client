@@ -3,17 +3,31 @@
     <h1>Trend for {{ uid }} </h1>
     <vue-loaders-ball-beat color="grey" scale="1" v-if="loading"/>
     <div v-else>
-      <VueJsonToCsv
-          :json-data="chartData"
-          :csv-title="`${this.uid}.data`"
-          :labels="{ date: {title: 'Datetime'}, co2: { title: 'CO2' }, temperature: { title: 'Temperature' }, humidity: { title: 'Humidity' } }"
-          >
-          <b-button variant="primary">
-            <DownloadIcon/>
-            Download
+      <div class="row no-print">
+        <div class="col-md-6">
+          <VueJsonToCsv
+              class="col-md-6"
+              :json-data="chartData"
+              :csv-title="`${this.uid}.data`"
+              :labels="{ date: {title: 'Datetime'}, co2: { title: 'CO2' }, temperature: { title: 'Temperature' }, humidity: { title: 'Humidity' } }"
+              >
+              <b-button
+                  variant="primary"
+                  v-b-tooltip.hover title="Download CSV"
+                  >
+                  <DownloadIcon/>
+              </b-button>
+          </VueJsonToCsv>
+        </div>
+        <div class="col-md-6" >
+            <b-button variant="primary" title="Print Chart" @click="print()">
+              <PrintIcon/>
           </b-button>
-      </VueJsonToCsv>
+        </div>
+      </div>
+      <div class="print">
       <highcharts :options="chartOptions"></highcharts>
+      </div>
     </div>
   </div>
 </template>
@@ -21,6 +35,7 @@
 <script>
 import VueJsonToCsv from 'vue-json-to-csv'
 import DownloadIcon from 'vue-material-design-icons/Download.vue'
+import PrintIcon from 'vue-material-design-icons/Printer.vue'
 import {Chart} from 'highcharts-vue'
 
 export default {
@@ -28,30 +43,25 @@ export default {
   components: {
     highcharts: Chart,
     VueJsonToCsv,
+    PrintIcon,
     DownloadIcon
   },
-  created() {
-    this.loading = true
-  },
   async mounted() {
-    this.$store.dispatch('fetchTrend', this.uid)
-      .then( reading => {
+    this.loading = true
+    this.$store.dispatch('fetchTrend', {
+      uid: this.uid,
+      from: this.from,
+      to: this.to
+    })
+      .then( readings => {
 
-        const fromDate = Date.parse(this.from)
-        const toDate = Date.parse(this.to)
-        const filteredReadings = reading.filter(reading => {
-          const dt = Date.parse(reading.datetime)
-          const cond = dt >= fromDate && dt <= toDate
-          return cond
-        })
         const csvData = []
 
         let co2 = []
         let humidity = []
-        // let pressure = []
         let temperature = []
 
-        for(let reading of filteredReadings) {
+        for(let reading of readings) {
           let date = new Date(reading.datetime).toLocaleString(undefined, {timeZone: 'Asia/Kolkata'})
           csvData.push({
             date: date,
@@ -61,17 +71,17 @@ export default {
           })
 
           co2.push([
-            date,
+            Date.parse(new Date(reading.datetime)),
             parseFloat(reading.co2) || 0
           ])
 
           temperature.push([
-            date,
+            Date.parse(new Date(reading.datetime)),
             parseFloat(reading.temperature) || 0
           ])
 
           humidity.push([
-            date,
+            Date.parse(new Date(reading.datetime)),
             parseFloat(reading.humidity) || 0
           ])
 
@@ -82,7 +92,6 @@ export default {
         this.chartOptions.series[0].data.push(...temperature)
         this.chartOptions.series[1].data.push(...humidity)
         this.chartOptions.series[2].data.push(...co2)
-
       })
      this.loading = false
   },
@@ -105,12 +114,17 @@ export default {
         },
         xAxis: {
           type: 'datetime',
-          labels: {
-            format: '{value:%Y-%b-%e}'
-          },
+          minorTickInterval:10,
+          minTickInterval:10,
           title: {
             text: "Timestamps",
           }
+        },
+        tooltip: {
+          xDateFormat: '%B, %d %Y %H:%M:%S',
+        },
+        time: {
+          timezoneOffset: -330
         },
         series: [
           {
@@ -128,6 +142,24 @@ export default {
         ]
       }
     }
+  },
+  methods: {
+    print() {
+      window.print()
+    }
   }
 }
 </script>
+
+<style scoped>
+@media print {
+  .no-print { display: none; }
+
+  .print {
+    display: block;
+    transform: translateY(400px) rotate(90deg) scale(1.25);
+    filter: grayscale(1);
+  }
+}
+
+</style>
