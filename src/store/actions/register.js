@@ -8,7 +8,7 @@ const register = async (state, regUserForm) => {
     }
     console.log(usr)
 
-    fetch(process.env.VUE_APP_HOST + '/user/register', {
+    fetch(process.env.VUE_APP_HOST + '/server/user/register', {
       method: "post",
       headers: {
         "Content-Type": "application/json",

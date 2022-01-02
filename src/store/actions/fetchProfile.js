@@ -1,6 +1,6 @@
 const fetchProfile = async (state) => {
   return new Promise( (resolve, reject) => {
-    fetch(process.env.VUE_APP_HOST + `/user/about`, {
+    fetch(process.env.VUE_APP_HOST + `/server/user/about`, {
       headers: new Headers({
         'Authorization': 'Bearer '+state.getters.getAccessToken
       })

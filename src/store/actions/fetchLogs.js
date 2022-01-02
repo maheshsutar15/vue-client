@@ -1,6 +1,6 @@
 const fetchLogs = async (state) => {
   return new Promise( (resolve, reject) => {
-    fetch(process.env.VUE_APP_HOST + `/activities`, {
+    fetch(process.env.VUE_APP_HOST + `/server/activities`, {
       headers: new Headers({
         'Authorization': 'Bearer '+state.getters.getAccessToken
       })

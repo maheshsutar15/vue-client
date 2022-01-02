@@ -1,6 +1,6 @@
 const deleteUser = async (state, user) => {
   return new Promise((res, rej) => {
-    fetch(process.env.VUE_APP_HOST + '/user/delete', {
+    fetch(process.env.VUE_APP_HOST + '/server/user/delete', {
       method: 'DELETE',
       headers: new Headers({
         "Authorization": "Bearer " + state.getters.getAccessToken,

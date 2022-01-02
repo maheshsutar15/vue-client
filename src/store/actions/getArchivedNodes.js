@@ -1,6 +1,6 @@
 const getArchived = async (state) => {
   return new Promise( (resolve, reject) => {
-    fetch(process.env.VUE_APP_HOST + `/node/archived`, {
+    fetch(process.env.VUE_APP_HOST + `/server/node/archived`, {
       headers: new Headers({
         'Authorization': 'Bearer '+state.getters.getAccessToken
       })

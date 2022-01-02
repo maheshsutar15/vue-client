@@ -1,6 +1,6 @@
 const getAllBackups = async () => {
   return new Promise( (resolve, reject) => {
-    fetch(process.env.VUE_APP_HOST + `/backup`, {
+    fetch(process.env.VUE_APP_HOST + `/server/backup`, {
       // headers: new Headers({
       //   'Authorization': 'Bearer '+state.getters.getAccessToken
       // })

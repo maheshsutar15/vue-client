@@ -6,7 +6,7 @@ const verify = async (_state, form) => {
       password: form.pwd
     }
     let code
-    fetch(process.env.VUE_APP_HOST + '/user/verify', {
+    fetch(process.env.VUE_APP_HOST + '/server/user/verify', {
       headers: {"Content-Type": "application/json"},
       mode: 'cors',
       cache: 'default',

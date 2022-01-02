@@ -4,7 +4,7 @@ const unarchiveNode = async (state, uid) => {
     isArchived: false
   }
   return new Promise((res, rej) => {
-    fetch(process.env.VUE_APP_HOST + '/node/modify', {
+    fetch(process.env.VUE_APP_HOST + '/server/node/modify', {
       headers: new Headers({
         'Authorization': 'Bearer ' + state.getters.getAccessToken,
         'Content-Type': 'application/json'

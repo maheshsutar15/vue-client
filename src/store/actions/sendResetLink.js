@@ -3,7 +3,7 @@ const sendLink = async (_state, uname) => {
     const cred = {
       username: uname,
     }
-    fetch(process.env.VUE_APP_HOST + '/user/forgot', {
+    fetch(process.env.VUE_APP_HOST + '/server/user/forgot', {
       headers: {"Content-Type": "application/json"},
       mode: 'cors',
       cache: 'default',

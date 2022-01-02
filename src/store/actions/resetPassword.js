@@ -4,7 +4,7 @@ const resetPwd = async (_state, data) => {
       token: data.token,
       password: data.pwd
     }
-    fetch(process.env.VUE_APP_HOST + '/user/resetpwd', {
+    fetch(process.env.VUE_APP_HOST + '/server/user/resetpwd', {
       headers: {"Content-Type": "application/json"},
       mode: 'cors',
       cache: 'default',

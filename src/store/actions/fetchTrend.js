@@ -1,6 +1,6 @@
 const fetchTrend = async (state, {uid, from, to}) => {
   return new Promise((resolve, reject) => {
-    fetch(process.env.VUE_APP_HOST + `/node/readings/all/`, {
+    fetch(process.env.VUE_APP_HOST + `/server/node/readings/all/`, {
       headers: new Headers({
         'Authorization': 'Bearer '+state.getters.getAccessToken,
         'Content-Type': 'application/json'

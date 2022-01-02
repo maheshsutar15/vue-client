@@ -1,7 +1,7 @@
 const deleteBackup = async (_state, bkp) => {
   console.log(bkp)
   return new Promise( (resolve, reject) => {
-    fetch(process.env.VUE_APP_HOST + `/backup/delete/${bkp}`, {
+    fetch(process.env.VUE_APP_HOST + '/server' + `/backup/delete/${bkp}`, {
       // headers: new Headers({
       //   'Authorization': 'Bearer '+state.getters.getAccessToken
       // })

@@ -4,7 +4,7 @@ const login = async (state, form) => {
       username: form.uname,
       password: form.pwd
     }
-    fetch(process.env.VUE_APP_HOST + '/user/login', {
+    fetch(process.env.VUE_APP_HOST + '/server/user/login', {
       headers: {"Content-Type": "application/json"},
       mode: 'cors',
       cache: 'default',

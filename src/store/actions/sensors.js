@@ -2,7 +2,7 @@ const fetchSensors = async (state, redraw) => {
   if(redraw) {
     state.commit('loading')
   }
-  const res = await fetch(process.env.VUE_APP_HOST + '/node', {
+  const res = await fetch(process.env.VUE_APP_HOST + '/server/node', {
     headers: new Headers({
       'Authorization': 'Bearer '+state.getters.getAccessToken
     })
