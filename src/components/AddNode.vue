@@ -89,13 +89,13 @@ export default {
       }
       this.$store.dispatch('addNode', node)
         .then(() => {
-          this.$bvModal.msgBoxOk('Node Added')
+          this.$bvToast.toast('Node Added')
             .then(() => {
               this.$bvModal.hide('nodeForm')
               this.$store.dispatch('fetchSensors', 1)
             })
         })
-        .catch((msg) => this.$bvModal.msgBoxOk('Could not Add node: ' + msg))
+        .catch((msg) => this.$bvToast.toast('Could not Add node: ' + msg))
     }
   },
   data() {

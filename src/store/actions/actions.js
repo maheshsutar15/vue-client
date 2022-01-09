@@ -6,6 +6,7 @@ import logout from './logout'
 import addNode from './addNode'
 import modifyNode from './modifyNode'
 import getArchived from './getArchivedNodes'
+import changeOwner from './changeOwner'
 import archiveNode from './archiveNode'
 import unarchiveNode from './unarchiveNode'
 import deleteNode from './deleteNode'
@@ -15,6 +16,7 @@ import sendResetLink from './sendResetLink'
 import resetPassword from './resetPassword'
 import deleteUser from './deleteUser'
 import fetchLogs from './fetchLogs'
+import createdUsers from './createdUsers'
 import getAllBackups from './getAllBackups'
 import createBackup from './createBackup'
 import deleteBackup from './deleteBackup'
@@ -48,6 +50,7 @@ export default  {
   logout,
   addNode,
   modifyNode,
+  changeOwner,
   getArchived,
   archiveNode,
   unarchiveNode,
@@ -57,6 +60,7 @@ export default  {
   fetchProfile,
   fetchLogs,
   deleteUser,
+  createdUsers,
   resetPassword,
   getAllBackups,
   createBackup,

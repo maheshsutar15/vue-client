@@ -9,9 +9,19 @@ module.exports = {
     host: '0.0.0.0',
     port: 8080,
     hotOnly: false,
+    proxy: {
+      '/server': {
+        target: 'http://localhost:3000/',
+        ws: true,
+        changeOrigin: true,
+        pathRewrite: {
+          '^/server': ''
+        }
+      }
+    }
   },
   pwa: {
-    name: "Central Monitoring System",
+    name: "Wireless Data Logger",
     themeColor: "#42b983",
     msTileColor: "#42b983",
     iconPaths: {

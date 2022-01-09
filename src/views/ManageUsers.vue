@@ -78,26 +78,25 @@ export default {
   },
   methods: {
     async fetchUsers() {
-      const resp = await fetch(process.env.VUE_APP_HOST + '/user/allusers', {
-        headers: new Headers({
-          'Authorization': 'Bearer '+this.$store.getters.getAccessToken
+      this.$store.dispatch('createdUsers')
+        .then(users => {
+          this.users = users
         })
-      })
-      const x = await resp.json()
-      console.log(x)
-      this.users = x
+        .catch(e => {
+          this.$bvToast.toast(e.message)
+        })
     },
     async deleteUser(user) {
       const sure = await this.$bvModal.msgBoxConfirm("Are you sure you want to delete this user? " + user.username)
       if (sure) {
         this.$store.dispatch('deleteUser', user)
           .then(() => {
-            this.$bvModal.msgBoxOk("Deleted user " + user.username)
+            this.$bvToast.toast("Deleted user " + user.username)
             this.fetchUsers()
           })
           .catch((e) => {
             console.log(e)
-            this.$bvModal.msgBoxOk("Could not delete user")
+            this.$bvToast.toast("Could not delete user")
           })
       }
     }

@@ -1,10 +1,5 @@
 <template >
   <div>
-    <div>
-      <b-modal class="long" id="modifyForm" title="Modify Node" hide-footer>
-        <ModifyNodeForm :sensor="currentNode"/>
-      </b-modal>
-    </div>
     <div class="container" v-if="sensors.length > 0 && !loading">
       <b-card
           v-for="sensor in sensors"
@@ -13,99 +8,102 @@
           v-bind:sub-title="sensor.reading.user"
           class="card drk"
           >
-        <hr>
-        <b-card-text >
-          <table>
-            <tr>
-              <td>
-                Machine
-              </td>
-          <td class="value" >
-            {{ sensor.machineName }}
+          <hr>
+          <b-card-text >
+            <table>
+              <tr>
+                <td>
+                  Machine
+                </td>
+            <td class="value" >
+              {{ sensor.machineName }}
+            </td>
+              </tr>
+        <tr>
+          <td>
+            Location
           </td>
-            </tr>
-            <tr>
-              <td>
-                Location
-              </td>
-              <td class="value">
-                {{ sensor.location }}
-              </td>
-            </tr>
-            <tr>
-              <td>
-                Sub-location
-              </td>
-              <td class="value">
-                {{ sensor.sublocation || "" }}
-              </td>
-            </tr>
-            <tr v-if="sensor.isTemperature">
-              <td>Temperature</td>
-              <td
-                  class="value"
-                  :class="{
-                           ok : checkOK(sensor.temperatureRange, sensor.reading.temperature),
-                           notok : !checkOK(sensor.temperatureRange, sensor.reading.temperature)}"
-                  >
-                  {{ sensor.reading.temperature || '-' }} &deg;C
-              </td>
-            </tr>
-            <tr v-if="sensor.isHumidity">
-              <td>Humidity</td>
-              <td
-                  class="value"
-                  :class="{
-                           ok : checkOK(sensor.humidityRange, sensor.reading.humidity),
-                           notok : !checkOK(sensor.humidityRange, sensor.reading.humidity)}"
-                  >
-                  {{ sensor.reading.humidity || '-' }} %
-              </td>
-            </tr>
-            <tr v-if="sensor.isCO2">
-              <td>CO<sub>2</sub></td>
-              <td
-                  class="value"
-                  :class="{
-                           ok : checkOK(sensor.co2Range, sensor.reading.co2),
-                           notok : !checkOK(sensor.co2Range, sensor.reading.co2)}"
-                  >
-                  {{ sensor.reading.co2 || '-'}} %
-              </td>
-            </tr>
-            <tr>
-              <td>Battery</td>
-              <td class="value" :style="{ok : true}">
-                <BatteryFull title="Battery Full" v-if="parseInt(sensor.reading.battery) >= 90" class="ok" />
-                <BatteryHalf title="Battery Normal" class="notbad" v-else-if="parseInt(sensor.reading.battery) >= 20 && parseInt(sensor.reading.battery ) < 90"/>
-                <BatteryLow title="Battery Critical" class="notok" v-else/>
-              </td>
-            </tr>
-          </table>
-          <hr>
-          <table>
+  <td class="value">
+    {{ sensor.location }}
+  </td>
+        </tr>
+        <tr>
+          <td>
+            Sub-location
+          </td>
+          <td class="value">
+            {{ sensor.sublocation || "" }}
+          </td>
+        </tr>
+        <tr v-if="sensor.isTemperature">
+          <td>Temperature</td>
+          <td
+              class="value"
+              :class="{
+                      ok : checkOK(sensor.temperatureRange, sensor.reading.temperature),
+                      notok : !checkOK(sensor.temperatureRange, sensor.reading.temperature)}"
+              >
+              {{ sensor.reading.temperature || '-' }} &deg;C
+          </td>
+        </tr>
+        <tr v-if="sensor.isHumidity">
+          <td>Humidity</td>
+          <td
+              class="value"
+              :class="{
+                      ok : checkOK(sensor.humidityRange, sensor.reading.humidity),
+                      notok : !checkOK(sensor.humidityRange, sensor.reading.humidity)}"
+              >
+              {{ sensor.reading.humidity || '-' }} %
+          </td>
+        </tr>
+        <tr v-if="sensor.isCO2">
+          <td>CO<sub>2</sub></td>
+          <td
+              class="value"
+              :class="{
+                      ok : checkOK(sensor.co2Range, sensor.reading.co2),
+                      notok : !checkOK(sensor.co2Range, sensor.reading.co2)}"
+              >
+              {{ sensor.reading.co2 || '-'}} %
+          </td>
+        </tr>
+        <tr>
+          <td>Battery</td>
+          <td class="value" :style="{ok : true}">
+            <BatteryFull title="Battery Full" v-if="parseInt(sensor.reading.battery) >= 90" class="ok" />
+            <BatteryHalf title="Battery Normal" class="notbad" v-else-if="parseInt(sensor.reading.battery) >= 20 && parseInt(sensor.reading.battery ) < 90"/>
+            <BatteryLow title="Battery Critical" class="notok" v-else/>
+          </td>
+        </tr>
+            </table>
+            <hr>
+            <table>
 
-            <tr>
-              <td @click="deleteNode(sensor.uid)">
-                <DeleteIcon title="Delete Node" class="action-btn delete" />
-              </td>
-              <td class="value" >
-                <Pencil @click="showModify(sensor)" title="Edit the node" class="action-btn" />
-              </td>
-            </tr>
-          </table>
-          <hr>
-          <div>
-            Last Updated at: {{ formatDate(sensor.reading.datetime )}},
-            <br>
-            {{ checkOffline(sensor) }} ago
-          </div>
-        </b-card-text>
+              <tr>
+                <td @click="deleteNode(sensor.uid)">
+                  <DeleteIcon title="Delete Node" class="action-btn delete" />
+                </td>
+                <td class="value" >
+                  <Pencil @click="showModify(sensor)" title="Edit the node" class="action-btn" />
+                </td>
+              </tr>
+            </table>
+            <hr>
+            <div>
+              Last Updated at: {{ formatDate(sensor.reading.datetime )}},
+              <br>
+              {{ checkOffline(sensor) }} ago
+            </div>
+          </b-card-text>
       </b-card>
     </div>
     <div v-else>
       <h3>No nodes in this category</h3>
     </div>
+    <b-modal class="long" ref="modifyForm" id="modifyForm" title="Modify Node" hide-footer>
+      <ModifyNodeForm :sensor="currentNode"/>
+    </b-modal>
   </div>
 </template>
 
@@ -145,8 +143,7 @@ export default {
   methods: {
     showModify(node) {
       this.currentNode = node
-      this.$bvModal.show('modifyForm')
-      //this.$bvModal.hide('modForm')
+      this.$refs['modifyForm'].show()
     },
     checkOK(range, val) {
       return (range.min <= val && val <= range.max)
@@ -160,12 +157,12 @@ export default {
                 this.$bvToast.toast('Successfully Deleted ' + uid)
                 this.$store.dispatch('fetchSensors', 1)
               })
-              .catch(() => this.$bvModal.msgBoxOk('Could not delete ' + uid))
+              .catch(() => this.$bvToast.toast('Could not delete ' + uid))
           }
         })
         .catch(e => {
           this.message = e.message
-          this.$bvModal.msgBoxOk(e.message)
+          this.$bvToast.toast(e.message)
         })
     },
     checkOffline(sensor) {

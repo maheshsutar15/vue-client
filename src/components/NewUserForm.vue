@@ -64,11 +64,11 @@ export default {
         pwd
       })
         .then((msg) => {
-          this.$bvModal.msgBoxOk(msg)
+          this.$bvToast.toast(msg)
           this.$router.push({ name: 'Welcome' })
         })
         .catch((e) => {
-          this.$bvModal.msgBoxOk(e)
+          this.$bvToast.toast(e)
           this.form = {
             usname: '',
             code: '',

@@ -30,17 +30,11 @@ export default {
     async registerUser() {
       this.$store.dispatch('register', this.regUserForm)
         .then(() => {
-          this.$bvModal.msgBoxOk('Registered Successfully')
-            .catch(() => {
-              this.$root.$off('bv::modal::hide')
-            })
-          // this.$router.push({name: 'Dashboard'})
+          this.$bvToast.toast('Registered Successfully')
           this.$root.$off('bv::modal::hide')
         }).catch((e) => {
-          this.$bvModal.msgBoxOk('Could not Register: ' + e)
-            .then(() => {
-              console.log(e)
-            })
+          this.$bvToast.toast('Could not Register: ' + e)
+          console.log(e)
         })
     }
   },

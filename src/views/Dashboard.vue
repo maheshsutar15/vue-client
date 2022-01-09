@@ -26,23 +26,33 @@
       </div>
       <div class="col-md-8">
         <div style="float: right; text-align: right; font-size: 10pt;">
-          <strong>
-            {{ ip }}
-          </strong>
+          <a :href="ip" target="_blank">
+            <strong>
+              {{ ip }}
+            </strong>
+          </a>
         </div>
       </div>
     </div>
-    <div class="summary">
-      <b>Summary</b>  <br>
-      {{ faultyNodes && faultyNodes.length }} Faulty nodes <br>
-      {{ healthyNodes && healthyNodes.length }} Healthy nodes
-    </div>
+    <!-- <div class="summary"> -->
+    <!--   <b>Summary</b>  <br> -->
+    <!--   {{ faultyNodes && faultyNodes.length }} Faulty nodes <br> -->
+    <!--   {{ healthyNodes && healthyNodes.length }} Healthy nodes -->
+    <!-- </div> -->
     <hr>
     <b-tabs>
-      <b-tab title="Faulty">
+      <b-tab>
+        <template #title>
+          Faulty
+          <b-badge>{{ faultyNodes && faultyNodes.length }}</b-badge>
+        </template>
         <Cards v-if="sensors && !loading" :sensors="faultyNodes"/>
       </b-tab>
-      <b-tab title="Healthy">
+      <b-tab>
+        <template #title>
+          Healthy
+          <b-badge>{{ healthyNodes && healthyNodes.length }}</b-badge>
+        </template>
         <Cards v-if="sensors && !loading" :sensors="healthyNodes"/>
       </b-tab>
     </b-tabs>
@@ -80,10 +90,9 @@ export default {
   },
   async mounted() {
     if(this.$store.getters.getAccessToken == null) {
-      this.$bvModal.msgBoxOk('Please Login')
+      this.$bvToast.toast('Please Login')
       this.$router.push('/')
     }
-    // navigator.serviceWorker.register('sw.js')
     this.fetchSensors = setInterval(
       () => {
         if(this.$store.getters.getSensors.length == 0) {
@@ -116,7 +125,7 @@ export default {
         }
         return
       }
-      , 3000)
+      , 10000)
 
     const appIn2 = setInterval(() => {
       if (this.faultyNodes.length > 0) {
@@ -130,7 +139,6 @@ export default {
 
     window.appInterval = this.fetchSensors
     window.notificationInterval = appIn2
-    // await window.Notification.requestPermission()
   },
   computed: {
     ...mapGetters({sensors: 'getSensors', loading: 'isLoading'}),
@@ -152,18 +160,15 @@ export default {
           if(confirmation) {
             this.$store.dispatch('deleteNode', uid)
               .then(() => {
-                this.$bvModal.msgBoxOk('Successfully Deleted ' + uid)
-                  .then(() => {
-
-                  })
+                this.$bvToast.toast('Successfully Deleted ' + uid)
                 this.$store.dispatch('fetchSensors', 1)
               })
-              .catch(() => this.$bvModal.msgBoxOk('Could not delete ' + uid))
+              .catch(() => this.$bvToast.toast('Could not delete ' + uid))
           }
         })
         .catch(e => {
           this.message = e.message
-          this.$bvModal.msgBoxOk(e.message)
+          this.$bvToast.toast(e.message)
         })
     }
   }

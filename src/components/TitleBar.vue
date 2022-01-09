@@ -87,7 +87,7 @@ export default {
         })
         .catch(e => {
           this.message = e.message
-          this.$bvModal.msgBoxOk(e.message)
+          this.$bvToast.toast(e.message)
         })
 
     },

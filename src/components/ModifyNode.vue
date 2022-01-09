@@ -83,13 +83,11 @@ export default {
       }
       this.$store.dispatch('modifyNode', node)
         .then(() => {
-          this.$bvModal.msgBoxOk('Node Modified')
-            .then(() => {
-              this.$bvModal.hide('nodeForm')
-              this.$store.dispatch('fetchSensors', 1)
-            })
+          this.$bvToast.toast('Node Modified')
+          this.$bvModal.hide('nodeForm')
+          this.$store.dispatch('fetchSensors', 1)
         })
-        .catch((msg) => this.$bvModal.msgBoxOk('Could not modified node: ' + msg))
+        .catch((msg) => this.$bvToast.toast('Could not modified node: ' + msg))
     }
   },
   created() {

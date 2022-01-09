@@ -1,11 +1,16 @@
 <template>
   <div id="app">
+    <div class="loader" v-if="$store.getters.isLoading">
+      <vue-loaders name="ball-scale-multiple" color="black" scale="1" />
+    </div>
     <TitleBar />
     <div class="container">
-      <b-breadcrumb class="no-print" :items="[
-                            { text: 'Home', href: '/' },
-                            { text: $route.name, href: $route.path }
-                            ]">
+      <b-breadcrumb
+          class="no-print"
+          :items="[
+                   { text: 'Home', href: '/' },
+                   { text: $route.name, href: $route.path }
+                   ]">
       </b-breadcrumb>
       <router-view></router-view>
     </div>
@@ -76,4 +81,18 @@ footer.main {
   background-color: #ccc;
   text-align: left;
 }
+.loader {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background: rgba(255,255,255,0.8);
+  color: black;
+  z-index: 2000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
 </style>

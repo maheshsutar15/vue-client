@@ -53,7 +53,6 @@ export default new Vuex.Store({
     setFaulties(state, newFaulties) {
       state.faulties.push(...newFaulties)
     }
-
   },
   actions: actions,
   modules: {
