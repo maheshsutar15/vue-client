@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import actions from './actions/actions'
+import createPersistedState from 'vuex-persistedstate'
 import { 
   getJWT,
   setJWT,
@@ -18,7 +19,7 @@ export default new Vuex.Store({
     accessToken: getJWT(),
     loggedIn: !!getJWT(),
     designation: getLocalDesignation(),
-    loading: true,
+    loading: false,
     faulties: Array()
   },
   mutations: {
@@ -64,5 +65,6 @@ export default new Vuex.Store({
     getLogInStatus: state => state.loggedIn,
     isLoading: state => state.loading,
     getFaulties: state => state.faulties
-  }
+  },
+  plugins: [createPersistedState({ storage: window.sessionStorage })]
 })

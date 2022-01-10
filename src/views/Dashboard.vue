@@ -93,13 +93,18 @@ export default {
       this.$bvToast.toast('Please Login')
       this.$router.push('/')
     }
+    console.log(this.$store.state)
+    this.$store.commit('loading')
     this.fetchSensors = setInterval(
       () => {
-        if(this.$store.getters.getSensors.length == 0) {
-          if(this.$store.getters.getLogInStatus) {
-            this.$store.dispatch('fetchSensors', 0)
-          }
+        console.log(this.$route)
+        if (this.$route.name !== 'Dashboard') {
+          console.log('not on dashboard abort')
           return
+        }
+        if(this.$store.getters.getLogInStatus) {
+          console.log(this.$store.getters.isLoading)
+          this.$store.dispatch('fetchSensors', 0)
         }
         if (this.$store.getters.getSensors.length != 0) {
 
@@ -119,13 +124,16 @@ export default {
             .sort((a, b) => { return ('' + a.uid).localeCompare(b.uid) })
         }
 
+        console.log(this.$store.getters.isLoading)
         this.$store.commit('setFaulties', this.faultyNodes)
-        if(this.$store.getters.getLogInStatus) {
-          this.$store.dispatch('fetchSensors', 0)
-        }
         return
       }
       , 10000)
+    console.log('called')
+    this.$store.dispatch('fetchSensors').then(() => {
+      this.$store.commit('loaded')
+      console.log('loaded')
+    })
 
     const appIn2 = setInterval(() => {
       if (this.faultyNodes.length > 0) {
