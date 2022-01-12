@@ -3,7 +3,7 @@
     <b-navbar toggleable="lg" type="dark" class="titlebar">
       <b-navbar-toggle target="nav-collapse" v-if="loggedIn"></b-navbar-toggle>
 
-      <b-navbar-brand href="/dashboard">
+      <b-navbar-brand href="/#/dashboard">
         <img src="../assets/logo.png" alt="ATechno Embedded Solutions" width="32px" height="32px">
         {{ isMobile ? 'ATES OPL' : 'ATechno Embedded Solutions' }}
       </b-navbar-brand>
