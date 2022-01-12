@@ -20,9 +20,9 @@ const register = async (state, regUserForm) => {
       .then(data => {
         console.log({data})
         if (data.msg) {
-          reject(data.msg)
+          resolve(data.msg)
         } else {
-          resolve()
+          resolve(data.message)
         }
       }).catch(e => {
         reject(e)

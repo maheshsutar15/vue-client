@@ -7,6 +7,9 @@ const fetchSensors = async (state) => {
     })
       .then(res => res.json())
       .then(sensorsList => {
+        if (!sensorsList) {
+          j('failed to load nodes')
+        }
         sensorsList.sort((a, b) => {
           return ('' + a.uid).localeCompare(b.uid)
         })
