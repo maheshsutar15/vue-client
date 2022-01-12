@@ -26,7 +26,7 @@
       </div>
       <div class="col-md-8">
         <div style="float: right; text-align: right; font-size: 10pt;">
-          <a :href="ip" target="_blank">
+          <a :href="`http://${ip}`" target="_blank">
             <strong>
               {{ ip }}
             </strong>
