@@ -5,19 +5,14 @@
     <div v-else>
       <div class="row no-print">
         <div class="col-md-6">
-          <VueJsonToCsv
-              class="col-md-6"
-              :json-data="chartData"
-              :csv-title="`${this.uid}.data`"
-              :labels="{ date: {title: 'Datetime'}, co2: { title: 'CO2' }, temperature: { title: 'Temperature' }, humidity: { title: 'Humidity' } }"
+          <b-button
+              variant="primary"
+              v-b-tooltip.hover
+              :href="`/server/node/csv/${uid}/${from}/${to}`"
+              title="Download CSV"
               >
-              <b-button
-                  variant="primary"
-                  v-b-tooltip.hover title="Download CSV"
-                  >
-                  <DownloadIcon/>
-              </b-button>
-          </VueJsonToCsv>
+              <DownloadIcon/>
+          </b-button>
         </div>
         <div class="col-md-6" >
             <b-button variant="primary" title="Print Chart" @click="print()">
@@ -33,7 +28,6 @@
 </template>
 
 <script>
-import VueJsonToCsv from 'vue-json-to-csv'
 import DownloadIcon from 'vue-material-design-icons/Download.vue'
 import PrintIcon from 'vue-material-design-icons/Printer.vue'
 import {Chart} from 'highcharts-vue'
@@ -42,7 +36,6 @@ export default {
   name: 'GraphHigh',
   components: {
     highcharts: Chart,
-    VueJsonToCsv,
     PrintIcon,
     DownloadIcon
   },
