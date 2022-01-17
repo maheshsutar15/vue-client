@@ -16,12 +16,12 @@ jobs:
         run: touch .env
       - name: 'Set APP_HOST'
         run: echo "VUE_APP_HOST=" > .env
-      - name: 'Run Build'
+      - name: 'Run Build and create archive'
         run: npm run build
       - uses: montudor/action-zip@v1
         with:
           args: zip -qq -r niv-client-${{ steps.date.outputs.date }}.zip dist
-      - name: 'Upload Binary artifacts'
+      - name: 'Upload ZIP artifacts'
         uses: actions/upload-artifact@v2
         with:
           name: niv
@@ -33,13 +33,13 @@ jobs:
     env:
       GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
     steps:
-      - name: 'Download Binary Artifacts'
+      - name: 'Download ZIP Artifacts'
         uses: actions/download-artifact@v2
         with:
-          name: niv
+          name: niv-client-${{ steps.date.outputs.date }}.zip
       - name: 'Create GitHub Release'
         uses: softprops/action-gh-release@v1
         with:
-          files: ./niv
+          files: ./niv-client-${{ steps.date.outputs.date }}.zip
           tag_name: v${{ github.run_number }}
           name: Release V${{ github.run_number }}
