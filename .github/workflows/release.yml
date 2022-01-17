@@ -20,12 +20,12 @@ jobs:
         run: npm run build
       - uses: montudor/action-zip@v1
         with:
-          args: zip -qq -r niv-client-${{ steps.date.outputs.date }}.zip dist
+          args: zip -qq -r niv-client.zip dist
       - name: 'Upload ZIP artifacts'
         uses: actions/upload-artifact@v2
         with:
-          name: niv
-          path: ./niv
+          name: niv-client.zip
+          path: ./niv-client.zip
   release:
     name: 'Create GitHub Release'
     runs-on: ubuntu-latest
@@ -36,10 +36,10 @@ jobs:
       - name: 'Download ZIP Artifacts'
         uses: actions/download-artifact@v2
         with:
-          name: niv-client-${{ steps.date.outputs.date }}.zip
+          name: niv-client.zip
       - name: 'Create GitHub Release'
         uses: softprops/action-gh-release@v1
         with:
-          files: ./niv-client-${{ steps.date.outputs.date }}.zip
+          files: ./niv-client.zip
           tag_name: v${{ github.run_number }}
           name: Release V${{ github.run_number }}
