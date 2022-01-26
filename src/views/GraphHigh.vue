@@ -1,10 +1,15 @@
 <template>
   <div>
     <h1>Trend for {{ uid }} </h1>
+    <div v-for="obj,i in Object.keys(setpoints)" :key="i">
+      <span>{{ obj }}</span>
+      &nbsp;
+      <span>{{ setpoints[obj] }}</span>
+    </div>
     <vue-loaders-ball-beat color="grey" scale="1" v-if="loading"/>
     <div v-else>
       <div class="row no-print">
-        <div class="col-md-6">
+        <div class="col-md-5">
           <b-button
               variant="primary"
               v-b-tooltip.hover
@@ -14,7 +19,7 @@
               <DownloadIcon/>
           </b-button>
         </div>
-        <div class="col-md-6" >
+        <div class="col-md-5" >
             <b-button variant="primary" title="Print Chart" @click="print()">
               <PrintIcon/>
           </b-button>
@@ -41,6 +46,8 @@ export default {
   },
   async mounted() {
     this.loading = true
+    this.$store.dispatch('fetchSetpoint', this.uid)
+      .then(s => this.setpoints = s)
     this.$store.dispatch('fetchTrend', {
       uid: this.uid,
       from: this.from,
@@ -93,6 +100,7 @@ export default {
       uid: this.$route.params.uid,
       from: this.$route.params.from,
       to: this.$route.params.to,
+      setpoints: {},
       loading: true,
       chartData: [],
       chartOptions: {

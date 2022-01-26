@@ -19,6 +19,7 @@
     Pressure. Also developed wireless smart maintenance support system for
     industrial applications which measure Voltage Current, Energy, Power.
     </p>
+    <br>
   </div>
 </template>
 
