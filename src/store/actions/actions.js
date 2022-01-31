@@ -11,6 +11,7 @@ import archiveNode from './archiveNode'
 import unarchiveNode from './unarchiveNode'
 import deleteNode from './deleteNode'
 import fetchTrend from './fetchTrend'
+import fetchNode from './fetchNode'
 import fetchSetpoint from './fetchSetpoints'
 import fetchProfile from './fetchProfile'
 import sendResetLink from './sendResetLink'
@@ -57,6 +58,7 @@ export default  {
   unarchiveNode,
   deleteNode,
   fetchTrend,
+  fetchNode,
   sendResetLink,
   fetchProfile,
   fetchSetpoint,

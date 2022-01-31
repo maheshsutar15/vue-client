@@ -1,10 +1,31 @@
 <template>
   <div>
     <h1>Trend for {{ uid }} </h1>
-    <div v-for="obj,i in Object.keys(setpoints)" :key="i">
-      <span>{{ obj }}</span>
-      &nbsp;
-      <span>{{ setpoints[obj] }}</span>
+    <div>
+      <table>
+        <tbody>
+          <tr>
+            <th>Parameter</th>
+            <th>Min</th>
+            <th>Max</th>
+          </tr>
+          <tr>
+            <td>Temperature</td>
+            <td>{{ node.temperatureRange.min }}</td>
+            <td>{{ node.temperatureRange.max }}</td>
+          </tr>
+          <tr>
+            <td>Humidity</td>
+            <td>{{ node.humidityRange.min }}</td>
+            <td>{{ node.humidityRange.max }}</td>
+          </tr>
+          <tr>
+            <td>CO2</td>
+            <td>{{ node.co2Range.min }}</td>
+            <td>{{ node.co2Range.max }}</td>
+          </tr>
+        </tbody>
+      </table>
     </div>
     <vue-loaders-ball-beat color="grey" scale="1" v-if="loading"/>
     <div v-else>
@@ -46,61 +67,23 @@ export default {
   },
   async mounted() {
     this.loading = true
-    this.$store.dispatch('fetchSetpoint', this.uid)
-      .then(s => this.setpoints = s)
+    this.$store.dispatch('fetchNode', this.uid).then(data => {
+      this.node = data
+    })
     this.$store.dispatch('fetchTrend', {
       uid: this.uid,
       from: this.from,
       to: this.to
     })
-      .then( readings => {
-
-        const csvData = []
-
-        let co2 = []
-        let humidity = []
-        let temperature = []
-
-        for(let reading of readings) {
-          let date = new Date(reading.datetime).toLocaleString(undefined, {timeZone: 'Asia/Kolkata'})
-          csvData.push({
-            date: date,
-            co2: parseFloat(reading.co2 || 0),
-            temperature: parseFloat(reading.temperature || 0),
-            humidity: parseFloat(reading.humidity || 0)
-          })
-
-          co2.push([
-            Date.parse(new Date(reading.datetime)),
-            parseFloat(reading.co2) || 0
-          ])
-
-          temperature.push([
-            Date.parse(new Date(reading.datetime)),
-            parseFloat(reading.temperature) || 0
-          ])
-
-          humidity.push([
-            Date.parse(new Date(reading.datetime)),
-            parseFloat(reading.humidity) || 0
-          ])
-
-        }
-
-        this.chartData.push(...csvData)
-
-        this.chartOptions.series[0].data.push(...temperature)
-        this.chartOptions.series[1].data.push(...humidity)
-        this.chartOptions.series[2].data.push(...co2)
-      })
-     this.loading = false
+      .then(this.constructData)
+    this.loading = false
   },
   data() {
     return {
       uid: this.$route.params.uid,
+      node: null,
       from: this.$route.params.from,
       to: this.$route.params.to,
-      setpoints: {},
       loading: true,
       chartData: [],
       chartOptions: {
@@ -127,26 +110,73 @@ export default {
         time: {
           timezoneOffset: -330
         },
-        series: [
-          {
-            name: 'Temperature',
-            data: []
-          },
-          {
-            name: 'Humdity',
-            data: []
-          },
-          {
-            name: 'CO2',
-            data: []
-          },
-        ]
+        series: [ ]
       }
     }
   },
   methods: {
     print() {
       window.print()
+    },
+    constructData (readings) {
+      const csvData = []
+
+      let co2 = []
+      let humidity = []
+      let temperature = []
+
+      for(let reading of readings) {
+        let date = new Date(reading.datetime).toLocaleString(undefined, {timeZone: 'Asia/Kolkata'})
+        csvData.push({
+          date: date,
+          co2: parseFloat(reading.co2 || 0),
+          temperature: parseFloat(reading.temperature || 0),
+          humidity: parseFloat(reading.humidity || 0)
+        })
+
+        co2.push([
+          Date.parse(new Date(reading.datetime)),
+          parseFloat(reading.co2) || 0
+        ])
+
+        temperature.push([
+          Date.parse(new Date(reading.datetime)),
+          parseFloat(reading.temperature) || 0
+        ])
+
+        humidity.push([
+          Date.parse(new Date(reading.datetime)),
+          parseFloat(reading.humidity) || 0
+        ])
+
+      }
+
+      this.chartData.push(...csvData)
+
+      let idx = 0
+      if (this.node.isCO2) {
+        this.chartOptions.series.push({
+          name: 'CO2',
+          data: []
+        })
+        this.chartOptions.series[idx].data.push(...co2)
+        idx++
+      }
+      if (this.node.isTemperature) {
+        this.chartOptions.series.push({
+          name: 'Temperature',
+          data: []
+        })
+        this.chartOptions.series[idx].data.push(...temperature)
+        idx++
+      }
+      if (this.node.isHumidity) {
+        this.chartOptions.series.push({
+          name: 'Humidity',
+          data: []
+        })
+        this.chartOptions.series[idx].data.push(...humidity)
+      }
     }
   }
 }
