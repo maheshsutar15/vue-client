@@ -2,24 +2,24 @@
   <div>
     <h1>Trend for {{ uid }} </h1>
     <div>
-      <table>
+      <table v-if="node">
         <tbody>
           <tr>
             <th>Parameter</th>
             <th>Min</th>
             <th>Max</th>
           </tr>
-          <tr>
+          <tr v-if="node.isTemperature">
             <td>Temperature</td>
             <td>{{ node.temperatureRange.min }}</td>
             <td>{{ node.temperatureRange.max }}</td>
           </tr>
-          <tr>
+          <tr v-if="node.isHumidity">
             <td>Humidity</td>
             <td>{{ node.humidityRange.min }}</td>
             <td>{{ node.humidityRange.max }}</td>
           </tr>
-          <tr>
+          <tr v-if="node.isCO2">
             <td>CO2</td>
             <td>{{ node.co2Range.min }}</td>
             <td>{{ node.co2Range.max }}</td>

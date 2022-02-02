@@ -3,13 +3,14 @@
     <div class="container" v-if="sensors.length > 0 && !loading">
       <b-card
           v-for="sensor in sensors"
-          v-bind:key="sensor._id"
-          v-bind:title="`UID: ${sensor.uid}`"
-          v-bind:sub-title="sensor.reading.user"
+          :key="sensor._id"
           class="card drk"
           >
+          <b-card-title class="copyable" @click="copyUID(sensor.uid)">UID: {{ sensor.uid }}</b-card-title>
+          <b-card-sub-title>{{ sensor.reading.user }}</b-card-sub-title>
           <hr>
           <b-card-text >
+
             <table>
               <tr>
                 <td>
@@ -130,7 +131,6 @@ export default {
   },
   components: {
     DeleteIcon,
-    //DownloadIcon,
     BatteryFull,
     BatteryHalf,
     ModifyNodeForm,
@@ -141,6 +141,10 @@ export default {
     ...mapGetters({loading: 'isLoading'})
   },
   methods: {
+    copyUID (uid) {
+      navigator.clipboard.writeText(uid.trim())
+      this.$bvToast.toast("UID copied to the clipboard")
+    },
     showModify(node) {
       this.currentNode = node
       this.$refs['modifyForm'].show()
@@ -268,5 +272,8 @@ td {
   color: #fff;
 }
 
+.copyable {
+  cursor: pointer;
+}
 
 </style>

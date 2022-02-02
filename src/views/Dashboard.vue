@@ -82,6 +82,7 @@ export default {
   data() {
     return {
       fetchSensors: null,
+      notificationService: null,
       ip: window.location.host,
       server: process.env.VUE_APP_HOST,
       healthyNodes: [],
@@ -93,17 +94,13 @@ export default {
       this.$bvToast.toast('Please Login')
       this.$router.push('/')
     }
-    console.log(this.$store.state)
     this.$store.commit('loading')
     this.fetchSensors = setInterval(
       () => {
-        console.log(this.$route)
         if (this.$route.name !== 'Dashboard') {
-          console.log('not on dashboard abort')
           return
         }
         if(this.$store.getters.getLogInStatus) {
-          console.log(this.$store.getters.isLoading)
           this.$store.dispatch('fetchSensors', 0)
         }
         if (this.$store.getters.getSensors.length != 0) {
@@ -124,33 +121,32 @@ export default {
             .sort((a, b) => { return ('' + a.uid).localeCompare(b.uid) })
         }
 
-        console.log(this.$store.getters.isLoading)
         this.$store.commit('setFaulties', this.faultyNodes)
         return
       }
       , 10000)
-    console.log('called')
     this.$store.dispatch('fetchSensors').then(() => {
       this.$store.commit('loaded')
-      console.log('loaded')
     })
 
-    const appIn2 = setInterval(() => {
+    this.notificationService = setInterval(() => {
       if (this.faultyNodes.length > 0) {
         const notifBody = sendNotification(this.faultyNodes)
-        console.log(notifBody)
         this.$notification.show('There are few faulty nodes', {
           body: notifBody
         }, {})
       }
     }, 30 * 60 * 1000)
 
-    window.appInterval = this.fetchSensors
-    window.notificationInterval = appIn2
   },
   computed: {
     ...mapGetters({sensors: 'getSensors', loading: 'isLoading'}),
     ...mapActions('notifications', ['add']),
+  },
+  destroyed () {
+    console.log('removing interval')
+    clearInterval(this.fetchSensors)
+    clearInterval(this.notificationService)
   },
   methods: {
     applyLogic(a, b) {

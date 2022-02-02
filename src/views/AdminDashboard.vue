@@ -37,8 +37,8 @@
           <b-card-body>
             <b-card-text>
               <h4>Archived nodes Setings</h4>
-              <div v-if="nodes.length > 0">
-                <b-card class="mb-1"  v-for="(node, idx) in nodes" :key="node._id">
+              <div class="scrollable" v-if="nodes.length > 0" v-bar>
+                <b-card class="mb-1" v-for="(node, idx) in nodes" :key="node._id">
                   <div class="row">
                     <div class="col-md-2">
                       <strong>{{ node.uid }}</strong>
@@ -244,6 +244,11 @@ export default {
 
 .card {
   width: 100%;
+}
+
+.scrollable {
+  min-height: 100px;
+
 }
 
 </style>

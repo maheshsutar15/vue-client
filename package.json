@@ -23,6 +23,7 @@
     "vue-material-design-icons": "^4.13.0",
     "vue-native-notification": "^1.1.1",
     "vue-router": "^3.5.1",
+    "vuebar": "^0.0.20",
     "vuex": "^3.4.0",
     "vuex-persistedstate": "^4.1.0"
   },
