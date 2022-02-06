@@ -5,7 +5,12 @@
 
       <b-navbar-brand href="/#/dashboard">
         <img src="../assets/logo.png" alt="ATechno Embedded Solutions" width="32px" height="32px">
-        {{ isMobile ? 'ATES OPL' : 'ATechno Embedded Solutions' }}
+        <span v-if="isMobile">
+          ATES OPL <small>WDL</small>
+        </span>
+        <span v-else>
+          ATechno Embedded Solutions <small>Wireless Data Logger</small>
+        </span>
       </b-navbar-brand>
       <b-collapse id="nav-collapse" is-nav v-if="loggedIn">
         <b-navbar-nav class="ml-auto operations" >

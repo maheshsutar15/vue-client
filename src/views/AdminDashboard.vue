@@ -53,7 +53,7 @@
                     <div class="col-md-3">
                       <div>
                         <b-select :options="users"
-                         v-model="attrUser[idx]"
+                         v-model.trim="attrUser[idx]"
                          value-field="username"
                          text-field="username"
                          />

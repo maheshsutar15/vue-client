@@ -142,8 +142,12 @@ export default {
   },
   methods: {
     copyUID (uid) {
-      navigator.clipboard.writeText(uid.trim())
-      this.$bvToast.toast("UID copied to the clipboard")
+      try {
+        navigator.clipboard.writeText(uid.trim())
+        this.$bvToast.toast('UID copied to the clipboard')
+      } catch (e) {
+        this.$bvToast.toast('Cannot copy UID: Permission Denied')
+      }
     },
     showModify(node) {
       this.currentNode = node
@@ -194,7 +198,7 @@ td {
   min-height: 200px;
 }
 .card {
-  width: 14rem;
+  width: 14em !important;
   float: left;
   margin: 8px 8px;
   padding: 15px 2px;

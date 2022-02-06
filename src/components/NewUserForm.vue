@@ -5,7 +5,7 @@
     <b-form-group id="f2" label="Username:" label-for="usname">
       <b-form-input
                                     id="usname"
-                                    v-model="form.usname"
+                                    v-model.trim="form.usname"
                                     placeholder="Enter username"
                                     required>
 
@@ -14,7 +14,7 @@
     <b-form-group label="OTP" label-for="otp">
       <b-form-input
                                    id="otp"
-                                   v-model="form.code"
+                                   v-model.trim="form.code"
                                    placeholder="Enter OTP"
                                    type="password"
                                    required>
@@ -23,7 +23,7 @@
     <b-form-group label="Set new password" label-for="passwd">
       <b-form-input
                                    id="passwd"
-                                   v-model="form.passwd"
+                                   v-model.trim="form.passwd"
                                    placeholder="Enter Password"
                                    type="password"
                                    required>
@@ -32,7 +32,7 @@
     <b-form-group label="Set new password" label-for="cpasswd">
       <b-form-input
                                    id="cpasswd"
-                                   v-model="cpasswd"
+                                   v-model.trim="cpasswd"
                                    placeholder="Confirm Password"
                                    type="password"
                                    v-on:keyup="checkMatch()"

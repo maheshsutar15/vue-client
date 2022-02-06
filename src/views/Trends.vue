@@ -6,7 +6,7 @@
       <b-form-group label="UID: " label-for="uid">
         <b-form-input
             id="uid"
-            v-model="uid"
+            v-model.trim="uid"
             placeholder="Enter UID"
             required>
 
@@ -16,7 +16,7 @@
         <b-form-group class="col-md-6" label="Start Date and Time:" label-for="start">
           <b-form-input
               id="start"
-              v-model="start"
+              v-model.trim="start"
               placeholder="Enter start Date"
               type="datetime-local"
               required>
@@ -26,7 +26,7 @@
         <b-form-group class="col-md-6" label="End Date and Time:" label-for="end">
           <b-form-input
               id="end"
-              v-model="end"
+              v-model.trim="end"
               placeholder="enter end date"
               type="datetime-local"
               required>

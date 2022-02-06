@@ -5,7 +5,7 @@
     <b-form-group label="Username:" label-for="uname">
       <b-form-input
                                     id="uname"
-                                    v-model="form.uname"
+                                    v-model.trim="form.uname"
                                     placeholder="Enter username"
                                     required>
 
@@ -14,7 +14,7 @@
     <b-form-group label="Password" label-for="pwd">
       <b-form-input
                                    id="pwd"
-                                   v-model="form.pwd"
+                                   v-model.trim="form.pwd"
                                    placeholder="Enter Password"
                                    type="password"
                                    required>

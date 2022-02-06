@@ -3,7 +3,7 @@
     <h1>Forgot Password</h1>
     <bForm v-if="!done">
     <bFormGroup label="Username: " label-for="uname">
-    <bFormInput id="uname" v-model="uname" placeholder="Enter username" required></bFormInput>
+    <bFormInput id="uname" v-model.trim="uname" placeholder="Enter username" required></bFormInput>
     </bFormGroup>
     <bButton v-on:click="goToReset()">Submit</bButton>
     </bForm>

@@ -3,10 +3,10 @@
     <h1>Reset Password</h1>
     <bForm >
     <bFormGroup label="New Password: " label-for="pwd">
-    <bFormInput type="password" id="pwd" v-model="pwd" placeholder="Enter New password" required></bFormInput>
+    <bFormInput type="password" id="pwd" v-model.trim="pwd" placeholder="Enter New password" required></bFormInput>
     </bFormGroup>
     <bFormGroup label="Confirm New Password: " label-for="cpwd">
-    <bFormInput type="password" id="cpwd" v-model="cpwd" placeholder="Re enter New password" v-on:keyup="checkMatch()" required></bFormInput>
+    <bFormInput type="password" id="cpwd" v-model.trim="cpwd" placeholder="Re enter New password" v-on:keyup="checkMatch()" required></bFormInput>
     </bFormGroup>
     <small class="red" v-if="nomatch">
       <li>
