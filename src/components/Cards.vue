@@ -1,7 +1,8 @@
 <template >
   <div>
     <div class="container" v-if="sensors.length > 0 && !loading">
-      <b-card
+      <div class="card-container">
+        <b-card
           v-for="sensor in sensors"
           :key="sensor._id"
           class="card drk"
@@ -20,63 +21,63 @@
               {{ sensor.machineName }}
             </td>
               </tr>
-        <tr>
-          <td>
-            Location
-          </td>
-  <td class="value">
-    {{ sensor.location }}
-  </td>
-        </tr>
-        <tr>
-          <td>
-            Sub-location
-          </td>
-          <td class="value">
-            {{ sensor.sublocation || "" }}
-          </td>
-        </tr>
-        <tr v-if="sensor.isTemperature">
-          <td>Temperature</td>
-          <td
-              class="value"
-              :class="{
-                      ok : checkOK(sensor.temperatureRange, sensor.reading.temperature),
-                      notok : !checkOK(sensor.temperatureRange, sensor.reading.temperature)}"
-              >
-              {{ sensor.reading.temperature || '-' }} &deg;C
-          </td>
-        </tr>
-        <tr v-if="sensor.isHumidity">
-          <td>Humidity</td>
-          <td
-              class="value"
-              :class="{
-                      ok : checkOK(sensor.humidityRange, sensor.reading.humidity),
-                      notok : !checkOK(sensor.humidityRange, sensor.reading.humidity)}"
-              >
-              {{ sensor.reading.humidity || '-' }} %
-          </td>
-        </tr>
-        <tr v-if="sensor.isCO2">
-          <td>CO<sub>2</sub></td>
-          <td
-              class="value"
-              :class="{
-                      ok : checkOK(sensor.co2Range, sensor.reading.co2),
-                      notok : !checkOK(sensor.co2Range, sensor.reading.co2)}"
-              >
-              {{ sensor.reading.co2 || '-'}} %
-          </td>
-        </tr>
-        <tr>
-          <td>Battery</td>
-          <td class="value" :style="{ok : true}">
-            <BatteryFull title="Battery Full" v-if="parseInt(sensor.reading.battery) >= 90" class="ok" />
-            <BatteryHalf title="Battery Normal" class="notbad" v-else-if="parseInt(sensor.reading.battery) >= 20 && parseInt(sensor.reading.battery ) < 90"/>
-            <BatteryLow title="Battery Critical" class="notok" v-else/>
-          </td>
-        </tr>
+              <tr>
+                <td>
+                  Location
+                </td>
+                <td class="value">
+                  {{ sensor.location }}
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  Sub-location
+                </td>
+                <td class="value">
+                  {{ sensor.sublocation || "" }}
+                </td>
+              </tr>
+              <tr v-if="sensor.isTemperature">
+                <td>Temperature</td>
+                <td
+                    class="value"
+                    :class="{
+                            ok : checkOK(sensor.temperatureRange, sensor.reading.temperature),
+                            notok : !checkOK(sensor.temperatureRange, sensor.reading.temperature)}"
+                    >
+                    {{ sensor.reading.temperature || '-' }} &deg;C
+                </td>
+              </tr>
+              <tr v-if="sensor.isHumidity">
+                <td>Humidity</td>
+                <td
+                    class="value"
+                    :class="{
+                            ok : checkOK(sensor.humidityRange, sensor.reading.humidity),
+                            notok : !checkOK(sensor.humidityRange, sensor.reading.humidity)}"
+                    >
+                    {{ sensor.reading.humidity || '-' }} %
+                </td>
+              </tr>
+              <tr v-if="sensor.isCO2">
+                <td>CO<sub>2</sub></td>
+                <td
+                    class="value"
+                    :class="{
+                            ok : checkOK(sensor.co2Range, sensor.reading.co2),
+                            notok : !checkOK(sensor.co2Range, sensor.reading.co2)}"
+                    >
+                    {{ sensor.reading.co2 || '-'}} %
+                </td>
+              </tr>
+              <tr>
+                <td>Battery</td>
+                <td class="value" :style="{ok : true}">
+                  <BatteryFull title="Battery Full" v-if="parseInt(sensor.reading.battery) >= 90" class="ok" />
+                  <BatteryHalf title="Battery Normal" class="notbad" v-else-if="parseInt(sensor.reading.battery) >= 20 && parseInt(sensor.reading.battery ) < 90"/>
+                  <BatteryLow title="Battery Critical" class="notok" v-else/>
+                </td>
+              </tr>
             </table>
             <hr>
             <table>
@@ -91,13 +92,17 @@
               </tr>
             </table>
             <hr>
+          </b-card-text>
+          <template class="c-footer" #footer>
             <div>
               Last Updated at: {{ formatDate(sensor.reading.datetime )}},
               <br>
               {{ checkOffline(sensor) }} ago
             </div>
-          </b-card-text>
+
+          </template>
       </b-card>
+      </div>
     </div>
     <div v-else>
       <h3>No nodes in this category</h3>
@@ -189,7 +194,7 @@ export default {
 
 </script>
 
-<style>
+<style scoped>
 
 td {
   font-size: 13pt;
@@ -197,12 +202,30 @@ td {
 .container {
   min-height: 200px;
 }
+
+.card-container {
+  display: grid;
+  gap: 16px;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+}
+
+.card-container .card-body {
+  flex: 0 1 auto;
+  margin-top: auto;
+}
+
+.card-container .card-footer {
+  margin-bottom: auto;
+}
+
 .card {
-  width: 14em !important;
-  float: left;
-  margin: 8px 8px;
   padding: 15px 2px;
   padding-left: 10px;
+  height: auto;
+}
+
+.card-footer {
+  border-top: none;
 }
 
 .full_neu {
@@ -278,6 +301,18 @@ td {
 
 .copyable {
   cursor: pointer;
+}
+
+@media screen and (max-width: 768px) {
+  .card-container {
+    grid-template-columns: 1fr 1fr 1fr;
+  }
+}
+
+@media screen and (max-width: 546px) {
+  .card-container {
+    grid-template-columns: 1fr;
+  }
 }
 
 </style>

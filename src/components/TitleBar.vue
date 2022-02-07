@@ -68,10 +68,14 @@ export default {
     Info
   },
   mounted() {
-    window.addEventListener('resize', () => {
-      let size = window.screen.width;
-      this.isMobile = size <= 760;
-    });
+     // window.addEventListener('resize', () => {
+     //   let size = window.screen.width;
+     //   this.isMobile = size <= 760;
+     // });
+  },
+  created () {
+    const size = window.screen.width;
+    this.isMobile = size <= 760;
   },
   computed: {
     ...mapGetters({

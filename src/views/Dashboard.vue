@@ -9,6 +9,8 @@
             variant="outline-primary"
             @click="$bvModal.show('nodeForm')"
             style="float: left; margin-right: 10px"
+            v-b-tooltip.hover
+            title="Add Node"
             >
             <PlusIcon class="addnode"/>
             Add Node
@@ -26,7 +28,7 @@
       </div>
       <div class="col-md-8">
         <div style="float: right; text-align: right; font-size: 10pt;">
-          <a :href="`http://${ip}`" target="_blank">
+          <a :href="`http://${ip}`" target="_blank" v-b-tooltip.hover title="Host IP or Server Address">
             <strong>
               {{ ip }}
             </strong>
@@ -34,11 +36,6 @@
         </div>
       </div>
     </div>
-    <!-- <div class="summary"> -->
-    <!--   <b>Summary</b>  <br> -->
-    <!--   {{ faultyNodes && faultyNodes.length }} Faulty nodes <br> -->
-    <!--   {{ healthyNodes && healthyNodes.length }} Healthy nodes -->
-    <!-- </div> -->
     <hr>
     <b-tabs>
       <b-tab>
