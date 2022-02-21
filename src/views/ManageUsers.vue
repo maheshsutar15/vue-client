@@ -43,7 +43,7 @@
       </b-list-group-item>
     </b-list-group>
     <b-modal id='regForm' title="Add new user" hide-footer>
-      <RegisterForm class="full_height" v-if="designation == 'admin' || designation == 'superadmin'"></RegisterForm>
+      <RegisterForm class="full_height" v-if="designation == 'admin' || designation == 'superadmin' || designation == 'user'"></RegisterForm>
       <div v-else>
         <b-alert show variant="warning">Only admins can add new users.</b-alert>
       </div>

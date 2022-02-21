@@ -24,6 +24,8 @@
 
 <script>
 
+import { getDesignationOptions } from '../common/designation'
+
 export default {
   name: 'RegisterForm',
   methods: {
@@ -47,17 +49,16 @@ export default {
         institute: '',
         designation: null
       },
-      designationOptions: [
-        { text: 'Please select an Option', value: null, disabled: true },
-        { value: 'admin', text: 'Administrative User' },
-        { value: 'user', text: 'Normal User' },
-        { value: 'maintenance', text: 'Maintenance Staff' },
-        { value: 'maintenance', text: 'Observer' }
-      ]
+      designationOptions: []
     }
   },
   beforeDestroy() {
     this.$root.$off('bv::modal::hide')
+  },
+  mounted () {
+    this.designationOptions = getDesignationOptions(
+      this.$store.getters.getDesignation
+    )
   }
 }
 </script>
