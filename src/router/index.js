@@ -45,6 +45,14 @@ const routes = [
     }
   },
   {
+    path: '/table/:uid/:from/:to',
+    name: 'NodeTable',
+    component: () => import('../views/Table.vue'),
+    meta: {
+      footer: false,
+    }
+  },
+  {
     path: '/forgot-password',
     name: 'Forgot',
     component: () => import('../views/Forgot.vue'),

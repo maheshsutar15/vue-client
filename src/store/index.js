@@ -10,6 +10,7 @@ import {
   setLocalDesignation,
   purgeLocalDesignation
 } from '@/common/jwt.service.js'
+import { designationArray } from '../common/designation'
 
 Vue.use(Vuex)
 
@@ -64,6 +65,7 @@ export default new Vuex.Store({
     getDesignation: state => state.designation,
     getLogInStatus: state => state.loggedIn,
     isLoading: state => state.loading,
+    getPrivilege: state => designationArray.indexOf(state.designation),
     getFaulties: state => state.faulties
   },
   plugins: [createPersistedState({ storage: window.sessionStorage })]

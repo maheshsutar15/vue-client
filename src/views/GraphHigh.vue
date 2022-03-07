@@ -26,36 +26,51 @@
           </tr>
         </tbody>
       </table>
+      Showing From
+      <b>{{ fromL }}</b>
+      to
+      <b>{{ toL }}</b>
     </div>
     <vue-loaders-ball-beat color="grey" scale="1" v-if="loading"/>
-    <div v-else>
-      <div class="row no-print">
-        <div class="col-md-5">
-          <b-button
-              variant="primary"
-              v-b-tooltip.hover
-              :href="`/server/node/csv/${uid}/${from}/${to}`"
-              title="Download CSV"
-              >
-              <DownloadIcon/>
-          </b-button>
-        </div>
-        <div class="col-md-5" >
+      <div v-else>
+        <div class="row no-print">
+          <div class="col-md-4">
+            <b-button
+                variant="primary"
+                v-b-tooltip.hover
+                :href="`/server/node/csv/${uid}/${from}/${to}`"
+                title="Download CSV"
+                >
+                <DownloadIcon/>
+            </b-button>
+          </div>
+          <div class="col-md-4">
+            <b-button
+                variant="primary"
+                v-b-tooltip.hover
+                @click="goToTable()"
+                title="Go to table"
+                >
+                <TableIcon/>
+            </b-button>
+          </div>
+          <div class="col-md-4" >
             <b-button variant="primary" title="Print Chart" @click="print()">
               <PrintIcon/>
-          </b-button>
+            </b-button>
+          </div>
+        </div>
+        <div class="print">
+          <highcharts :options="chartOptions"></highcharts>
         </div>
       </div>
-      <div class="print">
-      <highcharts :options="chartOptions"></highcharts>
-      </div>
-    </div>
   </div>
 </template>
 
 <script>
 import DownloadIcon from 'vue-material-design-icons/Download.vue'
 import PrintIcon from 'vue-material-design-icons/Printer.vue'
+import TableIcon from 'vue-material-design-icons/Table.vue'
 import {Chart} from 'highcharts-vue'
 
 export default {
@@ -63,13 +78,19 @@ export default {
   components: {
     highcharts: Chart,
     PrintIcon,
+    TableIcon,
     DownloadIcon
+  },
+  computed: {
+    fromL: function() { return new Date(this.from).toLocaleString(undefined, {timeZone: 'Asia/Kolkata'})},
+    toL: function() { return new Date(this.to).toLocaleString(undefined, {timeZone: 'Asia/Kolkata'})}
   },
   async mounted() {
     this.loading = true
-    this.$store.dispatch('fetchNode', this.uid).then(data => {
-      this.node = data
-    })
+    this.$store.dispatch('fetchNode', this.uid)
+      .then(data => {
+        this.node = data
+      })
     this.$store.dispatch('fetchTrend', {
       uid: this.uid,
       from: this.from,
@@ -115,6 +136,16 @@ export default {
     }
   },
   methods: {
+    goToTable() {
+      this.$router.push({
+        name: 'NodeTable',
+        params: {
+          uid: this.uid,
+          from: this.from,
+          to: this.to,
+        }
+      })
+    },
     print() {
       window.print()
     },

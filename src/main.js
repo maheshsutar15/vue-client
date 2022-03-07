@@ -8,6 +8,7 @@ import router from './router'
 import Vuebar from 'vuebar'
 import VueLoaders from 'vue-loaders'
 import HighchartsVue from 'highcharts-vue'
+import VueI18n from 'vue-i18n'
 import VueNativeNotification from 'vue-native-notification'
 // import './registerServiceWorker'
 
@@ -16,6 +17,7 @@ Vue.config.productionTip = false
 // HighchartsVue.dateFormat("Month: %m Day: %d Year: %Y", 20, false)
 Vue.use(Vuebar)
 Vue.use(VueLoaders)
+Vue.use(VueI18n)
 Vue.use(HighchartsVue)
 Vue.use(VueNativeNotification)
 

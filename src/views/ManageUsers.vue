@@ -45,7 +45,7 @@
     <b-modal id='regForm' title="Add new user" hide-footer>
       <RegisterForm class="full_height" v-if="designation == 'admin' || designation == 'superadmin' || designation == 'user'"></RegisterForm>
       <div v-else>
-        <b-alert show variant="warning">Only admins can add new users.</b-alert>
+        <b-alert show variant="warning">You are not authorized to add users</b-alert>
       </div>
     </b-modal>
   </div>

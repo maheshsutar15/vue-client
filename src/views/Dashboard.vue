@@ -7,7 +7,7 @@
       <div class="col-md-2">
         <b-button
             variant="outline-primary"
-            @click="$bvModal.show('nodeForm')"
+            @click="addNode()"
             style="float: left; margin-right: 10px"
             v-b-tooltip.hover
             title="Add Node"
@@ -146,6 +146,13 @@ export default {
     clearInterval(this.notificationService)
   },
   methods: {
+    addNode() {
+      if (this.$store.getters.getPrivilege > 2) {
+        this.$bvToast.toast('You are not authorized to perform this action')
+        return
+      }
+      this.$bvModal.show('nodeForm')
+    },
     applyLogic(a, b) {
       return (a && b) || !a;
     },

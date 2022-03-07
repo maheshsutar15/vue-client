@@ -123,6 +123,7 @@ import BatteryFull from 'vue-material-design-icons/Battery.vue';
 import BatteryLow from 'vue-material-design-icons/BatteryLow.vue';
 import BatteryHalf from 'vue-material-design-icons/Battery50.vue';
 import Pencil from 'vue-material-design-icons/Pencil.vue';
+// import { designationArray } from '../common/designation';
 import { mapGetters } from 'vuex';
 
 export default {
@@ -155,6 +156,10 @@ export default {
       }
     },
     showModify(node) {
+      if (this.$store.getters.getPrivilege > 2) {
+        this.$bvToast.toast('You are not authorized to perform this action')
+        return
+      }
       this.currentNode = node
       this.$refs['modifyForm'].show()
     },
@@ -162,6 +167,10 @@ export default {
       return (range.min <= val && val <= range.max)
     },
     async deleteNode(uid) {
+      if (this.$store.getters.getPrivilege > 2) {
+        this.$bvToast.toast('You are not authorized to perform this action')
+        return
+      }
       this.$bvModal.msgBoxConfirm("Are you sure you want to delete the node "+ uid)
         .then(confirmation => {
           if(confirmation) {

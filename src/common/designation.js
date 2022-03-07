@@ -30,5 +30,6 @@ function getDesignationOptions(designation) {
 }
 
 module.exports = {
-  getDesignationOptions
+  getDesignationOptions,
+  designationArray
 }
