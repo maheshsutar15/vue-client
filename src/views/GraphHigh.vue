@@ -27,9 +27,9 @@
         </tbody>
       </table>
       Showing From
-      <b>{{ fromL }}</b>
+      <b>{{ formateDate(from) }}</b>
       to
-      <b>{{ toL }}</b>
+      <b>{{ formateDate(to) }}</b>
     </div>
     <vue-loaders-ball-beat color="grey" scale="1" v-if="loading"/>
       <div v-else>
@@ -80,10 +80,6 @@ export default {
     PrintIcon,
     TableIcon,
     DownloadIcon
-  },
-  computed: {
-    fromL: function() { return new Date(this.from).toLocaleString(undefined, {timeZone: 'Asia/Kolkata'})},
-    toL: function() { return new Date(this.to).toLocaleString(undefined, {timeZone: 'Asia/Kolkata'})}
   },
   async mounted() {
     this.loading = true
@@ -136,6 +132,11 @@ export default {
     }
   },
   methods: {
+    formateDate(date) {
+      let unx = Date.parse(date)
+      unx = unx - (330*60*1000)
+      return new Date(unx).toLocaleString()
+    },
     goToTable() {
       this.$router.push({
         name: 'NodeTable',
