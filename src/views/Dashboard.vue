@@ -8,7 +8,7 @@
         <b-button
             variant="outline-primary"
             @click="addNode()"
-            style="float: left; margin-right: 10px"
+            style="margin-right: 10px"
             v-b-tooltip.hover
             title="Add Node"
             >
@@ -20,14 +20,22 @@
         <b-button
             variant="outline-primary"
             @click="goToTrend()"
-            style="float: left;"
             >
             <ChartLine class="addnode"/>
             See trend
         </b-button>
       </div>
-      <div class="col-md-8">
-        <div style="float: right; text-align: right; font-size: 10pt;">
+      <div class="col-md-2">
+        <b-button
+            variant="outline-primary"
+            @click="goToReport()"
+            >
+            <ReportIcon class="addnode"/>
+            Get Report
+        </b-button>
+      </div>
+      <div class="col-md-push-6">
+        <div style="text-align: right; font-size: 10pt;">
           <a :href="`http://${ip}`" target="_blank" v-b-tooltip.hover title="Host IP or Server Address">
             <strong>
               {{ ip }}
@@ -64,6 +72,7 @@ import AddNodeForm from '@/components/AddNode.vue'
 import 'vue-loaders/dist/vue-loaders.css';
 import PlusIcon from 'vue-material-design-icons/PlusCircle.vue';
 import ChartLine from 'vue-material-design-icons/ChartLine.vue';
+import ReportIcon from 'vue-material-design-icons/RemoteDesktop.vue';
 
 import { mapGetters, mapActions } from 'vuex';
 import { sendNotification } from '@/common/notifcation.service';
@@ -74,6 +83,7 @@ export default {
     Cards,
     AddNodeForm,
     PlusIcon,
+    ReportIcon,
     ChartLine
   },
   data() {
@@ -158,6 +168,9 @@ export default {
     },
     goToTrend() {
       this.$router.push({name: 'Trends'})
+    },
+    goToReport() {
+      this.$router.push({name: 'Report'})
     },
     checkOK(range, val) {
       return (range.min <= val && val <= range.max)

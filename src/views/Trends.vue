@@ -56,7 +56,7 @@ export default {
       console.log(this.start, this.end)
       let from = this.start + ':00.000Z'
       let to = this.end + ':00.000Z'
-      this.$router.push({name: 'GraphHigh', params: { uid: this.uid, from : from, to: to}})
+      this.$router.push({name: 'Graph', params: { uid: this.uid, from : from, to: to}})
     }
   }
 }

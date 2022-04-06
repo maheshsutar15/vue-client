@@ -30,8 +30,8 @@ const routes = [
   },
   {
     path: '/graph/:uid/:from/:to',
-    name: 'GraphHigh',
-    component: () => import('../views/GraphHigh.vue'),
+    name: 'Graph',
+    component: () => import('../views/Graph.vue'),
     meta: {
       footer: false,
     }
@@ -88,6 +88,14 @@ const routes = [
     path: '/admin-dashboard',
     name: 'AdminDashboard',
     component: () => import('../views/AdminDashboard.vue'),
+    meta: {
+      footer: false,
+    }
+  },
+  {
+    path: '/report',
+    name: 'Report',
+    component: () => import('../views/Report.vue'),
     meta: {
       footer: false,
     }

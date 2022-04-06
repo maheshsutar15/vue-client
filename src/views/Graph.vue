@@ -1,8 +1,9 @@
 <template>
   <div>
     <h1>Trend for {{ uid }} </h1>
-    <div>
-      <table v-if="node">
+    <div v-if="node">
+      <h2>{{ node.location }} - {{ node.sublocation }}</h2>
+      <table>
         <tbody>
           <tr>
             <th>Parameter</th>
@@ -34,17 +35,7 @@
     <vue-loaders-ball-beat color="grey" scale="1" v-if="loading"/>
       <div v-else>
         <div class="row no-print">
-          <div class="col-md-4">
-            <b-button
-                variant="primary"
-                v-b-tooltip.hover
-                :href="`/server/node/csv/${uid}/${from}/${to}`"
-                title="Download CSV"
-                >
-                <DownloadIcon/>
-            </b-button>
-          </div>
-          <div class="col-md-4">
+          <div class="col-md-6">
             <b-button
                 variant="primary"
                 v-b-tooltip.hover
@@ -54,7 +45,7 @@
                 <TableIcon/>
             </b-button>
           </div>
-          <div class="col-md-4" >
+          <div class="col-md-6" >
             <b-button variant="primary" title="Print Chart" @click="print()">
               <PrintIcon/>
             </b-button>
@@ -68,18 +59,16 @@
 </template>
 
 <script>
-import DownloadIcon from 'vue-material-design-icons/Download.vue'
 import PrintIcon from 'vue-material-design-icons/Printer.vue'
 import TableIcon from 'vue-material-design-icons/Table.vue'
 import {Chart} from 'highcharts-vue'
 
 export default {
-  name: 'GraphHigh',
+  name: 'Graph',
   components: {
     highcharts: Chart,
     PrintIcon,
     TableIcon,
-    DownloadIcon
   },
   async mounted() {
     this.loading = true
@@ -221,7 +210,6 @@ export default {
   .print {
     display: block;
     transform: translateY(400px) rotate(90deg) scale(1.25);
-    filter: grayscale(1);
   }
 }
 
