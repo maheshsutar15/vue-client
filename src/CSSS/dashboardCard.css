@@ -1,0 +1,40 @@
+.green{
+    color: #000000;
+    background: linear-gradient(rgb(0 255 27), rgb(122 222 58), rgb(0 170 19));
+  }
+  
+  .red{
+    color: #000000;
+    background: linear-gradient(rgb(251 0 0), rgb(255 107 107), rgb(236 0 0));
+  }
+
+.card-text:last-child {
+    margin-bottom: -31px;
+    margin-top: -15px;
+}
+
+.card-container .card-footer[data-v-3d932c3a] {
+    margin-bottom: -20px;
+}
+
+.text-muted {
+    color: #000000!important;
+}
+
+
+.ok[data-v-3d932c3a] {
+
+    color: #006c00;
+}
+
+.sun{
+  background: #FCE765;
+}
+
+b-tabs .healthy1{
+    background: #006c00;
+
+}
+b-badge .faulty1{
+    background-color: red;
+}
